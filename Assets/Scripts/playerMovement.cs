@@ -134,8 +134,8 @@ public class PlayerMovement : MonoBehaviour
 
 	void OnEnterJumpState()
     {
-		m_carryOverAirSpeed = m_moveSpeed * m_userXInput;
-		Vector2 inputMovement = new(m_userXInput, m_jumpVelocity);
+		m_carryOverAirSpeed = m_moveSpeed * m_preJumpUserInput;
+		Vector2 inputMovement = new(m_preJumpUserInput, m_jumpVelocity);
 		Move(inputMovement, m_carryOverAirSpeed);
 	}
 
@@ -152,6 +152,8 @@ public class PlayerMovement : MonoBehaviour
     {
 		m_animator.ResetTrigger("OnJumpEnd");
 		m_animator.SetTrigger("OnJump");
+
+		m_preJumpUserInput = m_userXInput;
 
 		// should be in a more visible location. ideally directly tied to the anim length of preJump.
 		m_preJumpTimer = 1f/6f;
@@ -226,6 +228,7 @@ public class PlayerMovement : MonoBehaviour
 	float m_userXInput = 0f;
 	float m_carryOverAirSpeed = 0f;
 	float m_preJumpTimer;
+	float m_preJumpUserInput = 0f;
 
 	[SerializeField] PlayerMovementState m_playerMovementState;
 
