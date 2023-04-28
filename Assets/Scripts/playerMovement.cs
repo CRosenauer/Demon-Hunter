@@ -18,7 +18,7 @@ public class PlayerMovement : MonoBehaviour
 		preJump,
 		jump,
 		fall,
-		// jumpLand,
+		jumpLand,
 	}
 
 	enum PlayerAttackState
@@ -68,7 +68,10 @@ public class PlayerMovement : MonoBehaviour
 			case PlayerMovementState.fall:
 				OnFallState();
 				break;
-        }
+			case PlayerMovementState.jumpLand:
+				OnJumpLandState();
+				break;
+		}
 
 		m_userJump = false;
 	}
@@ -129,7 +132,7 @@ public class PlayerMovement : MonoBehaviour
 
 	void OnEnterIdleState()
     {
-		m_animator.SetTrigger("OnJumpEnd");
+
 	}
 
 	void OnEnterJumpState()
@@ -137,6 +140,14 @@ public class PlayerMovement : MonoBehaviour
 		m_carryOverAirSpeed = m_moveSpeed * m_preJumpUserInput;
 		Vector2 inputMovement = new(m_preJumpUserInput, m_jumpVelocity);
 		Move(inputMovement, m_carryOverAirSpeed);
+	}
+
+	void OnEnterJumpLand()
+	{
+		m_animator.SetTrigger("OnJumpEnd");
+
+		m_stateTimer = 1f / 6f;
+		Move(Vector2.zero, 0f);
 	}
 
 	void OnEnterFallStateFromIdle()
@@ -156,16 +167,16 @@ public class PlayerMovement : MonoBehaviour
 		m_preJumpUserInput = m_userXInput;
 
 		// should be in a more visible location. ideally directly tied to the anim length of preJump.
-		m_preJumpTimer = 1f/6f;
+		m_stateTimer = 1f/6f;
 
 		Move(Vector2.zero, 0f);
 	}
 
 	void OnPreJumpState()
 	{
-		m_preJumpTimer -= Time.fixedDeltaTime;
+		m_stateTimer -= Time.fixedDeltaTime;
 
-		if(m_preJumpTimer <= 0f)
+		if(m_stateTimer <= 0f)
         {
 			m_playerMovementState = PlayerMovementState.jump;
 			OnEnterJumpState();
@@ -184,20 +195,34 @@ public class PlayerMovement : MonoBehaviour
         }
 		else if(IsOnGround())
         {
-			m_playerMovementState = PlayerMovementState.idle;
-			OnEnterIdleState();
+			m_playerMovementState = PlayerMovementState.jumpLand;
+			OnEnterJumpLand();
 			return;
 		}
 
 		AirMove();
 	}
 
+	void OnJumpLandState()
+	{
+		m_stateTimer -= Time.fixedDeltaTime;
+
+		if (m_stateTimer <= 0f)
+		{
+			m_playerMovementState = PlayerMovementState.idle;
+			OnEnterIdleState();
+			return;
+		}
+
+		m_rbody.velocity = Vector2.zero;
+	}
+
 	void OnFallState()
 	{
 		if (IsOnGround())
 		{
-			m_playerMovementState = PlayerMovementState.idle;
-			OnEnterIdleState();
+			m_playerMovementState = PlayerMovementState.jumpLand;
+			OnEnterJumpLand();
 			m_animator.ResetTrigger("OnJump");
 			m_animator.ResetTrigger("OnFall");
 		}
@@ -227,8 +252,9 @@ public class PlayerMovement : MonoBehaviour
 
 	float m_userXInput = 0f;
 	float m_carryOverAirSpeed = 0f;
-	float m_preJumpTimer;
 	float m_preJumpUserInput = 0f;
+
+	float m_stateTimer;
 
 	[SerializeField] PlayerMovementState m_playerMovementState;
 
