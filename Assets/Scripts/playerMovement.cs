@@ -2,8 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+
+// this code should probably bre refactored soon.
+// its quickly starting to get unmanageable.
 [RequireComponent(typeof(Rigidbody2D))]
-public class playerMovement : MonoBehaviour
+public class PlayerMovement : MonoBehaviour
 {
 	[SerializeField] float m_moveSpeed;
 	[SerializeField] float m_jumpVelocity;
@@ -12,7 +15,7 @@ public class playerMovement : MonoBehaviour
 	{
 		idle,
 		// walk,
-		// preJump,
+		preJump,
 		jump,
 		fall,
 		// jumpLand,
@@ -28,6 +31,13 @@ public class playerMovement : MonoBehaviour
 	void Start()
 	{
 		m_rbody = GetComponent<Rigidbody2D>();
+		m_animator = GetComponent<Animator>();
+		m_spriteRenderer = GetComponent<SpriteRenderer>();
+
+		Debug.Assert(m_rbody);
+		Debug.Assert(m_animator);
+		Debug.Assert(m_spriteRenderer);
+
 		m_playerMovementState = PlayerMovementState.idle;
 	}
 
@@ -35,7 +45,11 @@ public class playerMovement : MonoBehaviour
 	void Update()
 	{
 		m_userXInput = Input.GetAxisRaw("Horizontal");
-		m_userJump = Input.GetButton("Jump");
+
+		bool jumpDown = Input.GetButton("Jump");
+		m_userJump = m_userJump || jumpDown && !m_userJumpDownLastFrame;
+
+		m_userJumpDownLastFrame = jumpDown;
 	}
 
     void FixedUpdate()
@@ -44,7 +58,10 @@ public class playerMovement : MonoBehaviour
         {
 			case PlayerMovementState.idle:
 				OnIdleState();
-				break;  
+				break;
+			case PlayerMovementState.preJump:
+				OnPreJumpState();
+				break;
 			case PlayerMovementState.jump:
 				OnJumpState();
 				break;
@@ -52,6 +69,8 @@ public class playerMovement : MonoBehaviour
 				OnFallState();
 				break;
         }
+
+		m_userJump = false;
 	}
 
 	// could generalize later if need be
@@ -81,11 +100,20 @@ public class playerMovement : MonoBehaviour
 	// FSM def wont scale well. may need to refactor later.
 	void OnIdleState()
 	{
+		if (m_userXInput == 1f)
+		{
+			m_spriteRenderer.flipX = false;
+		}
+		else if (m_userXInput == -1f)
+		{
+			m_spriteRenderer.flipX = true;
+		}
+
 		bool isOnGround = IsOnGround();
 		if (m_userJump && isOnGround)
 		{
-			m_playerMovementState = PlayerMovementState.jump;
-			OnEnterJumpState();
+			m_playerMovementState = PlayerMovementState.preJump;
+			OnEnterPreJumpState();
 			return;
 		}
 		else if(!isOnGround)
@@ -99,6 +127,11 @@ public class playerMovement : MonoBehaviour
 		Move(inputMovement, m_moveSpeed);
 	}
 
+	void OnEnterIdleState()
+    {
+		m_animator.SetTrigger("OnJumpEnd");
+	}
+
 	void OnEnterJumpState()
     {
 		m_carryOverAirSpeed = m_moveSpeed * m_userXInput;
@@ -110,6 +143,31 @@ public class playerMovement : MonoBehaviour
 	{
 		m_carryOverAirSpeed = 0f;
 		Move(m_rbody.velocity, m_carryOverAirSpeed);
+
+		m_animator.ResetTrigger("OnJumpEnd");
+		m_animator.SetTrigger("OnFall");
+	}
+
+	void OnEnterPreJumpState()
+    {
+		m_animator.ResetTrigger("OnJumpEnd");
+		m_animator.SetTrigger("OnJump");
+
+		// should be in a more visible location. ideally directly tied to the anim length of preJump.
+		m_preJumpTimer = 1f/6f;
+
+		Move(Vector2.zero, 0f);
+	}
+
+	void OnPreJumpState()
+	{
+		m_preJumpTimer -= Time.fixedDeltaTime;
+
+		if(m_preJumpTimer <= 0f)
+        {
+			m_playerMovementState = PlayerMovementState.jump;
+			OnEnterJumpState();
+		}
 	}
 
 	void OnJumpState()
@@ -120,10 +178,13 @@ public class playerMovement : MonoBehaviour
 		if(m_rbody.velocity.y < 0f)
         {
 			m_playerMovementState = PlayerMovementState.fall;
+			return;
         }
 		else if(IsOnGround())
         {
 			m_playerMovementState = PlayerMovementState.idle;
+			OnEnterIdleState();
+			return;
 		}
 
 		AirMove();
@@ -134,6 +195,9 @@ public class playerMovement : MonoBehaviour
 		if (IsOnGround())
 		{
 			m_playerMovementState = PlayerMovementState.idle;
+			OnEnterIdleState();
+			m_animator.ResetTrigger("OnJump");
+			m_animator.ResetTrigger("OnFall");
 		}
 
 		AirMove();
@@ -144,6 +208,8 @@ public class playerMovement : MonoBehaviour
 		Vector2 speedMultiplier = new(xSpeed, 1f);
 		Vector2 velocity = direction * speedMultiplier;
 		m_rbody.velocity = velocity;
+
+		m_animator.SetFloat("Speed", Mathf.Abs(velocity.x));
 	}
 
 	void AirMove()
@@ -154,11 +220,15 @@ public class playerMovement : MonoBehaviour
 	}
 
     Rigidbody2D m_rbody;
+	Animator m_animator;
+	SpriteRenderer m_spriteRenderer;
 
 	float m_userXInput = 0f;
 	float m_carryOverAirSpeed = 0f;
+	float m_preJumpTimer;
 
 	[SerializeField] PlayerMovementState m_playerMovementState;
 
 	bool m_userJump = false;
+	bool m_userJumpDownLastFrame = false;
 }
