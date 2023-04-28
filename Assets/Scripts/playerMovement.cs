@@ -113,16 +113,17 @@ public class PlayerMovement : MonoBehaviour
 		}
 
 		bool isOnGround = IsOnGround();
-		if (m_userJump && isOnGround)
+
+		if (!isOnGround)
+		{
+			m_playerMovementState = PlayerMovementState.fall;
+			OnEnterFallStateFromIdle();
+			return;
+		}
+		else if (m_userJump && isOnGround)
 		{
 			m_playerMovementState = PlayerMovementState.preJump;
 			OnEnterPreJumpState();
-			return;
-		}
-		else if(!isOnGround)
-        {
-			m_playerMovementState = PlayerMovementState.fall;
-			OnEnterFallStateFromIdle();
 			return;
 		}
 
