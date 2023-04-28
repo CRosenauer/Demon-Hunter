@@ -2458,6 +2458,10 @@ PrefabInstance:
       value: 2.4
       objectReference: {fileID: 0}
     - target: {fileID: 5173901498255341361, guid: 56a519ee3d768724db32b07fa355ba3e, type: 3}
+      propertyPath: m_Size.y
+      value: 2.4
+      objectReference: {fileID: 0}
+    - target: {fileID: 5173901498255341361, guid: 56a519ee3d768724db32b07fa355ba3e, type: 3}
       propertyPath: m_WasSpriteAssigned
       value: 1
       objectReference: {fileID: 0}
