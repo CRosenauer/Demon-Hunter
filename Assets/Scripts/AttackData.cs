@@ -20,8 +20,6 @@ public class AttackData : ScriptableObject
     [Space]
 
     [SerializeField] public AttackData m_nextAttack;
-    [SerializeField] public int m_nextAttackWindowStart;
-    [SerializeField] public int m_nextAttackWindowEnd;
     [SerializeField] public int m_interruptableAsSoonAs;
 }
 

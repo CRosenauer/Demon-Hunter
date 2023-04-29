@@ -19,7 +19,6 @@ MonoBehaviour:
   m_activeFrames: 10
   m_recoveryFrames: 10
   m_animationTrigger: OnAttack
+  m_animationEndTrigger: OnAttackEnd
   m_nextAttack: {fileID: 11400000, guid: 36be8c24605587f459adffade064212d, type: 2}
-  m_nextAttackWindowStart: 10
-  m_nextAttackWindowEnd: 30
   m_interruptableAsSoonAs: 20

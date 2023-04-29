@@ -6,6 +6,9 @@ using UnityEngine;
 // this code should probably bre refactored soon.
 // its quickly starting to get unmanageable.
 [RequireComponent(typeof(Rigidbody2D))]
+[RequireComponent(typeof(SpriteRenderer))]
+[RequireComponent(typeof(Animator))]
+[RequireComponent(typeof(AttackComponent))]
 public class PlayerMovement : MonoBehaviour
 {
 	[SerializeField] float m_moveSpeed;
@@ -18,12 +21,7 @@ public class PlayerMovement : MonoBehaviour
 		jump,
 		fall,
 		jumpLand,
-	}
-
-	enum PlayerAttackState
-	{
-		nonAttack,
-		attack,
+		damageKnockback,
 	}
 
 	public enum PlayerDirection
@@ -43,10 +41,14 @@ public class PlayerMovement : MonoBehaviour
 		m_rbody = GetComponent<Rigidbody2D>();
 		m_animator = GetComponent<Animator>();
 		m_spriteRenderer = GetComponent<SpriteRenderer>();
+		m_attackComponent = GetComponent<AttackComponent>();
 
+		// these asserts arent strictly necessary
+		// w/e never hurts
 		Debug.Assert(m_rbody);
 		Debug.Assert(m_animator);
 		Debug.Assert(m_spriteRenderer);
+		Debug.Assert(m_attackComponent);
 
 		m_playerMovementState = PlayerMovementState.idle;
 	}
@@ -56,13 +58,19 @@ public class PlayerMovement : MonoBehaviour
 	{
 		m_userXInput = Input.GetAxisRaw("Horizontal");
 
-		bool jumpDown = Input.GetButton("Jump");
-		m_userJump = m_userJump || jumpDown && !m_userJumpDownLastFrame;
-
-		m_userJumpDownLastFrame = jumpDown;
+		UpdateUserInput("Jump", ref m_userJump, ref m_userJumpDownLastFrame);
+		UpdateUserInput("Attack", ref m_userAttack, ref m_userAttackDownLastFrame);
 	}
 
-    void FixedUpdate()
+	void UpdateUserInput(string button, ref bool inputFlag, ref bool lastFrameInputFlag)
+    {
+		bool attackDown = Input.GetButton(button);
+		inputFlag = inputFlag || attackDown && !lastFrameInputFlag;
+
+		lastFrameInputFlag = attackDown;
+	}
+
+	void FixedUpdate()
     {
 		QueryOnGround();
 
@@ -86,6 +94,7 @@ public class PlayerMovement : MonoBehaviour
 		}
 
 		m_userJump = false;
+		m_userAttack = false;
 	}
 
 	// could generalize later if need be
@@ -122,15 +131,20 @@ public class PlayerMovement : MonoBehaviour
 	// FSM def wont scale well. may need to refactor later.
 	void OnIdleState()
 	{
-		if (m_userXInput == 1f)
+		bool isInAttack = m_attackComponent.IsInAttack();
+
+		if (!isInAttack)
 		{
-			m_direction = PlayerDirection.right;
-			m_spriteRenderer.flipX = false;
-		}
-		else if (m_userXInput == -1f)
-		{
-			m_direction = PlayerDirection.left;
-			m_spriteRenderer.flipX = true;
+			if (m_userXInput == 1f)
+			{
+				m_direction = PlayerDirection.right;
+				m_spriteRenderer.flipX = false;
+			}
+			else if (m_userXInput == -1f)
+			{
+				m_direction = PlayerDirection.left;
+				m_spriteRenderer.flipX = true;
+			}
 		}
 
 		bool isOnGround = IsOnGround();
@@ -141,20 +155,30 @@ public class PlayerMovement : MonoBehaviour
 			OnEnterFallStateFromIdle();
 			return;
 		}
-		else if (m_userJump && isOnGround)
+		else if (m_userJump && isOnGround && !isInAttack)
 		{
 			m_playerMovementState = PlayerMovementState.preJump;
 			OnEnterPreJumpState();
 			return;
 		}
 
-		Vector2 inputMovement = new(m_userXInput, 0f);
-		Move(inputMovement, m_moveSpeed);
+		TryBufferAttack();
+		
+		if(!isInAttack)
+        {
+			Vector2 inputMovement = new(m_userXInput, 0f);
+			Move(inputMovement, m_moveSpeed);
+		}
+		else
+        {
+			Move(Vector2.zero, 0f);
+		}
 	}
 
 	void OnEnterIdleState()
     {
-
+		// stub
+		// may be needed later?
 	}
 
 	void OnEnterJumpState()
@@ -191,6 +215,8 @@ public class PlayerMovement : MonoBehaviour
 
 		m_preJumpUserInput = m_userXInput;
 
+		m_attackBuffered = false;
+
 		// should be in a more visible location. ideally directly tied to the anim length of preJump.
 		m_stateTimer = 1f/6f;
 
@@ -200,6 +226,11 @@ public class PlayerMovement : MonoBehaviour
 	void OnPreJumpState()
 	{
 		m_stateTimer -= Time.fixedDeltaTime;
+
+		if(m_userAttack)
+        {
+			m_attackBuffered = true;
+		}
 
 		if(m_stateTimer <= 0f)
         {
@@ -212,7 +243,7 @@ public class PlayerMovement : MonoBehaviour
 	{
 		// basically lose control over the jump until it's over.
 		// may want to add a gravity curve later.
-
+		
 		if(m_rbody.velocity.y < 0f)
         {
 			m_playerMovementState = PlayerMovementState.fall;
@@ -224,6 +255,8 @@ public class PlayerMovement : MonoBehaviour
 			OnEnterJumpLand();
 			return;
 		}
+
+		TryBufferAttack();
 
 		AirMove();
 	}
@@ -239,6 +272,8 @@ public class PlayerMovement : MonoBehaviour
 			return;
 		}
 
+		m_attackBuffered = m_attackBuffered || m_userAttack;
+
 		m_rbody.velocity = Vector2.zero;
 	}
 
@@ -252,6 +287,7 @@ public class PlayerMovement : MonoBehaviour
 			m_animator.ResetTrigger("OnFall");
 		}
 
+		TryBufferAttack();
 		AirMove();
 	}
 
@@ -271,9 +307,33 @@ public class PlayerMovement : MonoBehaviour
 		Move(velocity, 1f);
 	}
 
+	void TryBufferAttack()
+    {
+		if (!TryAttack())
+		{
+			m_attackBuffered = m_attackBuffered || m_userAttack;
+		}
+		else
+		{
+			m_attackBuffered = false;
+		}
+	}
+
+	bool TryAttack()
+    {
+		if ((m_attackBuffered || m_userAttack) && m_attackComponent.CanAttack())
+		{
+			m_attackComponent.OnAttack(m_playerMovementState);
+			return true;
+		}
+
+		return false;
+	}
+
     Rigidbody2D m_rbody;
 	Animator m_animator;
 	SpriteRenderer m_spriteRenderer;
+	AttackComponent m_attackComponent;
 
 	float m_userXInput = 0f;
 	float m_carryOverAirSpeed = 0f;
@@ -287,5 +347,11 @@ public class PlayerMovement : MonoBehaviour
 
 	bool m_userJump = false;
 	bool m_userJumpDownLastFrame = false;
+
+	bool m_userAttack = false;
+	bool m_userAttackDownLastFrame = false;
+
+	bool m_attackBuffered = false;
+
 	bool m_isOnGround = true;
 }
