@@ -11,10 +11,9 @@ public class PlayerMovement : MonoBehaviour
 	[SerializeField] float m_moveSpeed;
 	[SerializeField] float m_jumpVelocity;
 
-	enum PlayerMovementState
+	public enum PlayerMovementState
 	{
 		idle,
-		// walk,
 		preJump,
 		jump,
 		fall,
@@ -26,6 +25,17 @@ public class PlayerMovement : MonoBehaviour
 		nonAttack,
 		attack,
 	}
+
+	public enum PlayerDirection
+    {
+		right,
+		left
+    }
+
+	public PlayerDirection GetDirection()
+    {
+		return m_direction;
+    }
 
 	// Start is called before the first frame update
 	void Start()
@@ -54,7 +64,9 @@ public class PlayerMovement : MonoBehaviour
 
     void FixedUpdate()
     {
-		switch(m_playerMovementState)
+		QueryOnGround();
+
+		switch (m_playerMovementState)
         {
 			case PlayerMovementState.idle:
 				OnIdleState();
@@ -79,36 +91,45 @@ public class PlayerMovement : MonoBehaviour
 	// could generalize later if need be
 	bool IsOnGround()
     {
+		return m_isOnGround;
+    }
+
+	void QueryOnGround()
+    {
 		const float SPEED_EPSILON = 0.0001f;
-		if(m_rbody.velocity.y > SPEED_EPSILON)
-        {
-			return false;
-        }
+		if (m_rbody.velocity.y > SPEED_EPSILON)
+		{
+			m_isOnGround = false;
+			return;
+		}
 
 		List<ContactPoint2D> contacts = new List<ContactPoint2D>();
 		m_rbody.GetContacts(contacts);
 
 		foreach (ContactPoint2D contact in contacts)
-        {
+		{
 			float dot = Vector2.Dot(contact.normal, Vector2.up);
-			if(dot >= 0.99f)
-            {
-				return true;
-            }
-        }
+			if (dot >= 0.99f)
+			{
+				m_isOnGround = true;
+				return;
+			}
+		}
 
-		return false;
-    }
+		m_isOnGround = false;
+	}
 
 	// FSM def wont scale well. may need to refactor later.
 	void OnIdleState()
 	{
 		if (m_userXInput == 1f)
 		{
+			m_direction = PlayerDirection.right;
 			m_spriteRenderer.flipX = false;
 		}
 		else if (m_userXInput == -1f)
 		{
+			m_direction = PlayerDirection.left;
 			m_spriteRenderer.flipX = true;
 		}
 
@@ -145,7 +166,10 @@ public class PlayerMovement : MonoBehaviour
 
 	void OnEnterJumpLand()
 	{
-		m_animator.SetTrigger("OnJumpEnd");
+		if (IsOnGround())
+		{
+			m_animator.SetTrigger("OnJumpEnd");
+		}
 
 		m_stateTimer = 1f / 6f;
 		Move(Vector2.zero, 0f);
@@ -255,10 +279,13 @@ public class PlayerMovement : MonoBehaviour
 	float m_carryOverAirSpeed = 0f;
 	float m_preJumpUserInput = 0f;
 
+	PlayerDirection m_direction = PlayerDirection.right;
+
 	float m_stateTimer;
 
 	[SerializeField] PlayerMovementState m_playerMovementState;
 
 	bool m_userJump = false;
 	bool m_userJumpDownLastFrame = false;
+	bool m_isOnGround = true;
 }

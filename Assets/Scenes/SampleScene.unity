@@ -1603,6 +1603,39 @@ BoxCollider2D:
   m_CorrespondingSourceObject: {fileID: 2374521590681563339, guid: ee4b0a1191288e04ea40e0f75900a78e, type: 3}
   m_PrefabInstance: {fileID: 1311731010}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1214476774 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5173901498255341368, guid: 56a519ee3d768724db32b07fa355ba3e, type: 3}
+  m_PrefabInstance: {fileID: 5173901499389140137}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1214476775 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 8568073928407871871, guid: 56a519ee3d768724db32b07fa355ba3e, type: 3}
+  m_PrefabInstance: {fileID: 5173901499389140137}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1214476774}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c7dd3ea2730de614ba24ff62a888355b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1214476781
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1214476774}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bd4df208dbe568e4eb4e31ad0fcf7238, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_playerMovementComponent: {fileID: 1214476775}
+  m_currentAttack: {fileID: 11400000, guid: 097455ff5f9900c4082d4db1b2fe5738, type: 2}
+  m_hitBoxQueryLayer:
+    serializedVersion: 2
+    m_Bits: 256
 --- !u!1001 &1311731010
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2459,11 +2492,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5173901498255341361, guid: 56a519ee3d768724db32b07fa355ba3e, type: 3}
       propertyPath: m_Size.y
-      value: 2.4
+      value: 1.6
       objectReference: {fileID: 0}
     - target: {fileID: 5173901498255341361, guid: 56a519ee3d768724db32b07fa355ba3e, type: 3}
       propertyPath: m_WasSpriteAssigned
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5173901498255341368, guid: 56a519ee3d768724db32b07fa355ba3e, type: 3}
       propertyPath: m_Name
