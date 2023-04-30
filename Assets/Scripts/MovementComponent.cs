@@ -10,6 +10,7 @@ public class MovementComponent : MonoBehaviour
 {
     public enum MovementState
     {
+        init,
         idle,
         preJump,
         jump,

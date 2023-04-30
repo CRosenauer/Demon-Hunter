@@ -22,7 +22,7 @@ public class PlayerMovement : MovementComponent
 		ComponentInit();
 		m_lifeComponent = GetComponent<LifeComponent>();
 
-		m_movementState = MovementState.idle;
+		m_movementState = MovementState.init;
 	}
 
 	// Update is called once per frame
@@ -48,6 +48,9 @@ public class PlayerMovement : MovementComponent
 
 		switch (m_movementState)
 		{
+			case MovementState.init:
+				OnInitState();
+				break;
 			case MovementState.idle:
 				OnIdleState();
 				break;
@@ -76,6 +79,13 @@ public class PlayerMovement : MovementComponent
 
 		m_userJump = false;
 		m_userAttack = false;
+	}
+
+	void OnInitState()
+    {
+		Move(Vector2.zero, 0f);
+		m_movementState = MovementState.idle;
+		OnEnterIdleState();
 	}
 
 	// FSM def wont scale well. may need to refactor later.
