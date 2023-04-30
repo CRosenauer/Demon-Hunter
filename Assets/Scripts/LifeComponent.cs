@@ -44,13 +44,11 @@ public class LifeComponent : MonoBehaviour
 
         m_currentHealth -= damage;
 
-        if(m_currentHealth <= 0)
+        BroadcastMessage("OnDamage", m_damageInvulnerableTime);
+
+        if (m_currentHealth <= 0)
         {
             BroadcastMessage("OnDeath");
-        }
-        else
-        {
-            BroadcastMessage("OnDamage", m_damageInvulnerableTime);
         }
 
         m_enable = false;

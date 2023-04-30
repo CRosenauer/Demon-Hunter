@@ -17,6 +17,7 @@ public class MovementComponent : MonoBehaviour
         jumpLand,
         damageKnockback,
         dead,
+        deathFall
     }
 
     public enum Direction

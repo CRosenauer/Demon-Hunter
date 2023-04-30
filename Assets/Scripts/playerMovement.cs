@@ -69,6 +69,9 @@ public class PlayerMovement : MovementComponent
 			case MovementState.dead:
 				OnDeadState();
 				break;
+			case MovementState.deathFall:
+				OnDeathFallState();
+				break;
 		}
 
 		m_userJump = false;
@@ -78,6 +81,13 @@ public class PlayerMovement : MovementComponent
 	// FSM def wont scale well. may need to refactor later.
 	void OnIdleState()
 	{
+		if (m_shouldDie)
+		{
+			OnEnterDeadState();
+			m_movementState = MovementState.dead;
+			return;
+		}
+
 		bool isInAttack = m_attackComponent.IsInAttack();
 
 		if (!isInAttack)
@@ -202,6 +212,13 @@ public class PlayerMovement : MovementComponent
 
 	void OnJumpLandState()
 	{
+		if(m_shouldDie)
+        {
+			OnEnterDeadState();
+			m_movementState = MovementState.dead;
+			return;
+		}
+
 		m_stateTimer -= Time.fixedDeltaTime;
 
 		if (m_stateTimer <= 0f)
@@ -225,6 +242,8 @@ public class PlayerMovement : MovementComponent
 			knockbackVelocity.x = -knockbackVelocity.x;
 		}
 
+		m_carryOverAirSpeed = knockbackVelocity.x;
+
 		Move(knockbackVelocity, 1f);
 
 		m_animator.SetTrigger("OnDamage");
@@ -237,9 +256,20 @@ public class PlayerMovement : MovementComponent
 		if (m_stateTimer <= 0f)
 		{
 			m_animator.ResetTrigger("OnDamage");
-			m_movementState = MovementState.idle;
-			OnEnterIdleState();
-			return;
+
+			if (IsOnGround())
+			{
+				if (m_shouldDie)
+				{
+					m_movementState = MovementState.deathFall;
+				}
+				else
+                {
+					m_movementState = MovementState.idle;
+					OnEnterIdleState();
+				}
+				
+			}
 		}
 	}
 
@@ -251,7 +281,21 @@ public class PlayerMovement : MovementComponent
 
 	void OnDeadState()
 	{
-		// reset at some point?
+		// hack. prob doesnt matter?
+		m_animator.ResetTrigger("OnDeath");
+	}
+
+	void OnDeathFallState()
+    {
+		if (IsOnGround())
+		{
+			m_movementState = MovementState.jumpLand;
+			OnEnterJumpLand();
+			m_animator.ResetTrigger("OnJump");
+			m_animator.ResetTrigger("OnFall");
+		}
+
+		AirMove();
 	}
 
 	void OnFallState()
@@ -278,8 +322,7 @@ public class PlayerMovement : MovementComponent
 
 	void OnDeath()
     {
-		OnEnterDeadState();
-		m_movementState = MovementState.dead;
+		m_shouldDie = true;
 	}
 
 	LifeComponent m_lifeComponent;
@@ -291,4 +334,6 @@ public class PlayerMovement : MovementComponent
 
 	bool m_userJump = false;
 	bool m_userJumpDownLastFrame = false;
+
+	bool m_shouldDie = false;
 }

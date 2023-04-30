@@ -15,6 +15,7 @@ GameObject:
   - component: {fileID: 5173901498255341361}
   - component: {fileID: 8568073928407871871}
   - component: {fileID: 1587683572650101367}
+  - component: {fileID: 4908526127180572845}
   m_Layer: 6
   m_Name: Player
   m_TagString: Player
@@ -151,7 +152,7 @@ SpriteRenderer:
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 1.6, y: 1.6}
+  m_Size: {x: 2.4, y: 1.6}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 0
@@ -169,9 +170,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c7dd3ea2730de614ba24ff62a888355b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_playerMovementState: 0
+  m_movementState: 0
+  m_onHitKnockbackVelocity: {x: -5, y: 8}
   m_moveSpeed: 5
-  m_jumpVelocity: 15
+  m_jumpSpeed: 15
 --- !u!114 &1587683572650101367
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -192,3 +194,17 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 9ec154866f41b954e9d46b7808bb4dbb, type: 2}
   - {fileID: 11400000, guid: 097455ff5f9900c4082d4db1b2fe5738, type: 2}
   - {fileID: 11400000, guid: 097455ff5f9900c4082d4db1b2fe5738, type: 2}
+--- !u!114 &4908526127180572845
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5173901498255341368}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b56f087363b98024bb488938ceeec5d7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_damageInvulnerableTime: 0.33333334
+  m_maxHealth: 10
