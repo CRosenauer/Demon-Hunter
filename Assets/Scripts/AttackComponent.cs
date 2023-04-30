@@ -10,7 +10,7 @@ public class AttackComponent : MonoBehaviour
     void Start()
     {
         m_animator = GetComponent<Animator>();
-        m_playerMovementComponent = GetComponent<PlayerMovement>();
+        m_playerMovementComponent = GetComponent<MovementComponent>();
     }
 
     void FixedUpdate()
@@ -48,7 +48,7 @@ public class AttackComponent : MonoBehaviour
 
                 Vector3 hitboxOffset = new(m_currentAttack.m_collisionOffset.x, m_currentAttack.m_collisionOffset.y, 0f);
 
-                if (m_playerMovementComponent.GetDirection() == PlayerMovement.PlayerDirection.left)
+                if (m_playerMovementComponent.GetDirection() == PlayerMovement.Direction.left)
                 {
                     hitboxOffset.x = -hitboxOffset.x;
                 }
@@ -59,7 +59,7 @@ public class AttackComponent : MonoBehaviour
         }
     }
 
-    public void OnAttack(PlayerMovement.PlayerMovementState playerMovementState)
+    public void OnAttack(PlayerMovement.MovementState playerMovementState)
     {
         bool consecutiveAttack = false;
 
@@ -84,11 +84,11 @@ public class AttackComponent : MonoBehaviour
         // likely some performance or load order gachas i dont know about.
         if(!consecutiveAttack)
         {
-            if (playerMovementState == PlayerMovement.PlayerMovementState.idle)
+            if (playerMovementState == PlayerMovement.MovementState.idle)
             {
                 m_currentAttack = Resources.Load<AttackData>("AttackData/PlayerGroundAttack1");
             }
-            else if (playerMovementState == PlayerMovement.PlayerMovementState.jump)
+            else if (playerMovementState == PlayerMovement.MovementState.jump)
             {
                 m_currentAttack = Resources.Load<AttackData>("AttackData/PlayerAirAttack");
             }
@@ -166,7 +166,7 @@ public class AttackComponent : MonoBehaviour
         return m_frameCount >= m_currentAttack.m_startUpFrames && m_frameCount < (m_currentAttack.m_startUpFrames + m_currentAttack.m_activeFrames);
     }
 
-    PlayerMovement m_playerMovementComponent;
+    MovementComponent m_playerMovementComponent;
     Animator m_animator;
 
     AttackData m_currentAttack;
