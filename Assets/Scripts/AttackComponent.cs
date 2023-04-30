@@ -6,11 +6,24 @@ public class AttackComponent : MonoBehaviour
 {
     [SerializeField] LayerMask m_hitBoxQueryLayer;
 
+    [SerializeField] List<MovementComponent.MovementState> m_movementStates;
+    [SerializeField] List<AttackData> m_attackComponents;
+
     // Start is called before the first frame update
     void Start()
     {
         m_animator = GetComponent<Animator>();
         m_playerMovementComponent = GetComponent<MovementComponent>();
+
+        Debug.Assert(m_movementStates.Count == m_attackComponents.Count);
+
+        m_attackDictionary = new();
+
+        for (int i = 0; i < m_movementStates.Count; ++i)
+        {
+            m_attackDictionary.Add(m_movementStates[i], m_attackComponents[i]);
+        }
+
     }
 
     void FixedUpdate()
@@ -48,7 +61,7 @@ public class AttackComponent : MonoBehaviour
 
                 Vector3 hitboxOffset = new(m_currentAttack.m_collisionOffset.x, m_currentAttack.m_collisionOffset.y, 0f);
 
-                if (m_playerMovementComponent.GetDirection() == PlayerMovement.Direction.left)
+                if (m_playerMovementComponent.GetDirection() == MovementComponent.Direction.left)
                 {
                     hitboxOffset.x = -hitboxOffset.x;
                 }
@@ -59,7 +72,7 @@ public class AttackComponent : MonoBehaviour
         }
     }
 
-    public void OnAttack(PlayerMovement.MovementState playerMovementState)
+    public void OnAttack(MovementComponent.MovementState playerMovementState)
     {
         bool consecutiveAttack = false;
 
@@ -80,21 +93,18 @@ public class AttackComponent : MonoBehaviour
             }
         }
         
-        // this will easily become unmaintainable.
-        // likely some performance or load order gachas i dont know about.
         if(!consecutiveAttack)
         {
-            if (playerMovementState == PlayerMovement.MovementState.idle)
+            if(!m_attackDictionary.TryGetValue(playerMovementState, out m_currentAttack))
             {
-                m_currentAttack = Resources.Load<AttackData>("AttackData/PlayerGroundAttack1");
-            }
-            else if (playerMovementState == PlayerMovement.MovementState.jump)
-            {
-                m_currentAttack = Resources.Load<AttackData>("AttackData/PlayerAirAttack");
+                return;
             }
         }
 
-        Debug.Assert(m_currentAttack);
+        if(!m_currentAttack)
+        {
+            return;
+        }
 
         m_resetFrameCount = true;
 
@@ -170,6 +180,8 @@ public class AttackComponent : MonoBehaviour
     Animator m_animator;
 
     AttackData m_currentAttack;
+
+    Dictionary<MovementComponent.MovementState, AttackData> m_attackDictionary;
 
     string oldAnimationTrigger;
 
