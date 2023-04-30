@@ -11,11 +11,12 @@ GameObject:
   - component: {fileID: 1513549560692225950}
   - component: {fileID: 1513549560692225951}
   - component: {fileID: 1513549560692225936}
-  - component: {fileID: 1513549560692225937}
   - component: {fileID: 1513549560692225938}
   - component: {fileID: 1513549560692225949}
   - component: {fileID: 1897867909}
   - component: {fileID: 1897867910}
+  - component: {fileID: 1897867911}
+  - component: {fileID: 1897867912}
   m_Layer: 8
   m_Name: Cultist
   m_TagString: Untagged
@@ -85,27 +86,6 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.5, y: 1.2}
   m_EdgeRadius: 0
---- !u!95 &1513549560692225937
-Animator:
-  serializedVersion: 5
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1513549560692225939}
-  m_Enabled: 1
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 655ce0d6d252c1441a60355bee58c06c, type: 2}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_StabilizeFeet: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorStateOnDisable: 0
-  m_WriteDefaultValuesOnDisable: 0
 --- !u!212 &1513549560692225938
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -175,7 +155,41 @@ MonoBehaviour:
     m_Bits: 64
   m_movementStates: 
   m_attackComponents: []
---- !u!114 &1897867909
+--- !u!95 &1897867909
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1513549560692225939}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 655ce0d6d252c1441a60355bee58c06c, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &1897867910
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1513549560692225939}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 570aad57e7b157243bff4355b969a20e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_movementState: 0
+--- !u!114 &1897867911
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -187,14 +201,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e9bf31abcd8615b4b93f572b265473f1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_movementComponent: {fileID: 1897867910}
+  m_movementComponent: {fileID: 1897867912}
   m_hitBoxQueryLayer:
     serializedVersion: 2
     m_Bits: 64
   m_collisionBounds: {x: 0.5, y: 1.2}
   m_collisionOffset: {x: 0, y: -0.2}
   m_damage: 1
---- !u!114 &1897867910
+--- !u!114 &1897867912
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}

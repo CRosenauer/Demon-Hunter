@@ -255,16 +255,17 @@ public class PlayerMovement : MovementComponent
 
 		if (m_stateTimer <= 0f)
 		{
-			m_animator.ResetTrigger("OnDamage");
-
 			if (IsOnGround())
 			{
+				m_animator.ResetTrigger("OnDamage");
+
 				if (m_shouldDie)
 				{
 					m_movementState = MovementState.deathFall;
 				}
 				else
-                {
+				{
+					m_animator.SetTrigger("OnDamageEnd");
 					m_movementState = MovementState.idle;
 					OnEnterIdleState();
 				}
