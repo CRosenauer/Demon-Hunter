@@ -44,7 +44,7 @@ public class AttackComponent : MonoBehaviour
 
             foreach (Collider2D collider in colliders)
             {
-                OnHit(collider);
+                Hit(collider, m_currentAttack.m_damage);
             }
         }
 
@@ -161,9 +161,9 @@ public class AttackComponent : MonoBehaviour
         return m_frameCount < (m_currentAttack.m_startUpFrames + m_currentAttack.m_activeFrames + m_currentAttack.m_recoveryFrames);
     }
 
-    void OnHit(Collider2D collider)
+    public static void Hit(Collider2D collider, int damage)
     {
-
+        collider.BroadcastMessage("OnHit", damage);
     }
 
     bool IsInActiveWindow()

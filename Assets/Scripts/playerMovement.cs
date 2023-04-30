@@ -8,17 +8,21 @@ using UnityEngine;
 [RequireComponent(typeof(Rigidbody2D))]
 [RequireComponent(typeof(Animator))]
 [RequireComponent(typeof(AttackComponent))]
+[RequireComponent(typeof(LifeComponent))]
 public class PlayerMovement : MovementComponent
 {
+	[SerializeField] Vector2 m_onHitKnockbackVelocity;
+
 	[SerializeField] float m_moveSpeed;
-	[SerializeField] float m_jumpVelocity;
+	[SerializeField] float m_jumpSpeed;
 
 	// Start is called before the first frame update
 	void Start()
 	{
 		ComponentInit();
+		m_lifeComponent = GetComponent<LifeComponent>();
 
-		m_playerMovementState = MovementState.idle;
+		m_movementState = MovementState.idle;
 	}
 
 	// Update is called once per frame
@@ -31,7 +35,7 @@ public class PlayerMovement : MovementComponent
 	}
 
 	void UpdateUserInput(string button, ref bool inputFlag, ref bool lastFrameInputFlag)
-    {
+	{
 		bool attackDown = Input.GetButton(button);
 		inputFlag = inputFlag || attackDown && !lastFrameInputFlag;
 
@@ -39,11 +43,11 @@ public class PlayerMovement : MovementComponent
 	}
 
 	void FixedUpdate()
-    {
+	{
 		QueryOnGround();
 
-		switch (m_playerMovementState)
-        {
+		switch (m_movementState)
+		{
 			case MovementState.idle:
 				OnIdleState();
 				break;
@@ -58,6 +62,12 @@ public class PlayerMovement : MovementComponent
 				break;
 			case MovementState.jumpLand:
 				OnJumpLandState();
+				break;
+			case MovementState.damageKnockback:
+				OnDamageKnockbackState();
+				break;
+			case MovementState.dead:
+				OnDeadState();
 				break;
 		}
 
@@ -79,40 +89,40 @@ public class PlayerMovement : MovementComponent
 
 		if (!isOnGround)
 		{
-			m_playerMovementState = MovementState.fall;
+			m_movementState = MovementState.fall;
 			OnEnterFallStateFromIdle();
 			return;
 		}
 		else if (m_userJump && isOnGround && !isInAttack)
 		{
-			m_playerMovementState = MovementState.preJump;
+			m_movementState = MovementState.preJump;
 			OnEnterPreJumpState();
 			return;
 		}
 
 		TryBufferAttack();
-		
-		if(!isInAttack)
-        {
+
+		if (!isInAttack)
+		{
 			Vector2 inputMovement = new(m_userXInput, 0f);
 			Move(inputMovement, m_moveSpeed);
 		}
 		else
-        {
+		{
 			Move(Vector2.zero, 0f);
 		}
 	}
 
 	void OnEnterIdleState()
-    {
+	{
 		// stub
 		// may be needed later?
 	}
 
 	void OnEnterJumpState()
-    {
+	{
 		m_carryOverAirSpeed = m_moveSpeed * m_preJumpUserInput;
-		Vector2 inputMovement = new(m_preJumpUserInput, m_jumpVelocity);
+		Vector2 inputMovement = new(m_preJumpUserInput, m_jumpSpeed);
 		Move(inputMovement, m_carryOverAirSpeed);
 	}
 
@@ -138,7 +148,7 @@ public class PlayerMovement : MovementComponent
 	}
 
 	void OnEnterPreJumpState()
-    {
+	{
 		m_animator.ResetTrigger("OnJumpEnd");
 		m_animator.SetTrigger("OnJump");
 
@@ -147,7 +157,7 @@ public class PlayerMovement : MovementComponent
 		m_attackBuffered = false;
 
 		// should be in a more visible location. ideally directly tied to the anim length of preJump.
-		m_stateTimer = 1f/6f;
+		m_stateTimer = 1f / 6f;
 
 		Move(Vector2.zero, 0f);
 	}
@@ -156,14 +166,14 @@ public class PlayerMovement : MovementComponent
 	{
 		m_stateTimer -= Time.fixedDeltaTime;
 
-		if(m_userAttack)
-        {
+		if (m_userAttack)
+		{
 			m_attackBuffered = true;
 		}
 
-		if(m_stateTimer <= 0f)
-        {
-			m_playerMovementState = MovementState.jump;
+		if (m_stateTimer <= 0f)
+		{
+			m_movementState = MovementState.jump;
 			OnEnterJumpState();
 		}
 	}
@@ -172,15 +182,15 @@ public class PlayerMovement : MovementComponent
 	{
 		// basically lose control over the jump until it's over.
 		// may want to add a gravity curve later.
-		
-		if(m_rbody.velocity.y < 0f)
-        {
-			m_playerMovementState = MovementState.fall;
+
+		if (m_rbody.velocity.y < 0f)
+		{
+			m_movementState = MovementState.fall;
 			return;
-        }
-		else if(IsOnGround())
-        {
-			m_playerMovementState = MovementState.jumpLand;
+		}
+		else if (IsOnGround())
+		{
+			m_movementState = MovementState.jumpLand;
 			OnEnterJumpLand();
 			return;
 		}
@@ -196,7 +206,7 @@ public class PlayerMovement : MovementComponent
 
 		if (m_stateTimer <= 0f)
 		{
-			m_playerMovementState = MovementState.idle;
+			m_movementState = MovementState.idle;
 			OnEnterIdleState();
 			return;
 		}
@@ -206,11 +216,49 @@ public class PlayerMovement : MovementComponent
 		m_rbody.velocity = Vector2.zero;
 	}
 
+	void OnEnterDamageKnockbackState()
+	{
+		Vector2 knockbackVelocity = m_onHitKnockbackVelocity;
+
+		if(GetDirection() == Direction.left)
+        {
+			knockbackVelocity.x = -knockbackVelocity.x;
+		}
+
+		Move(knockbackVelocity, 1f);
+
+		m_animator.SetTrigger("OnDamage");
+	}
+
+	void OnDamageKnockbackState()
+	{
+		m_stateTimer -= Time.fixedDeltaTime;
+
+		if (m_stateTimer <= 0f)
+		{
+			m_animator.ResetTrigger("OnDamage");
+			m_movementState = MovementState.idle;
+			OnEnterIdleState();
+			return;
+		}
+	}
+
+	void OnEnterDeadState()
+	{
+		Move(Vector2.zero, 0f);
+		m_animator.SetTrigger("OnDeath");
+	}
+
+	void OnDeadState()
+	{
+		// reset at some point?
+	}
+
 	void OnFallState()
 	{
 		if (IsOnGround())
 		{
-			m_playerMovementState = MovementState.jumpLand;
+			m_movementState = MovementState.jumpLand;
 			OnEnterJumpLand();
 			m_animator.ResetTrigger("OnJump");
 			m_animator.ResetTrigger("OnFall");
@@ -220,11 +268,26 @@ public class PlayerMovement : MovementComponent
 		AirMove();
 	}
 
+	void OnDamage(float damageInvulnerableTime)
+	{
+		m_stateTimer = damageInvulnerableTime;
+
+		OnEnterDamageKnockbackState();
+		m_movementState = MovementState.damageKnockback;
+	}
+
+	void OnDeath()
+    {
+		OnEnterDeadState();
+		m_movementState = MovementState.dead;
+	}
+
+	LifeComponent m_lifeComponent;
+
 	float m_userXInput = 0f;
 	float m_preJumpUserInput = 0f;
 
 	float m_stateTimer;
-
 
 	bool m_userJump = false;
 	bool m_userJumpDownLastFrame = false;

@@ -16,6 +16,7 @@ public class MovementComponent : MonoBehaviour
         fall,
         jumpLand,
         damageKnockback,
+        dead,
     }
 
     public enum Direction
@@ -130,14 +131,14 @@ public class MovementComponent : MonoBehaviour
     {
         if ((m_attackBuffered || m_userAttack) && m_attackComponent.CanAttack())
         {
-            m_attackComponent.OnAttack(m_playerMovementState);
+            m_attackComponent.OnAttack(m_movementState);
             return true;
         }
 
         return false;
     }
 
-    [SerializeField] protected MovementState m_playerMovementState;
+    [SerializeField] protected MovementState m_movementState;
 
     protected Rigidbody2D m_rbody;
     SpriteRenderer m_spriteRenderer;
