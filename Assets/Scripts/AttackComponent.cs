@@ -40,6 +40,12 @@ public class AttackComponent : MonoBehaviour
         {
             Vector2 playerBasePos = new(transform.position.x, transform.position.y);
             Vector2 hitboxOffset = m_currentAttack.m_collisionOffset;
+
+            if (m_playerMovementComponent.GetDirection() == MovementComponent.Direction.left)
+            {
+                hitboxOffset.x = -hitboxOffset.x;
+            }
+
             Collider2D[] colliders = Physics2D.OverlapBoxAll(playerBasePos + hitboxOffset, m_currentAttack.m_collisionBounds, 0f, m_hitBoxQueryLayer);
 
             foreach (Collider2D collider in colliders)
@@ -179,7 +185,7 @@ public class AttackComponent : MonoBehaviour
     MovementComponent m_playerMovementComponent;
     Animator m_animator;
 
-    AttackData m_currentAttack;
+    [SerializeField] AttackData m_currentAttack;
 
     Dictionary<MovementComponent.MovementState, AttackData> m_attackDictionary;
 

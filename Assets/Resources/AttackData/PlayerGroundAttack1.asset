@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: db11590789a8a5c4eb741b4c689938c7, type: 3}
   m_Name: PlayerGroundAttack1
   m_EditorClassIdentifier: 
-  m_collisionBounds: {x: 1, y: 0.4}
-  m_collisionOffset: {x: 0.65, y: 0.05}
+  m_collisionBounds: {x: 0.71875, y: 0.3125}
+  m_collisionOffset: {x: 0.5625, y: 0.0625}
   m_damage: 1
   m_startUpFrames: 10
   m_activeFrames: 10

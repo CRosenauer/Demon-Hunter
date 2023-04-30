@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: db11590789a8a5c4eb741b4c689938c7, type: 3}
   m_Name: PlayerAirAttack
   m_EditorClassIdentifier: 
-  m_collisionBounds: {x: 1, y: 0.7}
-  m_collisionOffset: {x: 0.7, y: 0.3}
+  m_collisionBounds: {x: 0.71875, y: 0.5}
+  m_collisionOffset: {x: 0.5625, y: 0.1875}
   m_damage: 1
   m_startUpFrames: 10
   m_activeFrames: 10
