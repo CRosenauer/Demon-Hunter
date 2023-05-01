@@ -146,7 +146,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 5
+  m_SortingOrder: 6
   m_Sprite: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -172,7 +172,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_movementState: 0
   m_onHitKnockbackVelocity: {x: -5, y: 8}
-  m_moveSpeed: 5
+  m_moveSpeed: 3
   m_jumpSpeed: 15
 --- !u!114 &1587683572650101367
 MonoBehaviour:

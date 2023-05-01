@@ -101,5 +101,5 @@ MonoBehaviour:
   m_trackingAxis: 0
   m_cameraPositionOffset: {x: 1, y: 0, z: 0}
   m_minPosition: 0
-  m_maxPosition: 1e+17
+  m_maxPosition: 23
   m_offsetBuffer: 0.5
