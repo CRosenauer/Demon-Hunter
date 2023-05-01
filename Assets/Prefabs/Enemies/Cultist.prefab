@@ -73,18 +73,18 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: -0.2}
+  m_Offset: {x: 0, y: -0.1875}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 1.6, y: 1.6}
-    newSize: {x: 1.6, y: 1.6}
+    oldSize: {x: 1.25, y: 1.25}
+    newSize: {x: 1.25, y: 1.25}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.5, y: 1.2}
+  m_Size: {x: 0.3125, y: 0.875}
   m_EdgeRadius: 0
 --- !u!212 &1513549560692225938
 SpriteRenderer:
@@ -132,7 +132,7 @@ SpriteRenderer:
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 1.6, y: 1.6}
+  m_Size: {x: 1.25, y: 1.25}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 0
@@ -155,6 +155,7 @@ MonoBehaviour:
     m_Bits: 64
   m_movementStates: 
   m_attackComponents: []
+  m_currentAttack: {fileID: 0}
 --- !u!95 &1897867909
 Animator:
   serializedVersion: 5
@@ -205,8 +206,8 @@ MonoBehaviour:
   m_hitBoxQueryLayer:
     serializedVersion: 2
     m_Bits: 64
-  m_collisionBounds: {x: 0.5, y: 1.2}
-  m_collisionOffset: {x: 0, y: -0.2}
+  m_collisionBounds: {x: 0.3125, y: 0.875}
+  m_collisionOffset: {x: 0, y: -0.1875}
   m_damage: 1
 --- !u!114 &1897867912
 MonoBehaviour:
