@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7585043366107919337}
   - component: {fileID: 9116309862513336060}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: VillageGround
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -56,7 +56,7 @@ GameObject:
   - component: {fileID: 6327342629922279458}
   - component: {fileID: 1968338486385612705}
   - component: {fileID: 1746092753219643454}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Layer1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
