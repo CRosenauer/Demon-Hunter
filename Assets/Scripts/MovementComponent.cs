@@ -8,6 +8,7 @@ using UnityEngine;
 [RequireComponent(typeof(AttackComponent))]
 public class MovementComponent : MonoBehaviour
 {
+    // prob net best ot have all entities draw from this same state pool
     public enum MovementState
     {
         init,
@@ -18,7 +19,8 @@ public class MovementComponent : MonoBehaviour
         jumpLand,
         damageKnockback,
         dead,
-        deathFall
+        deathFall,
+        spawn,
     }
 
     public enum Direction
@@ -69,6 +71,13 @@ public class MovementComponent : MonoBehaviour
             m_direction = Direction.left;
             m_spriteRenderer.flipX = true;
         }
+    }
+
+    protected void UpdateDirection(Direction direction)
+    {
+        m_direction = direction;
+
+        m_spriteRenderer.flipX = direction == Direction.right ? true: false;
     }
 
     protected void QueryOnGround()
@@ -149,7 +158,7 @@ public class MovementComponent : MonoBehaviour
 
     protected float m_carryOverAirSpeed = 0f;
 
-    Direction m_direction = Direction.right;
+    protected Direction m_direction = Direction.right;
 
     bool m_isOnGround = true;
 

@@ -37,7 +37,7 @@ public class PersistentHitboxComponent : MonoBehaviour
             m_disableTimer -= Time.fixedDeltaTime;
             if(m_disableTimer <= 0f)
             {
-                SetActive(m_enable);
+                SetActive(true);
             }
         }
 

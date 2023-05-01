@@ -52,6 +52,7 @@ public class LifeComponent : MonoBehaviour
         }
 
         m_enable = false;
+
         m_disableTimer = m_damageInvulnerableTime;
     }
 
