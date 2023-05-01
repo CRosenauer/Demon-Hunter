@@ -57,6 +57,10 @@ public class SkeletonComponent : MovementComponent
 					break;
 			}
 		}
+		else if(distSquared.sqrMagnitude > 4 * m_activeDistance * m_activeDistance)
+        {
+			Destroy(gameObject);
+        }
 		else
         {
 			Move(Vector2.zero, 0f);
@@ -150,7 +154,7 @@ public class SkeletonComponent : MovementComponent
 		// kinda hacky
 		Destroy(m_persistentHitboxComponent);
 
-		Destroy(this.gameObject, 1f);
+		Destroy(gameObject, 1f);
 		m_animator.SetTrigger("OnDeath");
     }
 
