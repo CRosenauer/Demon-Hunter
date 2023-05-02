@@ -20,7 +20,6 @@ public class PlayerMovement : MovementComponent
 	void Start()
 	{
 		ComponentInit();
-		m_lifeComponent = GetComponent<LifeComponent>();
 
 		m_movementState = MovementState.init;
 	}
@@ -29,6 +28,7 @@ public class PlayerMovement : MovementComponent
 	void Update()
 	{
 		m_userXInput = Input.GetAxisRaw("Horizontal");
+		m_userYInput = Input.GetAxisRaw("Vertical");
 
 		UpdateUserInput("Jump", ref m_userJump, ref m_userJumpDownLastFrame);
 		UpdateUserInput("Attack", ref m_userAttack, ref m_userAttackDownLastFrame);
@@ -74,6 +74,9 @@ public class PlayerMovement : MovementComponent
 				break;
 			case MovementState.deathFall:
 				OnDeathFallState();
+				break;
+			case MovementState.walkOnStair:
+				OnWalkOnStair();
 				break;
 		}
 
@@ -309,6 +312,45 @@ public class PlayerMovement : MovementComponent
 		AirMove();
 	}
 
+	void OnEnterWalkOnStair()
+    {
+		m_stairComponent = m_stairObject.GetComponent<StairComponent>();
+		if(!m_stairComponent)
+        {
+			m_movementState = MovementState.idle;
+			return;
+        }
+
+		m_stairObject.BroadcastMessage("OnEnterStair");
+    }
+
+	void OnExitWalkOnStair()
+    {
+		m_stairComponent = null;
+		m_stairObject.BroadcastMessage("OnExitStair");
+	}
+
+	void OnWalkOnStair()
+    {
+		if (!m_stairComponent)
+		{
+			m_movementState = MovementState.idle;
+		}
+
+		if(m_stairComponent.ShouldExitStair(transform.position))
+        {
+			m_rbody.position = m_stairComponent.ExitStairPos();
+			OnExitWalkOnStair();
+			m_movementState = MovementState.idle;
+		}
+
+		Vector2 userInput = new(m_userXInput, m_userYInput);
+
+		Vector2 movement = m_stairComponent.CalculateOnStairMovement(userInput, m_moveSpeed);
+
+		Move(movement, 1f);
+	}
+
 	void OnFallState()
 	{
 		if (IsOnGround())
@@ -327,6 +369,11 @@ public class PlayerMovement : MovementComponent
 	{
 		m_stateTimer = damageInvulnerableTime;
 
+		if(m_movementState == MovementState.walkOnStair)
+        {
+			OnExitWalkOnStair();
+        }
+
 		OnEnterDamageKnockbackState();
 		m_movementState = MovementState.damageKnockback;
 	}
@@ -336,9 +383,31 @@ public class PlayerMovement : MovementComponent
 		m_shouldDie = true;
 	}
 
-	LifeComponent m_lifeComponent;
+	void OnTriggerEnter2D(Collider2D other)
+	{
+		int layer = LayerMask.GetMask("Stair");
+		int shiftedObjectLayer = 1 << other.gameObject.layer;
+		if ( (shiftedObjectLayer & layer) != 0 )
+        {
+			m_stairObject = other.gameObject;
+		}
+	}
+
+	void OnTriggerExit2D(Collider2D other)
+	{
+		int layer = LayerMask.GetMask("Stair");
+		int shiftedObjectLayer = 1 << other.gameObject.layer;
+		if ( (shiftedObjectLayer & layer) != 0 )
+		{
+			m_stairObject = null;
+		}
+	}
+
+	GameObject m_stairObject;
+	StairComponent m_stairComponent;
 
 	float m_userXInput = 0f;
+	float m_userYInput = 0f;
 	float m_preJumpUserInput = 0f;
 
 	float m_stateTimer;

@@ -208,6 +208,7 @@ SpriteAtlas:
   - {fileID: -2112895996, guid: 3b1cba2899daa1e4ba45be6ea813b5a6, type: 3}
   - {fileID: 2080920251, guid: 3b1cba2899daa1e4ba45be6ea813b5a6, type: 3}
   - {fileID: -124859029, guid: 3b1cba2899daa1e4ba45be6ea813b5a6, type: 3}
+  - {fileID: 1160074492, guid: 3b1cba2899daa1e4ba45be6ea813b5a6, type: 3}
   - {fileID: 1010970542, guid: 3b1cba2899daa1e4ba45be6ea813b5a6, type: 3}
   - {fileID: -902867225, guid: 3b1cba2899daa1e4ba45be6ea813b5a6, type: 3}
   - {fileID: 2064194681, guid: 3b1cba2899daa1e4ba45be6ea813b5a6, type: 3}
@@ -641,6 +642,7 @@ SpriteAtlas:
   - Village_206
   - Village_294
   - Village_428
+  - Village_432
   - Village_312
   - Village_207
   - Village_297
