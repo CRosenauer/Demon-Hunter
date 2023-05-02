@@ -127,6 +127,29 @@ public class PlayerMovement : MovementComponent
 
 		if (!isInAttack)
 		{
+			if(m_stairComponent)
+            {
+				if(m_stairComponent.CanWalkToStair() && !Mathf.Approximately(m_userYInput, 0f))
+                {
+					if(m_stairComponent.CanEnterStair(transform.position))
+                    {
+						// move on stair
+                    }
+
+					Vector2 inputVector = new(m_userXInput, m_userYInput);
+					Vector2 moveToStair = m_stairComponent.CalculateToStairMovement(transform.position, inputVector, m_moveSpeed);
+
+					if(!Mathf.Approximately(moveToStair.x, 0f))
+                    {
+						UpdateDirect(Mathf.Sign(moveToStair.x));
+					}
+					
+					Move(moveToStair, 1f);
+
+					return;
+				}
+			}
+			
 			Vector2 inputMovement = new(m_userXInput, 0f);
 			Move(inputMovement, m_moveSpeed);
 		}
@@ -390,6 +413,7 @@ public class PlayerMovement : MovementComponent
 		if ( (shiftedObjectLayer & layer) != 0 )
         {
 			m_stairObject = other.gameObject;
+			m_stairComponent = m_stairObject.GetComponent<StairComponent>();
 		}
 	}
 
@@ -400,6 +424,7 @@ public class PlayerMovement : MovementComponent
 		if ( (shiftedObjectLayer & layer) != 0 )
 		{
 			m_stairObject = null;
+			m_stairComponent = null;
 		}
 	}
 

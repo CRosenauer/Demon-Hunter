@@ -630,7 +630,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_destinationStair: {fileID: 1918991385}
   m_upperCollider: {fileID: 265916288}
-  m_stairMovementThreshold: 0
+  m_stairMovementThreshold: 0.1
 --- !u!50 &705210565
 Rigidbody2D:
   serializedVersion: 4
@@ -31198,7 +31198,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_destinationStair: {fileID: 705210561}
   m_upperCollider: {fileID: 265916288}
-  m_stairMovementThreshold: 0
+  m_stairMovementThreshold: 0.1
 --- !u!50 &1918991389
 Rigidbody2D:
   serializedVersion: 4

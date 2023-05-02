@@ -20,11 +20,14 @@ public class StairComponent : MonoBehaviour
 
         float dot = Vector2.Dot(userInput, m_dirToOtherStair);
 
-        if (Mathf.Approximately(dot, 0f))
+        if(dot < 0.01f)
         {
             return Vector2.zero;
         }
-        else if(dot < 0f)
+
+        Vector3 playerToStairEnterPos = transform.position - playerPosition;
+
+        if (playerToStairEnterPos.sqrMagnitude <= m_stairMovementThreshold * m_stairMovementThreshold)
         {
             return Vector2.zero;
         }
@@ -32,9 +35,10 @@ public class StairComponent : MonoBehaviour
         Vector3 playerToStairR3 = transform.position - playerPosition;
         Vector2 playerToStairR2 = new(playerToStairR3.x, playerToStairR3.y);
 
+        playerToStairR2.x = Mathf.Sign(playerToStairR2.x) * speed;
         playerToStairR2.y = 0;
 
-        return playerToStairR2 * speed;
+        return playerToStairR2;
     }
 
     public Vector2 CalculateOnStairMovement(Vector2 userInput, float speed)
