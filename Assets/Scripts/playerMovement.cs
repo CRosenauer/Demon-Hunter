@@ -350,11 +350,41 @@ public class PlayerMovement : MovementComponent
 	void OnExitWalkOnStair()
     {
 		m_rbody.gravityScale = gravity;
-		// m_stairComponent = null;
-		m_stairObject.BroadcastMessage("OnExitStair");
+
+		if(m_stairObject)
+        {
+			m_stairObject.BroadcastMessage("OnExitStair");
+		}
+		
 		m_isOnGround = true;
 		Move(Vector2.zero, 0f);
 	}
+
+	/*
+	 	bool isInAttack = m_attackComponent.IsInAttack();
+
+		if (!isInAttack)
+		{
+			UpdateDirect(m_userXInput);
+		}
+
+		bool isOnGround = IsOnGround();
+
+		if (!isOnGround)
+		{
+			m_movementState = MovementState.fall;
+			OnEnterFallStateFromIdle();
+			return;
+		}
+		else if (m_userJump && isOnGround && !isInAttack)
+		{
+			m_movementState = MovementState.preJump;
+			OnEnterPreJumpState();
+			return;
+		}
+
+		TryBufferAttack();
+	 */
 
 	void OnWalkOnStair()
     {
@@ -375,8 +405,17 @@ public class PlayerMovement : MovementComponent
 
 		Vector2 movement = m_stairComponent.CalculateOnStairMovement(userInput, m_moveSpeed);
 
-		UpdateDirect(movement.x);
-		Move(movement, 1f);
+		TryBufferAttack();
+
+		if (!m_attackComponent.IsInAttack())
+        {
+			UpdateDirect(movement.x);
+			Move(movement, 1f);
+		}
+		else
+        {
+			Move(Vector2.zero, 0f);
+		}
 	}
 
 	void OnFallState()
