@@ -165,6 +165,7 @@ public class PlayerMovement : MovementComponent
 
 	void OnEnterJumpState()
 	{
+		m_rbody.gravityScale = gravity;
 		m_carryOverAirSpeed = m_moveSpeed * m_preJumpUserInput;
 		Vector2 inputMovement = new(m_preJumpUserInput, m_jumpSpeed);
 		Move(inputMovement, m_carryOverAirSpeed);
@@ -360,31 +361,16 @@ public class PlayerMovement : MovementComponent
 		Move(Vector2.zero, 0f);
 	}
 
-	/*
-	 	bool isInAttack = m_attackComponent.IsInAttack();
-
-		if (!isInAttack)
+	void OnExitWalkOnStairToPreJump()
+	{
+		if (m_stairObject)
 		{
-			UpdateDirect(m_userXInput);
+			m_stairObject.BroadcastMessage("OnExitStair");
 		}
 
-		bool isOnGround = IsOnGround();
-
-		if (!isOnGround)
-		{
-			m_movementState = MovementState.fall;
-			OnEnterFallStateFromIdle();
-			return;
-		}
-		else if (m_userJump && isOnGround && !isInAttack)
-		{
-			m_movementState = MovementState.preJump;
-			OnEnterPreJumpState();
-			return;
-		}
-
-		TryBufferAttack();
-	 */
+		m_isOnGround = true;
+		Move(Vector2.zero, 0f);
+	}
 
 	void OnWalkOnStair()
     {
@@ -405,9 +391,19 @@ public class PlayerMovement : MovementComponent
 
 		Vector2 movement = m_stairComponent.CalculateOnStairMovement(userInput, m_moveSpeed);
 
+		bool isInAttack = m_attackComponent.IsInAttack();
+
+		if (m_userJump && !isInAttack)
+		{
+			m_movementState = MovementState.preJump;
+			OnExitWalkOnStairToPreJump();
+			OnEnterPreJumpState();
+			return;
+		}
+
 		TryBufferAttack();
 
-		if (!m_attackComponent.IsInAttack())
+		if (!isInAttack)
         {
 			UpdateDirect(movement.x);
 			Move(movement, 1f);
@@ -461,6 +457,7 @@ public class PlayerMovement : MovementComponent
 		}
 	}
 
+	/*
 	void OnTriggerExit2D(Collider2D other)
 	{
 		int layer = LayerMask.GetMask("Stair");
@@ -470,6 +467,7 @@ public class PlayerMovement : MovementComponent
 			m_stairObject = null;
 		}
 	}
+	 */
 
 	GameObject m_stairObject;
 	StairComponent m_stairComponent;
