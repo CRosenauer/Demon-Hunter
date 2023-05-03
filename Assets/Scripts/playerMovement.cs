@@ -127,23 +127,21 @@ public class PlayerMovement : MovementComponent
 
 		if (!isInAttack)
 		{
-			if(m_stairComponent)
+			if(m_stairObject && m_stairComponent)
             {
 				if(m_stairComponent.CanWalkToStair() && !Mathf.Approximately(m_userYInput, 0f))
                 {
-					if(m_stairComponent.CanEnterStair(transform.position))
-                    {
-						// move on stair
-                    }
-
 					Vector2 inputVector = new(m_userXInput, m_userYInput);
 					Vector2 moveToStair = m_stairComponent.CalculateToStairMovement(transform.position, inputVector, m_moveSpeed);
 
-					if(!Mathf.Approximately(moveToStair.x, 0f))
+					if (m_stairComponent.CanEnterStair(transform.position) && m_stairComponent.IsInputToEnterStair(inputVector))
                     {
-						UpdateDirect(Mathf.Sign(moveToStair.x));
-					}
-					
+						m_movementState = MovementState.walkOnStair;
+						OnEnterWalkOnStair();
+						return;
+                    }
+
+					UpdateDirect(moveToStair.x);
 					Move(moveToStair, 1f);
 
 					return;
@@ -337,6 +335,8 @@ public class PlayerMovement : MovementComponent
 
 	void OnEnterWalkOnStair()
     {
+		m_rbody.gravityScale = 0f;
+
 		m_stairComponent = m_stairObject.GetComponent<StairComponent>();
 		if(!m_stairComponent)
         {
@@ -349,8 +349,11 @@ public class PlayerMovement : MovementComponent
 
 	void OnExitWalkOnStair()
     {
-		m_stairComponent = null;
+		m_rbody.gravityScale = gravity;
+		// m_stairComponent = null;
 		m_stairObject.BroadcastMessage("OnExitStair");
+		m_isOnGround = true;
+		Move(Vector2.zero, 0f);
 	}
 
 	void OnWalkOnStair()
@@ -360,17 +363,19 @@ public class PlayerMovement : MovementComponent
 			m_movementState = MovementState.idle;
 		}
 
-		if(m_stairComponent.ShouldExitStair(transform.position))
+		if(m_stairComponent.ShouldExitStair(transform.position, new(m_userXInput, m_userYInput)))
         {
-			m_rbody.position = m_stairComponent.ExitStairPos();
+			m_rbody.position = m_stairComponent.transform.position;
 			OnExitWalkOnStair();
 			m_movementState = MovementState.idle;
+			return;
 		}
 
 		Vector2 userInput = new(m_userXInput, m_userYInput);
 
 		Vector2 movement = m_stairComponent.CalculateOnStairMovement(userInput, m_moveSpeed);
 
+		UpdateDirect(movement.x);
 		Move(movement, 1f);
 	}
 
@@ -424,12 +429,13 @@ public class PlayerMovement : MovementComponent
 		if ( (shiftedObjectLayer & layer) != 0 )
 		{
 			m_stairObject = null;
-			m_stairComponent = null;
 		}
 	}
 
 	GameObject m_stairObject;
 	StairComponent m_stairComponent;
+
+	const float gravity = 4f;
 
 	float m_userXInput = 0f;
 	float m_userYInput = 0f;

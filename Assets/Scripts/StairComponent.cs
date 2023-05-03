@@ -71,11 +71,23 @@ public class StairComponent : MonoBehaviour
         return playerToStairEnter.sqrMagnitude <= m_stairMovementThreshold * m_stairMovementThreshold;
     }
 
-    public bool ShouldExitStair(Vector3 playerPosition)
+    public bool IsInputToEnterStair(Vector2 userInput)
     {
-        Vector3 playerToStairEnter = m_destinationStair.transform.position - playerPosition;
+        userInput.x = 0f;
 
-        return playerToStairEnter.sqrMagnitude <= m_stairMovementThreshold * m_stairMovementThreshold;
+        return Vector2.Dot(m_dirToOtherStair, userInput) > 0.01f;
+    }
+
+    public bool ShouldExitStair(Vector3 playerPosition, Vector2 userInput)
+    {
+        Vector3 playerToStairEnter = transform.position - playerPosition;
+
+        Vector3 otherStairToThisStair = transform.position - m_destinationStair.transform.position;
+        Vector2 otherStairToThisStair2D = new(otherStairToThisStair.x, otherStairToThisStair.y);
+
+        float userInputValue = Vector2.Dot(otherStairToThisStair2D, userInput);
+
+        return userInputValue > 0.01f && playerToStairEnter.sqrMagnitude <= m_stairMovementThreshold * m_stairMovementThreshold;
     }
 
     public Vector2 ExitStairPos()
@@ -93,13 +105,13 @@ public class StairComponent : MonoBehaviour
 
     void OnEnterStair()
     {
-        PlatformEffector2D upperCollider = m_upperCollider.GetComponent<PlatformEffector2D>();
+        BoxCollider2D upperCollider = m_upperCollider.GetComponent<BoxCollider2D>();
         upperCollider.enabled = false;
     }
 
     void OnExitStair()
     {
-        PlatformEffector2D upperCollider = m_upperCollider.GetComponent<PlatformEffector2D>();
+        BoxCollider2D upperCollider = m_upperCollider.GetComponent<BoxCollider2D>();
         upperCollider.enabled = true;
     }
 

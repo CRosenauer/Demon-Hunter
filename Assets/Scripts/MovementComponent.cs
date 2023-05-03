@@ -62,6 +62,13 @@ public class MovementComponent : MonoBehaviour
 
     protected void UpdateDirect(float direction)
     {
+        if (Mathf.Approximately(direction, 0f))
+        {
+            return;
+        }
+
+        direction = Mathf.Sign(direction);
+
         if (direction == 1f)
         {
             m_direction = Direction.right;
@@ -161,7 +168,7 @@ public class MovementComponent : MonoBehaviour
 
     protected Direction m_direction = Direction.right;
 
-    bool m_isOnGround = true;
+    protected bool m_isOnGround = true;
 
     protected bool m_userAttack = false;
     protected bool m_userAttackDownLastFrame = false;
