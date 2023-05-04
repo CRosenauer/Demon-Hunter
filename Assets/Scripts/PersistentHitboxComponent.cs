@@ -47,9 +47,17 @@ public class PersistentHitboxComponent : MonoBehaviour
             Vector2 hitboxOffset = m_collisionOffset;
             Collider2D[] colliders = Physics2D.OverlapBoxAll(playerBasePos + hitboxOffset, m_collisionBounds, 0f, m_hitBoxQueryLayer);
 
+            bool hitSomething = false;
+
             foreach (Collider2D collider in colliders)
             {
+                hitSomething = true;
                 AttackComponent.Hit(collider, m_damage);
+            }
+
+            if(hitSomething)
+            {
+                BroadcastMessage("OnHitOther");
             }
         }
     }

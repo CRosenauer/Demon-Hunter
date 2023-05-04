@@ -57,7 +57,7 @@ public class SkeletonComponent : MovementComponent
 					break;
 			}
 		}
-		else if(distSquared.sqrMagnitude > 4 * m_activeDistance * m_activeDistance)
+		else if(m_movementState != MovementState.init && distSquared.sqrMagnitude > 4 * m_activeDistance * m_activeDistance)
         {
 			Destroy(gameObject);
         }
@@ -98,6 +98,7 @@ public class SkeletonComponent : MovementComponent
 		Vector2 movement = m_direction == Direction.right ? Vector2.right : Vector2.left;
 
 		movement = movement * m_moveSpeed;
+		movement.y = m_rbody.velocity.y;
 
 		Move(movement, 1f);
 	}
