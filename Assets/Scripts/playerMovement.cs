@@ -300,6 +300,7 @@ public class PlayerMovement : MovementComponent
 				}
 				else
 				{
+					BroadcastMessage("OnStartDisableHurtbox");
 					m_animator.SetTrigger("OnDamageEnd");
 					m_movementState = MovementState.idle;
 					OnEnterIdleState();
@@ -313,6 +314,7 @@ public class PlayerMovement : MovementComponent
 	{
 		Move(Vector2.zero, 0f);
 		m_animator.SetTrigger("OnDeath");
+		BroadcastMessage("OnDisableHurtbox");
 	}
 
 	void OnDeadState()
@@ -439,6 +441,8 @@ public class PlayerMovement : MovementComponent
 
 		OnEnterDamageKnockbackState();
 		m_movementState = MovementState.damageKnockback;
+
+		BroadcastMessage("OnDisableHurtbox");
 	}
 
 	void OnDeath()
@@ -456,18 +460,6 @@ public class PlayerMovement : MovementComponent
 			m_stairComponent = m_stairObject.GetComponent<StairComponent>();
 		}
 	}
-
-	/*
-	void OnTriggerExit2D(Collider2D other)
-	{
-		int layer = LayerMask.GetMask("Stair");
-		int shiftedObjectLayer = 1 << other.gameObject.layer;
-		if ( (shiftedObjectLayer & layer) != 0 )
-		{
-			m_stairObject = null;
-		}
-	}
-	 */
 
 	GameObject m_stairObject;
 	StairComponent m_stairComponent;

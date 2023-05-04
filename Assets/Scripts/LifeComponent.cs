@@ -35,6 +35,24 @@ public class LifeComponent : MonoBehaviour
         m_currentHealth = m_maxHealth;
     }
 
+    void OnStartDisableHurtbox()
+    {
+        m_enable = false;
+        m_disableTimer = m_damageInvulnerableTime;
+    }
+
+    void OnDisableHurtbox()
+    {
+        m_enable = false;
+        m_disableTimer = float.PositiveInfinity; // hack
+    }
+
+    void OnEnableHurtbox()
+    {
+        m_enable = true;
+        m_disableTimer = 0f;
+    }
+
     void OnHit(int damage)
     {
         if(!m_enable)
