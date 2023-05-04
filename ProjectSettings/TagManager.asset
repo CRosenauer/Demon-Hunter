@@ -16,7 +16,7 @@ TagManager:
   - Enemy
   - InvisibleWall
   - Stair
-  - 
+  - PlayerDetector
   - 
   - 
   - 
