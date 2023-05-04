@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class SpawnerComponent : MonoBehaviour
 {
+    const int m_enemyLimit = 10;
+
     [SerializeField] GameObject m_spawnedObject;
     [Space]
 
@@ -47,7 +49,13 @@ public class SpawnerComponent : MonoBehaviour
                 position.y = m_yPos;
                 position.z = 0f;
 
-                Instantiate(m_spawnedObject, position, Quaternion.identity);
+                m_spawnedEnemies.Add(Instantiate(m_spawnedObject, position, Quaternion.identity));
+
+                if(m_spawnedEnemies.Count > m_enemyLimit)
+                {
+                    Destroy(m_spawnedEnemies[0]);
+                    m_spawnedEnemies.RemoveAt(0);
+                }
 
                 m_timer = Random.Range(m_minTime, m_maxTime);
             }
@@ -65,6 +73,7 @@ public class SpawnerComponent : MonoBehaviour
         m_player = null;
     }
 
+    List<GameObject> m_spawnedEnemies = new();
     GameObject m_player;
 
     float m_timer;
