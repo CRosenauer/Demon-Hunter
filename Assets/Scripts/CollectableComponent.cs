@@ -10,11 +10,13 @@ public class CollectableComponent : MonoBehaviour
     {
         SerializedProperty m_callback;
         SerializedProperty m_quantity;
+        SerializedProperty m_item;
 
         void OnEnable()
         {
             m_callback = serializedObject.FindProperty("m_callback");
             m_quantity = serializedObject.FindProperty("m_quantity");
+            m_item = serializedObject.FindProperty("m_item");
         }
 
         public override void OnInspectorGUI()
@@ -25,7 +27,14 @@ public class CollectableComponent : MonoBehaviour
             CollectableComponent collectableComponent = target as CollectableComponent;
             if (collectableComponent.m_callback != CollectableFunction.Equip)
             {
-                EditorGUILayout.PropertyField(m_quantity);
+                if(collectableComponent.m_callback != CollectableFunction.ScreenClear)
+                {
+                    EditorGUILayout.PropertyField(m_quantity);
+                }
+            }
+            else
+            {
+                EditorGUILayout.PropertyField(m_item);
             }
 
             serializedObject.ApplyModifiedProperties();
@@ -35,6 +44,7 @@ public class CollectableComponent : MonoBehaviour
     enum CollectableFunction
     {
         Equip,
+        ScreenClear,
         AlterLife,
         AlterMagic,
         AlterScore,
@@ -42,6 +52,7 @@ public class CollectableComponent : MonoBehaviour
 
     delegate void CollectionCallback();
 
+    [SerializeField] GameObject m_item;
     [SerializeField] CollectableFunction m_callback;
     [SerializeField] int m_quantity;
 
@@ -52,6 +63,9 @@ public class CollectableComponent : MonoBehaviour
         {
             case CollectableFunction.Equip:
                 m_callbackFunction = Equip;
+                break;
+            case CollectableFunction.ScreenClear:
+                m_callbackFunction = ScreenClear;
                 break;
             case CollectableFunction.AlterLife:
                 m_callbackFunction = AlterLife;
@@ -67,11 +81,23 @@ public class CollectableComponent : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
+        int layer = LayerMask.GetMask("Player");
+        int shiftedObjectLayer = 1 << collision.gameObject.layer;
+        if ((shiftedObjectLayer & layer) == 0)
+        {
+            return;
+        }
+
         m_callbackFunction();
         Destroy(gameObject);
     }
 
     void Equip()
+    {
+
+    }
+
+    void ScreenClear()
     {
 
     }
