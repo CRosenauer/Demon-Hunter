@@ -90,7 +90,7 @@ public class MovementComponent : MonoBehaviour
 
     protected void QueryOnGround()
     {
-        const float SPEED_EPSILON = 0.0001f;
+        const float SPEED_EPSILON = 0.001f;
         if (m_rbody.velocity.y > SPEED_EPSILON)
         {
             m_isOnGround = false;

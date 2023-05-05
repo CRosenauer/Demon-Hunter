@@ -53,7 +53,7 @@ Rigidbody2D:
   m_Mass: 1
   m_LinearDrag: 0
   m_AngularDrag: 0
-  m_GravityScale: 4
+  m_GravityScale: 1
   m_Material: {fileID: 6200000, guid: 6805a00a0c59a3641b44d91c90f1c42b, type: 2}
   m_Interpolate: 0
   m_SleepingMode: 1
@@ -173,7 +173,7 @@ MonoBehaviour:
   m_movementState: 0
   m_onHitKnockbackVelocity: {x: -5, y: 8}
   m_moveSpeed: 3
-  m_jumpSpeed: 15
+  m_jumpSpeed: 9.428572
 --- !u!114 &1587683572650101367
 MonoBehaviour:
   m_ObjectHideFlags: 0

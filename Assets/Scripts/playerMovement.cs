@@ -22,6 +22,8 @@ public class PlayerMovement : MovementComponent
 		ComponentInit();
 
 		m_movementState = MovementState.init;
+
+		_gravity = m_rbody.gravityScale;
 	}
 
 	// Update is called once per frame
@@ -165,7 +167,7 @@ public class PlayerMovement : MovementComponent
 
 	void OnEnterJumpState()
 	{
-		m_rbody.gravityScale = gravity;
+		m_rbody.gravityScale = _gravity;
 		m_carryOverAirSpeed = m_moveSpeed * m_preJumpUserInput;
 		Vector2 inputMovement = new(m_preJumpUserInput, m_jumpSpeed);
 		Move(inputMovement, m_carryOverAirSpeed);
@@ -352,7 +354,7 @@ public class PlayerMovement : MovementComponent
 
 	void OnExitWalkOnStair()
     {
-		m_rbody.gravityScale = gravity;
+		m_rbody.gravityScale = _gravity;
 
 		if(m_stairObject)
         {
@@ -464,7 +466,7 @@ public class PlayerMovement : MovementComponent
 	GameObject m_stairObject;
 	StairComponent m_stairComponent;
 
-	const float gravity = 4f;
+	float _gravity;
 
 	float m_userXInput = 0f;
 	float m_userYInput = 0f;
