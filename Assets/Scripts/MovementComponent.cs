@@ -134,15 +134,24 @@ public class MovementComponent : MonoBehaviour
         Move(velocity, 1f);
     }
 
-    protected void TryBufferAttack()
+    protected void TryBufferAttack(bool updateDirection = false, float direction = 1)
     {
-        if (!TryAttack())
+
+        bool attacked = TryAttack();
+
+        if (!attacked)
         {
             m_attackBuffered = m_attackBuffered || m_userAttack;
         }
         else
         {
             m_attackBuffered = false;
+
+            if (updateDirection)
+            {
+                UpdateDirect(direction);
+            }
+
         }
     }
 

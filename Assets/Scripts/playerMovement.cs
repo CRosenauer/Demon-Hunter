@@ -125,7 +125,7 @@ public class PlayerMovement : MovementComponent
 			return;
 		}
 
-		TryBufferAttack();
+		TryBufferAttack(m_attackComponent.IsInAttack(), m_userXInput);
 
 		if (!isInAttack)
 		{
@@ -242,7 +242,7 @@ public class PlayerMovement : MovementComponent
 			return;
 		}
 
-		TryBufferAttack();
+		TryBufferAttack(m_userAttack, m_userXInput);
 
 		AirMove();
 	}
@@ -395,6 +395,7 @@ public class PlayerMovement : MovementComponent
 		if (m_userJump && !isInAttack)
 		{
 			m_movementState = MovementState.preJump;
+			UpdateDirect(movement.x);
 			OnExitWalkOnStairToPreJump();
 			OnEnterPreJumpState();
 			return;
@@ -423,7 +424,7 @@ public class PlayerMovement : MovementComponent
 			m_animator.ResetTrigger("OnFall");
 		}
 
-		TryBufferAttack();
+		TryBufferAttack(m_userAttack, m_userXInput);
 		AirMove();
 	}
 

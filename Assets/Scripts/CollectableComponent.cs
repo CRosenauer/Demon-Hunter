@@ -5,6 +5,7 @@ using UnityEditor;
 
 public class CollectableComponent : MonoBehaviour
 {
+#if UNITY_EDITOR
     [CustomEditor(typeof(CollectableComponent))]
     public class MyScriptEditor : Editor
     {
@@ -40,6 +41,7 @@ public class CollectableComponent : MonoBehaviour
             serializedObject.ApplyModifiedProperties();
         }
     }
+#endif
 
     enum CollectableFunction
     {
