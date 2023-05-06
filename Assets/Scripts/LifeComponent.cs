@@ -62,6 +62,8 @@ public class LifeComponent : MonoBehaviour
 
         m_currentHealth -= damage;
 
+        m_disableTimer = m_damageInvulnerableTime;
+
         BroadcastMessage("OnDamage", m_damageInvulnerableTime);
 
         if (m_currentHealth <= 0)
@@ -70,8 +72,6 @@ public class LifeComponent : MonoBehaviour
         }
 
         m_enable = false;
-
-        m_disableTimer = m_damageInvulnerableTime;
     }
 
     float m_disableTimer;

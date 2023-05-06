@@ -288,27 +288,22 @@ public class PlayerMovement : MovementComponent
 
 	void OnDamageKnockbackState()
 	{
-		m_stateTimer -= Time.fixedDeltaTime;
-
-		if (m_stateTimer <= 0f)
+		if (IsOnGround())
 		{
-			if (IsOnGround())
-			{
-				m_animator.ResetTrigger("OnDamage");
+			m_animator.ResetTrigger("OnDamage");
 
-				if (m_shouldDie)
-				{
-					m_movementState = MovementState.deathFall;
-				}
-				else
-				{
-					BroadcastMessage("OnStartDisableHurtbox");
-					m_animator.SetTrigger("OnDamageEnd");
-					m_movementState = MovementState.idle;
-					OnEnterIdleState();
-				}
-				
+			if (m_shouldDie)
+			{
+				m_movementState = MovementState.deathFall;
 			}
+			else
+			{
+				BroadcastMessage("OnStartDisableHurtbox");
+				m_animator.SetTrigger("OnDamageEnd");
+				m_movementState = MovementState.idle;
+				OnEnterIdleState();
+			}
+				
 		}
 	}
 
@@ -322,7 +317,7 @@ public class PlayerMovement : MovementComponent
 	void OnDeadState()
 	{
 		// hack. prob doesnt matter?
-		m_animator.ResetTrigger("OnDeath");
+		// m_animator.ResetTrigger("OnDeath");
 	}
 
 	void OnDeathFallState()
@@ -434,7 +429,7 @@ public class PlayerMovement : MovementComponent
 
 	void OnDamage(float damageInvulnerableTime)
 	{
-		m_stateTimer = damageInvulnerableTime;
+		// m_stateTimer = damageInvulnerableTime;
 
 		if(m_movementState == MovementState.walkOnStair)
         {
