@@ -8,4 +8,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Levels/village.unity
     guid: 4af6f3717f65a9b4186e2dc93b13bc75
+  - enabled: 1
+    path: Assets/Scenes/MovementTest.unity
+    guid: 394d7ff2bfec6084da88df161ec5a30d
   m_configObjects: {}

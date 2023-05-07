@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: e4da4484e45223e4fa75f11fa8ddb251
+guid: 88cf15300ac84ed41895c77dd5ffbd4d
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -69,8 +69,8 @@ TextureImporter:
     buildTarget: DefaultTexturePlatform
     maxTextureSize: 2048
     resizeAlgorithm: 0
-    textureFormat: -1
-    textureCompression: 0
+    textureFormat: 4
+    textureCompression: 1
     compressionQuality: 50
     crunchedCompression: 0
     allowsAlphaSplitting: 0
@@ -105,76 +105,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: hound_0
-      rect:
-        serializedVersion: 2
-        x: 0
-        y: 32
-        width: 32
-        height: 16
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: b1ea0e396c5cd564589eff20761bfa03
-      internalID: -402091737
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: hound_1
-      rect:
-        serializedVersion: 2
-        x: 32
-        y: 32
-        width: 32
-        height: 16
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 2d86aa75a300f9d42b845232e72fb74b
-      internalID: -1392120828
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: hound_2
-      rect:
-        serializedVersion: 2
-        x: 64
-        y: 32
-        width: 32
-        height: 16
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 3e7d029fb1f26c8408bc847de3645971
-      internalID: 1668749250
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: hound_3
+      name: blue-mage-staff-attack_strip3_0
       rect:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 32
-        height: 16
+        width: 64
+        height: 40
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -182,41 +119,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: c8525cf50df28474caf9cb906e579a53
-      internalID: 1918757846
+      spriteID: d4bd760affc73bb409c3e94d5f4b49b2
+      internalID: 1905174339
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: hound_4
-      rect:
-        serializedVersion: 2
-        x: 32
-        y: 0
-        width: 32
-        height: 16
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 12be61228e8bc484ea0940138d8b0e60
-      internalID: -959183045
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: hound_5
+      name: blue-mage-staff-attack_strip3_1
       rect:
         serializedVersion: 2
         x: 64
         y: 0
-        width: 32
-        height: 16
+        width: 64
+        height: 40
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -224,8 +140,29 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 10581965cd9e47245babde73e4fe0314
-      internalID: -1053838522
+      spriteID: c331d0c25a3754c4eb691603243d141b
+      internalID: -1234376851
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: blue-mage-staff-attack_strip3_2
+      rect:
+        serializedVersion: 2
+        x: 128
+        y: 0
+        width: 64
+        height: 40
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3ccb8ccd629c741468f42b38bf82ad2a
+      internalID: -116657996
       vertices: []
       indices: 
       edges: []
@@ -241,12 +178,9 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      hound_0: -402091737
-      hound_1: -1392120828
-      hound_2: 1668749250
-      hound_3: 1918757846
-      hound_4: -959183045
-      hound_5: -1053838522
+      blue-mage-staff-attack_strip3_0: 1905174339
+      blue-mage-staff-attack_strip3_1: -1234376851
+      blue-mage-staff-attack_strip3_2: -116657996
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0

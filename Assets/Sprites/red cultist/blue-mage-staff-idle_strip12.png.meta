@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: cdb0c1b93ad98d94981aaf4e8dd3faac
+guid: 9f514dab2d904bf49b3d835cc13ba5dd
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -69,8 +69,8 @@ TextureImporter:
     buildTarget: DefaultTexturePlatform
     maxTextureSize: 2048
     resizeAlgorithm: 0
-    textureFormat: -1
-    textureCompression: 0
+    textureFormat: 4
+    textureCompression: 1
     compressionQuality: 50
     crunchedCompression: 0
     allowsAlphaSplitting: 0
@@ -105,253 +105,253 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: redSkeleton_0
-      rect:
-        serializedVersion: 2
-        x: 0
-        y: 128
-        width: 32
-        height: 32
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 528db44e10dab7d449b1acfa2bc52ca9
-      internalID: 1186221654
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: redSkeleton_1
-      rect:
-        serializedVersion: 2
-        x: 32
-        y: 128
-        width: 32
-        height: 32
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 4e974839b1de49e43897fa080b925f7d
-      internalID: 915062256
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: redSkeleton_2
-      rect:
-        serializedVersion: 2
-        x: 64
-        y: 128
-        width: 32
-        height: 32
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 8aca7a57ad21edb4998db914957f4f91
-      internalID: 1436755406
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: redSkeleton_4
-      rect:
-        serializedVersion: 2
-        x: 0
-        y: 80
-        width: 32
-        height: 32
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 362f1184ccde85941b8b05a9321438ce
-      internalID: -1990282555
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: redSkeleton_5
-      rect:
-        serializedVersion: 2
-        x: 32
-        y: 80
-        width: 32
-        height: 32
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: b9670ec6d285de7459bb32a4bce6b1a2
-      internalID: -2042885480
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: redSkeleton_6
-      rect:
-        serializedVersion: 2
-        x: 64
-        y: 80
-        width: 32
-        height: 32
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: c91afeb3146731141b9de875b99af852
-      internalID: 2053767171
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: redSkeleton_3
-      rect:
-        serializedVersion: 2
-        x: 32
-        y: 32
-        width: 16
-        height: 16
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 54fe30cce0f04e847ba41e19d5db3a1c
-      internalID: 1029909817
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: redSkeleton_7
-      rect:
-        serializedVersion: 2
-        x: 48
-        y: 32
-        width: 16
-        height: 16
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 099820be35994b04f8d5edbae89e996c
-      internalID: -1489844346
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: redSkeleton_8
-      rect:
-        serializedVersion: 2
-        x: 64
-        y: 32
-        width: 16
-        height: 16
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 68cfb8d7595a07b4eae240fbb1b552fc
-      internalID: -304885658
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: redSkeleton_9
+      name: blue-mage-staff-idle_strip12_0
       rect:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 32
-        height: 32
+        width: 40
+        height: 40
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 1cc93610d4846964a92ca8478bb4f326
-      internalID: 161316970
+      spriteID: 42fe6c81944b9694e9636731efca766f
+      internalID: 1178613189
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: redSkeleton_10
+      name: blue-mage-staff-idle_strip12_1
       rect:
         serializedVersion: 2
-        x: 64
+        x: 40
         y: 0
-        width: 32
-        height: 32
+        width: 40
+        height: 40
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 077a5c8993f0d6043b5c354940c437f4
-      internalID: -2039678710
+      spriteID: 5c4fafed4cb060346b50e410a9fea70f
+      internalID: 2112622673
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: redSkeleton_11
+      name: blue-mage-staff-idle_strip12_2
       rect:
         serializedVersion: 2
-        x: 32
+        x: 80
         y: 0
-        width: 32
-        height: 32
+        width: 40
+        height: 40
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 4418d70678e29234c90e50b62bb51f60
-      internalID: -468967427
+      spriteID: b00b1f93fe245f9438ddbe0123a01652
+      internalID: 1946155317
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: blue-mage-staff-idle_strip12_3
+      rect:
+        serializedVersion: 2
+        x: 120
+        y: 0
+        width: 40
+        height: 40
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 65edd5cac2cd93540a51318d3202f991
+      internalID: 1429453377
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: blue-mage-staff-idle_strip12_4
+      rect:
+        serializedVersion: 2
+        x: 160
+        y: 0
+        width: 40
+        height: 40
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7c50bafeea634f64a899688fd88db4cf
+      internalID: -1897784974
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: blue-mage-staff-idle_strip12_5
+      rect:
+        serializedVersion: 2
+        x: 200
+        y: 0
+        width: 40
+        height: 40
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ca0779ae119caf54ca45f80475c7990e
+      internalID: -1000418698
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: blue-mage-staff-idle_strip12_6
+      rect:
+        serializedVersion: 2
+        x: 240
+        y: 0
+        width: 40
+        height: 40
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9fcc755e6fcedf04eaceb9332915216a
+      internalID: 1686230999
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: blue-mage-staff-idle_strip12_7
+      rect:
+        serializedVersion: 2
+        x: 280
+        y: 0
+        width: 40
+        height: 40
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 404ab2c0f8f33d14bb04dde832e41b20
+      internalID: -811512489
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: blue-mage-staff-idle_strip12_8
+      rect:
+        serializedVersion: 2
+        x: 320
+        y: 0
+        width: 40
+        height: 40
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: bf635ec7265f6d64ea259f43ae834e29
+      internalID: -205656383
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: blue-mage-staff-idle_strip12_9
+      rect:
+        serializedVersion: 2
+        x: 360
+        y: 0
+        width: 40
+        height: 40
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ebbb30462fcde8d4ca8a03678891eda6
+      internalID: 1106817856
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: blue-mage-staff-idle_strip12_10
+      rect:
+        serializedVersion: 2
+        x: 400
+        y: 0
+        width: 40
+        height: 40
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 56a4253d8a8851340b53ef58f745aa22
+      internalID: 1575740798
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: blue-mage-staff-idle_strip12_11
+      rect:
+        serializedVersion: 2
+        x: 440
+        y: 0
+        width: 40
+        height: 40
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 791a50079f2de29459e2c723a94abcf3
+      internalID: -1612378839
       vertices: []
       indices: 
       edges: []
@@ -360,25 +360,25 @@ TextureImporter:
     physicsShape: []
     bones: []
     spriteID: 5e97eb03825dee720800000000000000
-    internalID: 0
+    internalID: 1537655665
     vertices: []
     indices: 
     edges: []
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      redSkeleton_0: 1186221654
-      redSkeleton_1: 915062256
-      redSkeleton_10: -2039678710
-      redSkeleton_11: -468967427
-      redSkeleton_2: 1436755406
-      redSkeleton_3: 1029909817
-      redSkeleton_4: -1990282555
-      redSkeleton_5: -2042885480
-      redSkeleton_6: 2053767171
-      redSkeleton_7: -1489844346
-      redSkeleton_8: -304885658
-      redSkeleton_9: 161316970
+      blue-mage-staff-idle_strip12_0: 1178613189
+      blue-mage-staff-idle_strip12_1: 2112622673
+      blue-mage-staff-idle_strip12_10: 1575740798
+      blue-mage-staff-idle_strip12_11: -1612378839
+      blue-mage-staff-idle_strip12_2: 1946155317
+      blue-mage-staff-idle_strip12_3: 1429453377
+      blue-mage-staff-idle_strip12_4: -1897784974
+      blue-mage-staff-idle_strip12_5: -1000418698
+      blue-mage-staff-idle_strip12_6: 1686230999
+      blue-mage-staff-idle_strip12_7: -811512489
+      blue-mage-staff-idle_strip12_8: -205656383
+      blue-mage-staff-idle_strip12_9: 1106817856
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0

@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: e4da4484e45223e4fa75f11fa8ddb251
+guid: d3e060365663d20469a15fa607f1dbdf
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -105,76 +105,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: hound_0
-      rect:
-        serializedVersion: 2
-        x: 0
-        y: 32
-        width: 32
-        height: 16
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: b1ea0e396c5cd564589eff20761bfa03
-      internalID: -402091737
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: hound_1
-      rect:
-        serializedVersion: 2
-        x: 32
-        y: 32
-        width: 32
-        height: 16
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 2d86aa75a300f9d42b845232e72fb74b
-      internalID: -1392120828
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: hound_2
-      rect:
-        serializedVersion: 2
-        x: 64
-        y: 32
-        width: 32
-        height: 16
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 3e7d029fb1f26c8408bc847de3645971
-      internalID: 1668749250
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: hound_3
+      name: Door_0
       rect:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 32
-        height: 16
+        width: 16
+        height: 48
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -182,50 +119,50 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: c8525cf50df28474caf9cb906e579a53
-      internalID: 1918757846
+      spriteID: 4d2d65253c1e12347ada01b83a42012f
+      internalID: 1026218223
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: hound_4
+      name: Door_1
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 0
+        width: 16
+        height: 48
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4fa1085881f38f8418517c46a96bd5e0
+      internalID: 2092589427
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Door_2
       rect:
         serializedVersion: 2
         x: 32
         y: 0
         width: 32
-        height: 16
-      alignment: 0
-      pivot: {x: 0, y: 0}
+        height: 48
+      alignment: 9
+      pivot: {x: 0.25, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 12be61228e8bc484ea0940138d8b0e60
-      internalID: -959183045
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: hound_5
-      rect:
-        serializedVersion: 2
-        x: 64
-        y: 0
-        width: 32
-        height: 16
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 10581965cd9e47245babde73e4fe0314
-      internalID: -1053838522
+      spriteID: 23e19c618389998409e8270c9bbda95e
+      internalID: -1403278229
       vertices: []
       indices: 
       edges: []
@@ -241,12 +178,9 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      hound_0: -402091737
-      hound_1: -1392120828
-      hound_2: 1668749250
-      hound_3: 1918757846
-      hound_4: -959183045
-      hound_5: -1053838522
+      Door_0: 1026218223
+      Door_1: 2092589427
+      Door_2: -1403278229
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0
