@@ -105,7 +105,7 @@ public class SkeletonComponent : MovementComponent
 
 	void OnDeadState()
 	{
-		Move(Vector2.zero, 1f);
+		Move(new(0f, m_rbody.velocity.y), 1f);
 	}
 
 	void OnEnterSpawnState()
