@@ -16,9 +16,9 @@ GameObject:
   - component: {fileID: 7548005075730308608}
   - component: {fileID: 7548005075730308612}
   - component: {fileID: 7548005075730308615}
-  - component: {fileID: 9072057440038164441}
+  - component: {fileID: -935979807192983368}
   m_Layer: 8
-  m_Name: RedSkeleton
+  m_Name: WhiteSkeleton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -49,7 +49,7 @@ Animator:
   m_GameObject: {fileID: 7548005075730308620}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 4063d1bf30465384b98c63c2fd693775, type: 2}
+  m_Controller: {fileID: 9100000, guid: d4ac18bee929b9a43b4f407c31817ae5, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -101,7 +101,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 5
-  m_Sprite: {fileID: 1186221654, guid: cdb0c1b93ad98d94981aaf4e8dd3faac, type: 3}
+  m_Sprite: {fileID: 1802492793, guid: 33e3d690cb90a2c40aecc469d6d967c5, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -163,7 +163,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e9bf31abcd8615b4b93f572b265473f1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_movementComponent: {fileID: 9072057440038164441}
+  m_movementComponent: {fileID: 0}
   m_hitBoxQueryLayer:
     serializedVersion: 2
     m_Bits: 64
@@ -210,7 +210,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_damageInvulnerableTime: 0.33333334
   m_maxHealth: 1
---- !u!114 &9072057440038164441
+--- !u!114 &-935979807192983368
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -219,16 +219,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 7548005075730308620}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2adae348cd0e1764c9dc1e8e79a3e808, type: 3}
+  m_Script: {fileID: 11500000, guid: 469aa8a523300f04493c6578912ad0af, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_movementState: 0
   m_shouldDespawn: 1
-  m_bone: {fileID: 908688970402592725, guid: 68d592fc766b2724e9955bf57f45a1e8, type: 3}
   m_activeDistance: 10
-  m_moveSpeed: 2
-  m_shortJumpVelocity: 10
-  m_tallJumpVelocity: 14
-  m_tallJumpChance: 0.4
-  m_minThrowTime: 0.5
-  m_maxThrowTime: 1
+  m_moveSpeed: 2.5
+  m_respawnTimer: 3

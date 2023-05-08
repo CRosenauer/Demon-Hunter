@@ -4,13 +4,16 @@ using UnityEngine;
 
 public class SkeletonComponent : MovementComponent
 {
+	[SerializeField] bool m_shouldDespawn;
+	[Space]
+
 	[SerializeField] float m_activeDistance;
 	[Space]
 
 	[SerializeField] float m_moveSpeed;
 
 	// Start is called before the first frame update
-	void Start()
+	protected virtual void Start()
 	{
 		ComponentInit();
 
@@ -30,7 +33,7 @@ public class SkeletonComponent : MovementComponent
 	}
 
 	// Update is called once per frame
-	void FixedUpdate()
+	protected virtual void FixedUpdate()
 	{
 		QueryOnGround();
 
@@ -57,7 +60,7 @@ public class SkeletonComponent : MovementComponent
 					break;
 			}
 		}
-		else if(m_movementState != MovementState.init && distSquared.sqrMagnitude > 4 * m_activeDistance * m_activeDistance)
+		else if(m_shouldDespawn && m_movementState != MovementState.init && distSquared.sqrMagnitude > 4 * m_activeDistance * m_activeDistance)
         {
 			Destroy(gameObject);
         }
@@ -71,20 +74,25 @@ public class SkeletonComponent : MovementComponent
 	{
 		Move(Vector2.zero, 0f);
 
-		float xToPlayer = transform.position.x - m_player.transform.position.x;
-
-		if(xToPlayer >= 0)
-        {
-			UpdateDirection(Direction.left);
-			
-        }
-		else
-        {
-			UpdateDirection(Direction.right);
-		}
+		QueryDirectionToPlayer();
 
 		OnEnterSpawnState();
 		m_movementState = MovementState.spawn;
+	}
+
+	protected void QueryDirectionToPlayer()
+    {
+		float xToPlayer = transform.position.x - m_player.transform.position.x;
+
+		if (xToPlayer >= 0)
+		{
+			UpdateDirection(Direction.left);
+
+		}
+		else
+		{
+			UpdateDirection(Direction.right);
+		}
 	}
 
 	void OnEnterIdleState()
@@ -93,7 +101,7 @@ public class SkeletonComponent : MovementComponent
 		m_persistentHitboxComponent.SetActive(true);
 	}
 
-	void OnIdleState()
+	protected virtual void OnIdleState()
 	{
 		Vector2 movement = m_direction == Direction.right ? Vector2.right : Vector2.left;
 
@@ -103,12 +111,12 @@ public class SkeletonComponent : MovementComponent
 		Move(movement, 1f);
 	}
 
-	void OnDeadState()
+	protected virtual void OnDeadState()
 	{
 		Move(new(0f, m_rbody.velocity.y), 1f);
 	}
 
-	void OnEnterSpawnState()
+	protected void OnEnterSpawnState()
     {
 		m_stateTimer = 0.5f;
 		m_animator.SetTrigger("OnSpawn");
@@ -145,7 +153,7 @@ public class SkeletonComponent : MovementComponent
 		m_movementState = MovementState.damageKnockback;
 	}
 
-	void OnDeath()
+	protected virtual void OnDeath()
     {
 		m_lifeComponent.SetActive(false);
 		m_persistentHitboxComponent.SetActive(false);
@@ -161,9 +169,9 @@ public class SkeletonComponent : MovementComponent
 
     GameObject m_player;
 
-	PersistentHitboxComponent m_persistentHitboxComponent;
-	LifeComponent m_lifeComponent;
+	protected PersistentHitboxComponent m_persistentHitboxComponent;
+	protected LifeComponent m_lifeComponent;
 
 
-	float m_stateTimer;
+	protected float m_stateTimer;
 }

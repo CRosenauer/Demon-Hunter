@@ -223,5 +223,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_movementState: 0
+  m_shouldDespawn: 1
   m_activeDistance: 10
   m_moveSpeed: 2.5

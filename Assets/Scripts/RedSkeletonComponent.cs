@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class RedSkeletonComponent : MovementComponent
 {
+	[SerializeField] bool m_shouldDespawn;
+	[Space]
+
 	[SerializeField] GameObject m_bone;
 	[Space]
 
@@ -52,7 +55,7 @@ public class RedSkeletonComponent : MovementComponent
 					break;
 			}
 		}
-		else if (m_movementState != MovementState.init && distSquared.sqrMagnitude > 4 * m_activeDistance * m_activeDistance)
+		else if (m_shouldDespawn && m_movementState != MovementState.init && distSquared.sqrMagnitude > 4 * m_activeDistance * m_activeDistance)
 		{
 			Destroy(gameObject);
 		}

@@ -17,9 +17,14 @@ public class PersistentHitboxComponent : MonoBehaviour
 
     [SerializeField] public int m_damage;
 
-    public void SetActive(bool enable)
+    public void SetActive(bool enable, bool indefinite = false)
     {
         m_enable = enable;
+
+        if(indefinite)
+        {
+            m_disableTimer = float.PositiveInfinity;
+        }
     }
 
     void Start()
