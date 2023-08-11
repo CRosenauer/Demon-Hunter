@@ -39,6 +39,9 @@ public class PlayerMovement : MovementComponent
 	void UpdateUserInput(string button, ref bool inputFlag, ref bool lastFrameInputFlag)
 	{
 		bool attackDown = Input.GetButton(button);
+
+		// only updates the input if it hasnt been consumed
+		// represents the button being first down on this frame (seen by the fixed update)
 		inputFlag = inputFlag || attackDown && !lastFrameInputFlag;
 
 		lastFrameInputFlag = attackDown;
@@ -233,6 +236,7 @@ public class PlayerMovement : MovementComponent
 		if (m_rbody.velocity.y < 0f)
 		{
 			m_movementState = MovementState.fall;
+			TryBufferAttack(m_userAttack, m_userXInput);
 			return;
 		}
 		else if (IsOnGround())
