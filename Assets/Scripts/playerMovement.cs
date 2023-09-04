@@ -59,9 +59,6 @@ public class PlayerMovement : MovementComponent
 			case MovementState.idle:
 				OnIdleState();
 				break;
-			case MovementState.preJump:
-				OnPreJumpState();
-				break;
 			case MovementState.jump:
 				OnJumpState();
 				break;
@@ -123,8 +120,8 @@ public class PlayerMovement : MovementComponent
 		}
 		else if (m_userJump && isOnGround && !isInAttack)
 		{
-			m_movementState = MovementState.preJump;
-			OnEnterPreJumpState();
+			m_movementState = MovementState.jump;
+			OnEnterJumpState();
 			return;
 		}
 
@@ -168,14 +165,6 @@ public class PlayerMovement : MovementComponent
 		// may be needed later?
 	}
 
-	void OnEnterJumpState()
-	{
-		m_rbody.gravityScale = _gravity;
-		m_carryOverAirSpeed = m_moveSpeed * m_preJumpUserInput;
-		Vector2 inputMovement = new(m_preJumpUserInput, m_jumpSpeed);
-		Move(inputMovement, m_carryOverAirSpeed);
-	}
-
 	void OnEnterJumpLand()
 	{
 		if (IsOnGround())
@@ -184,48 +173,27 @@ public class PlayerMovement : MovementComponent
 		}
 
 		m_attackComponent.OnAttackInterrupt();
+		ClearAttackBuffer();
 		m_stateTimer = 1f / 6f;
 		Move(Vector2.zero, 0f);
+
+		m_movementState = MovementState.idle;
 	}
 
 	void OnEnterFallStateFromIdle()
 	{
-		m_carryOverAirSpeed = 0f;
-		Move(m_rbody.velocity, m_carryOverAirSpeed);
+		Move(m_rbody.velocity, 0f);
 
 		m_animator.ResetTrigger("OnJumpEnd");
 		m_animator.SetTrigger("OnFall");
 	}
 
-	void OnEnterPreJumpState()
+	void OnEnterJumpState()
 	{
-		m_animator.ResetTrigger("OnJumpEnd");
 		m_animator.SetTrigger("OnJump");
-
-		m_preJumpUserInput = m_userXInput;
-
-		m_attackBuffered = false;
-
-		// should be in a more visible location. ideally directly tied to the anim length of preJump.
-		m_stateTimer = 1f / 6f;
-
-		Move(Vector2.zero, 0f);
-	}
-
-	void OnPreJumpState()
-	{
-		m_stateTimer -= Time.fixedDeltaTime;
-
-		if (m_userAttack)
-		{
-			m_attackBuffered = true;
-		}
-
-		if (m_stateTimer <= 0f)
-		{
-			m_movementState = MovementState.jump;
-			OnEnterJumpState();
-		}
+		m_rbody.gravityScale = _gravity;
+		Vector2 inputMovement = new(m_userXInput, m_jumpSpeed);
+		Move(inputMovement, m_moveSpeed);
 	}
 
 	void OnJumpState()
@@ -282,8 +250,6 @@ public class PlayerMovement : MovementComponent
         {
 			knockbackVelocity.x = -knockbackVelocity.x;
 		}
-
-		m_carryOverAirSpeed = knockbackVelocity.x;
 
 		Move(knockbackVelocity, 1f);
 
@@ -398,10 +364,10 @@ public class PlayerMovement : MovementComponent
 
 		if (m_userJump && !isInAttack)
 		{
-			m_movementState = MovementState.preJump;
+			m_movementState = MovementState.jump;
 			UpdateDirect(movement.x);
 			OnExitWalkOnStairToPreJump();
-			OnEnterPreJumpState();
+			OnEnterJumpState();
 			return;
 		}
 
@@ -470,7 +436,6 @@ public class PlayerMovement : MovementComponent
 
 	float m_userXInput = 0f;
 	float m_userYInput = 0f;
-	float m_preJumpUserInput = 0f;
 
 	float m_stateTimer;
 

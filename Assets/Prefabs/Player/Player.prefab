@@ -189,10 +189,9 @@ MonoBehaviour:
   m_hitBoxQueryLayer:
     serializedVersion: 2
     m_Bits: 256
-  m_movementStates: 010000000200000003000000040000000a000000
+  m_movementStates: 01000000020000000300000004000000
   m_attackComponents:
   - {fileID: 11400000, guid: 9ec154866f41b954e9d46b7808bb4dbb, type: 2}
-  - {fileID: 11400000, guid: 097455ff5f9900c4082d4db1b2fe5738, type: 2}
   - {fileID: 11400000, guid: 097455ff5f9900c4082d4db1b2fe5738, type: 2}
   - {fileID: 11400000, guid: 097455ff5f9900c4082d4db1b2fe5738, type: 2}
   - {fileID: 11400000, guid: 9ec154866f41b954e9d46b7808bb4dbb, type: 2}
