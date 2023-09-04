@@ -123,8 +123,8 @@ public class PlayerMovement : MovementComponent
 		}
 		else if (m_userJump && isOnGround && !isInAttack)
 		{
-			m_movementState = MovementState.preJump;
-			OnEnterPreJumpState();
+			m_movementState = MovementState.jump;
+			OnEnterJumpState();
 			return;
 		}
 
@@ -170,9 +170,10 @@ public class PlayerMovement : MovementComponent
 
 	void OnEnterJumpState()
 	{
+		m_animator.SetTrigger("OnJump");
 		m_rbody.gravityScale = _gravity;
-		m_carryOverAirSpeed = m_moveSpeed * m_preJumpUserInput;
-		Vector2 inputMovement = new(m_preJumpUserInput, m_jumpSpeed);
+		m_carryOverAirSpeed = m_moveSpeed * m_userXInput;
+		Vector2 inputMovement = new(m_userXInput, m_jumpSpeed);
 		Move(inputMovement, m_carryOverAirSpeed);
 	}
 
@@ -186,6 +187,8 @@ public class PlayerMovement : MovementComponent
 		m_attackComponent.OnAttackInterrupt();
 		m_stateTimer = 1f / 6f;
 		Move(Vector2.zero, 0f);
+
+		m_movementState = MovementState.idle;
 	}
 
 	void OnEnterFallStateFromIdle()
@@ -398,10 +401,10 @@ public class PlayerMovement : MovementComponent
 
 		if (m_userJump && !isInAttack)
 		{
-			m_movementState = MovementState.preJump;
+			m_movementState = MovementState.jump;
 			UpdateDirect(movement.x);
 			OnExitWalkOnStairToPreJump();
-			OnEnterPreJumpState();
+			OnEnterJumpState();
 			return;
 		}
 
