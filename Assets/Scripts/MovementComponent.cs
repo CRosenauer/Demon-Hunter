@@ -13,7 +13,6 @@ public class MovementComponent : MonoBehaviour
     {
         init,
         idle,
-        preJump,
         jump,
         fall,
         jumpLand,
@@ -130,7 +129,6 @@ public class MovementComponent : MonoBehaviour
     protected void AirMove()
     {
         Vector2 velocity = m_rbody.velocity;
-        velocity.x = m_carryOverAirSpeed;
         Move(velocity, 1f);
     }
 
@@ -166,14 +164,17 @@ public class MovementComponent : MonoBehaviour
         return false;
     }
 
+    protected void ClearAttackBuffer()
+    {
+        m_attackBuffered = false;
+    }
+
     [SerializeField] protected MovementState m_movementState;
 
     protected Rigidbody2D m_rbody;
     SpriteRenderer m_spriteRenderer;
     protected Animator m_animator;
     protected AttackComponent m_attackComponent;
-
-    protected float m_carryOverAirSpeed = 0f;
 
     protected Direction m_direction = Direction.right;
 
