@@ -10,6 +10,12 @@ public class CameraComponent : MonoBehaviour
         Y
     }
 
+    public enum CameraMovementMode
+    {
+        Snap,
+        Linear,
+    }
+
     [SerializeField] GameObject m_trackingObject;
     [SerializeField] TrackingAxis m_trackingAxis;
     [Space]
@@ -22,13 +28,26 @@ public class CameraComponent : MonoBehaviour
 
     [SerializeField] float m_offsetBuffer;
 
+#if UNITY_EDITOR
+    [Space]
+    [SerializeField]
+#endif
+    CameraMovementMode m_movementMode;
+
+    const float m_scrollSpeed = 1; // units / second
 
     void Start()
     {
+        m_movementMode = CameraMovementMode.Snap;
         Debug.Assert(m_trackingObject);
     }
 
     void FixedUpdate()
+    {
+        CameraTrackUpdate();
+    }
+
+    void CameraTrackUpdate()
     {
         Vector3 trackedObjectPos = m_trackingObject.transform.position + m_cameraPositionOffset;
 
@@ -49,19 +68,60 @@ public class CameraComponent : MonoBehaviour
 
     float CalculateNewTrackingCoordinate(float thisPosition, float trackedPosition)
     {
-        float trackedDistance = thisPosition - trackedPosition;
-
-        if (trackedDistance > m_offsetBuffer)
+        switch (m_movementMode)
         {
-            thisPosition = trackedPosition + m_offsetBuffer;
-        }
-        else if (trackedDistance < -m_offsetBuffer)
-        {
-            thisPosition = trackedPosition - m_offsetBuffer;
+            case CameraMovementMode.Snap:
+                thisPosition = CalculateSnapTrackingCoordinate(thisPosition, trackedPosition);
+                break;
+            case CameraMovementMode.Linear:
+                thisPosition = CalculateLinearTrackingCoordinate(thisPosition, trackedPosition);
+                break;
         }
 
         thisPosition = Mathf.Clamp(thisPosition, m_minPosition, m_maxPosition);
 
         return thisPosition;
+    }
+
+    float CalculateSnapTrackingCoordinate(float thisPosition, float trackedPosition)
+    {
+        float trackedDistance = thisPosition - trackedPosition;
+        
+        if (trackedDistance > m_offsetBuffer)
+        {
+            return trackedPosition + m_offsetBuffer;
+        }
+        else if (trackedDistance < -m_offsetBuffer)
+        {
+            return trackedPosition - m_offsetBuffer;
+        }
+
+        return thisPosition;
+    }
+
+    float CalculateLinearTrackingCoordinate(float thisPosition, float trackedPosition)
+    {
+        float trackedDistance = thisPosition - trackedPosition;
+
+        if (trackedDistance > m_offsetBuffer)
+        {
+            return thisPosition - m_scrollSpeed * Time.fixedDeltaTime;
+        }
+        else if (trackedDistance < -m_offsetBuffer)
+        {
+            return thisPosition + m_scrollSpeed * Time.fixedDeltaTime;
+        }
+
+        return thisPosition;
+    }
+
+    void OnNewTrackingObject(GameObject obj)
+    {
+        m_trackingObject = obj;
+    }
+
+    void OnChangeCameraMovementMode(CameraMovementMode movementMode)
+    {
+        m_movementMode = movementMode;
     }
 }
