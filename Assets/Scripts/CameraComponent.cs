@@ -24,6 +24,7 @@ public class CameraComponent : MonoBehaviour
 
     [SerializeField] float m_minPosition;
     [SerializeField] float m_maxPosition;
+    [SerializeField] bool m_boundLimitEnabled = true;
     [Space]
 
     [SerializeField] float m_offsetBuffer;
@@ -34,12 +35,18 @@ public class CameraComponent : MonoBehaviour
 #endif
     CameraMovementMode m_movementMode;
 
+
     const float m_scrollSpeed = 1; // units / second
 
     void Start()
     {
         m_movementMode = CameraMovementMode.Snap;
         Debug.Assert(m_trackingObject);
+
+        if(Camera.allCamerasCount > 1)
+        {
+            gameObject.SetActive(true);
+        }
     }
 
     void FixedUpdate()
@@ -78,7 +85,10 @@ public class CameraComponent : MonoBehaviour
                 break;
         }
 
-        thisPosition = Mathf.Clamp(thisPosition, m_minPosition, m_maxPosition);
+        if(m_boundLimitEnabled)
+        {
+            thisPosition = Mathf.Clamp(thisPosition, m_minPosition, m_maxPosition);
+        }
 
         return thisPosition;
     }
@@ -115,13 +125,18 @@ public class CameraComponent : MonoBehaviour
         return thisPosition;
     }
 
-    void OnNewTrackingObject(GameObject obj)
+    void NewTrackingObject(GameObject obj)
     {
         m_trackingObject = obj;
     }
 
-    void OnChangeCameraMovementMode(CameraMovementMode movementMode)
+    void ChangeCameraMovementMode(CameraMovementMode movementMode)
     {
         m_movementMode = movementMode;
+    }
+
+    void EnableCameraBounds(bool enable)
+    {
+        m_boundLimitEnabled = enable;
     }
 }
