@@ -161,6 +161,11 @@ public class MovementComponent : MonoBehaviour
         m_attackBuffered = false;
     }
 
+    public MovementState GetMovmentState()
+    {
+        return m_movementState;
+    }
+
     [SerializeField] protected MovementState m_movementState;
 
     protected Rigidbody2D m_rbody;

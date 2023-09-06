@@ -29,11 +29,14 @@ public class PlayerMovement : MovementComponent
 	// Update is called once per frame
 	void Update()
 	{
-		m_userXInput = Input.GetAxisRaw("Horizontal");
-		m_userYInput = Input.GetAxisRaw("Vertical");
+		if(m_controlable)
+        {
+			m_userXInput = Input.GetAxisRaw("Horizontal");
+			m_userYInput = Input.GetAxisRaw("Vertical");
 
-		UpdateUserInput("Jump", ref m_userJump, ref m_userJumpDownLastFrame);
-		UpdateUserInput("Attack", ref m_userAttack, ref m_userAttackDownLastFrame);
+			UpdateUserInput("Jump", ref m_userJump, ref m_userJumpDownLastFrame);
+			UpdateUserInput("Attack", ref m_userAttack, ref m_userAttackDownLastFrame);
+		}
 	}
 
 	void UpdateUserInput(string button, ref bool inputFlag, ref bool lastFrameInputFlag)
@@ -437,6 +440,29 @@ public class PlayerMovement : MovementComponent
 		}
 	}
 
+	void SetControl(bool control)
+    {
+		m_controlable = control;
+
+		if(!m_controlable)
+        {
+			m_userXInput = 0;
+			m_userYInput = 0;
+
+			m_userJump = false;
+			m_userJumpDownLastFrame = false;
+
+			m_userAttack = false;
+			m_userAttackDownLastFrame = false;
+		}
+	}
+
+	void ForceEmulatedUserInput(Vector2 input)
+    {
+		m_userXInput = input.x;
+		m_userYInput = input.y;
+	}
+
 	GameObject m_stairObject;
 	StairComponent m_stairComponent;
 
@@ -453,4 +479,5 @@ public class PlayerMovement : MovementComponent
 	bool m_userJumpDownLastFrame = false;
 
 	bool m_shouldDie = false;
+	bool m_controlable = true;
 }
