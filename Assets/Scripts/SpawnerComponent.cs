@@ -49,9 +49,12 @@ public class SpawnerComponent : MonoBehaviour
                 position.y = m_yPos;
                 position.z = 0f;
 
-                m_spawnedEnemies.Add(Instantiate(m_spawnedObject, position, Quaternion.identity));
+                GameObject spawnedEnemy = Instantiate(m_spawnedObject, position, Quaternion.identity);
+                m_spawnedEnemies.Add(spawnedEnemy);
+                spawnedEnemy.transform.SetParent(transform.parent);
 
-                if(m_spawnedEnemies.Count > m_enemyLimit)
+
+                if (m_spawnedEnemies.Count > m_enemyLimit)
                 {
                     Destroy(m_spawnedEnemies[0]);
                     m_spawnedEnemies.RemoveAt(0);

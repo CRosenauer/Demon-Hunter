@@ -37,13 +37,29 @@ public class RedSkeletonComponent : MovementComponent
 		m_stateTimer = Random.Range(m_minThrowTime, m_maxThrowTime);
 	}
 
+	bool IsWithinCameraFrustum()
+    {
+		Vector3 screenPos = Camera.current.WorldToScreenPoint(transform.position);
+
+		if(screenPos.x == Mathf.Clamp(screenPos.x, 0, Screen.width))
+        {
+			if(screenPos.y == Mathf.Clamp(screenPos.y, 0, Screen.height))
+            {
+				return true;
+            }
+        }
+
+		return false;
+	}
+
 	void FixedUpdate()
 	{
 		QueryOnGround();
 
 		Vector3 distSquared = transform.position - m_player.transform.position;
+		distSquared.z = 0f;
 
-		if (distSquared.sqrMagnitude < m_activeDistance * m_activeDistance)
+		if (distSquared.sqrMagnitude < m_activeDistance * m_activeDistance || IsWithinCameraFrustum())
 		{
 			switch (m_movementState)
 			{
