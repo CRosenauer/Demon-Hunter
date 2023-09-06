@@ -117,10 +117,8 @@ public class MovementComponent : MonoBehaviour
         return m_isOnGround;
     }
 
-    protected void Move(Vector2 direction, float xSpeed)
+    protected void Move(Vector2 velocity)
     {
-        Vector2 speedMultiplier = new(xSpeed, 1f);
-        Vector2 velocity = direction * speedMultiplier;
         m_rbody.velocity = velocity;
 
         m_animator.SetFloat("Speed", Mathf.Abs(velocity.x));
@@ -129,7 +127,7 @@ public class MovementComponent : MonoBehaviour
     protected void AirMove()
     {
         Vector2 velocity = m_rbody.velocity;
-        Move(velocity, 1f);
+        Move(velocity);
     }
 
     protected void TryBufferAttack(bool updateDirection = false, float direction = 1)

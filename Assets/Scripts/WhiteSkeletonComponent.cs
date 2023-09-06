@@ -44,7 +44,7 @@ public class WhiteSkeletonComponent : SkeletonComponent
 
         m_stateTimer = m_respawnTimer;
 
-        Move(new(0f, m_rbody.velocity.y), 1f);
+        Move(new(0f, m_rbody.velocity.y));
     }
 
     bool IsOnWall()

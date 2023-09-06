@@ -61,7 +61,7 @@ public class RedSkeletonComponent : MovementComponent
 		}
 		else
 		{
-			Move(Vector2.zero, 0f);
+			Move(Vector2.zero);
 		}
 	}
 
@@ -117,7 +117,7 @@ public class RedSkeletonComponent : MovementComponent
 
 	void OnDeadState()
 	{
-		Move(new(0f, m_rbody.velocity.y), 1f);
+		Move(new(0f, m_rbody.velocity.y));
 	}
 
 	void OnDeath()

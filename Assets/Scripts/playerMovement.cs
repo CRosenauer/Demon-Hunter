@@ -88,7 +88,7 @@ public class PlayerMovement : MovementComponent
 
 	void OnInitState()
     {
-		Move(Vector2.zero, 0f);
+		Move(Vector2.zero);
 		m_movementState = MovementState.idle;
 		OnEnterIdleState();
 	}
@@ -144,18 +144,18 @@ public class PlayerMovement : MovementComponent
                     }
 
 					UpdateDirect(moveToStair.x);
-					Move(moveToStair, 1f);
+					Move(moveToStair);
 
 					return;
 				}
 			}
 			
-			Vector2 inputMovement = new(m_userXInput, 0f);
-			Move(inputMovement, m_moveSpeed);
+			Vector2 inputMovement = new(m_userXInput * m_moveSpeed, 0f);
+			Move(inputMovement);
 		}
 		else
 		{
-			Move(Vector2.zero, 0f);
+			Move(Vector2.zero);
 		}
 	}
 
@@ -175,14 +175,14 @@ public class PlayerMovement : MovementComponent
 		m_attackComponent.OnAttackInterrupt();
 		ClearAttackBuffer();
 		m_stateTimer = 1f / 6f;
-		Move(Vector2.zero, 0f);
+		Move(Vector2.zero);
 
 		m_movementState = MovementState.idle;
 	}
 
 	void OnEnterFallStateFromIdle()
 	{
-		Move(m_rbody.velocity, 0f);
+		Move(m_rbody.velocity);
 
 		m_animator.ResetTrigger("OnJumpEnd");
 		m_animator.SetTrigger("OnFall");
@@ -192,8 +192,8 @@ public class PlayerMovement : MovementComponent
 	{
 		m_animator.SetTrigger("OnJump");
 		m_rbody.gravityScale = _gravity;
-		Vector2 inputMovement = new(m_userXInput, m_jumpSpeed);
-		Move(inputMovement, m_moveSpeed);
+		Vector2 inputMovement = new(m_userXInput * m_moveSpeed, m_jumpSpeed);
+		Move(inputMovement);
 	}
 
 	void OnJumpState()
@@ -251,7 +251,7 @@ public class PlayerMovement : MovementComponent
 			knockbackVelocity.x = -knockbackVelocity.x;
 		}
 
-		Move(knockbackVelocity, 1f);
+		Move(knockbackVelocity);
 
 		m_animator.SetTrigger("OnDamage");
 	}
@@ -279,7 +279,7 @@ public class PlayerMovement : MovementComponent
 
 	void OnEnterDeadState()
 	{
-		Move(Vector2.zero, 0f);
+		Move(Vector2.zero);
 		m_animator.SetTrigger("OnDeath");
 		BroadcastMessage("OnDisableHurtbox");
 	}
@@ -327,7 +327,7 @@ public class PlayerMovement : MovementComponent
 		}
 		
 		m_isOnGround = true;
-		Move(Vector2.zero, 0f);
+		Move(Vector2.zero);
 	}
 
 	void OnExitWalkOnStairToPreJump()
@@ -338,7 +338,7 @@ public class PlayerMovement : MovementComponent
 		}
 
 		m_isOnGround = true;
-		Move(Vector2.zero, 0f);
+		Move(Vector2.zero);
 	}
 
 	void OnWalkOnStair()
@@ -376,11 +376,11 @@ public class PlayerMovement : MovementComponent
 		if (!isInAttack)
         {
 			UpdateDirect(movement.x);
-			Move(movement, 1f);
+			Move(movement);
 		}
 		else
         {
-			Move(Vector2.zero, 0f);
+			Move(Vector2.zero);
 		}
 	}
 

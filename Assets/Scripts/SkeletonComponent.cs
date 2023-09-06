@@ -66,13 +66,13 @@ public class SkeletonComponent : MovementComponent
         }
 		else
         {
-			Move(Vector2.zero, 0f);
+			Move(Vector2.zero);
         }
 	}
 
 	void OnInitState()
 	{
-		Move(Vector2.zero, 0f);
+		Move(Vector2.zero);
 
 		QueryDirectionToPlayer();
 
@@ -108,12 +108,12 @@ public class SkeletonComponent : MovementComponent
 		movement = movement * m_moveSpeed;
 		movement.y = m_rbody.velocity.y;
 
-		Move(movement, 1f);
+		Move(movement);
 	}
 
 	protected virtual void OnDeadState()
 	{
-		Move(new(0f, m_rbody.velocity.y), 1f);
+		Move(new(0f, m_rbody.velocity.y));
 	}
 
 	protected void OnEnterSpawnState()
@@ -124,7 +124,7 @@ public class SkeletonComponent : MovementComponent
 
 	void OnSpawnState()
     {
-		Move(Vector2.zero, 0f);
+		Move(Vector2.zero);
 
 		m_stateTimer -= Time.fixedDeltaTime;
 
@@ -137,7 +137,7 @@ public class SkeletonComponent : MovementComponent
 
 	void OnDamageKnockbackState()
 	{
-		Move(Vector2.zero, 0f);
+		Move(Vector2.zero);
 
 		m_stateTimer -= Time.fixedDeltaTime;
 
