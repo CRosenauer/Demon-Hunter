@@ -134,7 +134,8 @@ public class RedSkeletonComponent : MovementComponent
     {
 		if (m_bone)
 		{
-			Instantiate(m_bone, transform.position, Quaternion.identity);
+			GameObject spawnedBone = Instantiate(m_bone, transform.position, Quaternion.identity);
+			spawnedBone.transform.SetParent(transform.parent);
 		}
 	}
 
