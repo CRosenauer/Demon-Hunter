@@ -124,12 +124,6 @@ public class MovementComponent : MonoBehaviour
         m_animator.SetFloat("Speed", Mathf.Abs(velocity.x));
     }
 
-    protected void AirMove()
-    {
-        Vector2 velocity = m_rbody.velocity;
-        Move(velocity);
-    }
-
     protected void TryBufferAttack(bool updateDirection = false, float direction = 1)
     {
 

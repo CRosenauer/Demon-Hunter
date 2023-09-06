@@ -182,18 +182,28 @@ public class PlayerMovement : MovementComponent
 
 	void OnEnterFallStateFromIdle()
 	{
+		m_airTargetVelocity = 0f;
 		Move(m_rbody.velocity);
 
 		m_animator.ResetTrigger("OnJumpEnd");
-		m_animator.SetTrigger("OnFall");
+		m_animator.SetTrigger("OnJump");
 	}
 
 	void OnEnterJumpState()
 	{
+		m_animator.ResetTrigger("OnJumpEnd");
 		m_animator.SetTrigger("OnJump");
 		m_rbody.gravityScale = _gravity;
-		Vector2 inputMovement = new(m_userXInput * m_moveSpeed, m_jumpSpeed);
+		m_airTargetVelocity = m_userXInput * m_moveSpeed;
+		Vector2 inputMovement = new(m_airTargetVelocity, m_jumpSpeed);
 		Move(inputMovement);
+	}
+
+	void AirMove()
+	{
+		Vector2 velocity = m_rbody.velocity;
+		velocity.x = m_airTargetVelocity;
+		Move(velocity);
 	}
 
 	void OnJumpState()
@@ -297,7 +307,6 @@ public class PlayerMovement : MovementComponent
 			m_movementState = MovementState.jumpLand;
 			OnEnterJumpLand();
 			m_animator.ResetTrigger("OnJump");
-			m_animator.ResetTrigger("OnFall");
 		}
 
 		AirMove();
@@ -391,7 +400,6 @@ public class PlayerMovement : MovementComponent
 			m_movementState = MovementState.jumpLand;
 			OnEnterJumpLand();
 			m_animator.ResetTrigger("OnJump");
-			m_animator.ResetTrigger("OnFall");
 		}
 
 		TryBufferAttack(m_userAttack, m_userXInput);
@@ -438,6 +446,8 @@ public class PlayerMovement : MovementComponent
 	float m_userYInput = 0f;
 
 	float m_stateTimer;
+
+	float m_airTargetVelocity;
 
 	bool m_userJump = false;
 	bool m_userJumpDownLastFrame = false;
