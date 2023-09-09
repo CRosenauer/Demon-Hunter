@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class AttackComponent : MonoBehaviour
 {
+    [SerializeField] AudioSource m_hitSoundSource;
+    [SerializeField] AudioSource m_weaponSoundEffectSource;
+
     [SerializeField] LayerMask m_hitBoxQueryLayer;
 
     [SerializeField] List<MovementComponent.MovementState> m_movementStates;
@@ -50,7 +53,7 @@ public class AttackComponent : MonoBehaviour
 
             foreach (Collider2D collider in colliders)
             {
-                Hit(collider, m_currentAttack.m_damage);
+                Hit(collider, m_currentAttack.m_damage, m_hitSoundSource);
             }
         }
 
@@ -82,6 +85,7 @@ public class AttackComponent : MonoBehaviour
     {
         bool consecutiveAttack = false;
 
+        // check if we can actually attack
         if(m_currentAttack != null)
         {
             if(m_frameCount < m_currentAttack.m_interruptableAsSoonAs)
@@ -112,11 +116,21 @@ public class AttackComponent : MonoBehaviour
             return;
         }
 
+        // attack actually goes through
         m_resetFrameCount = true;
 
         m_animator.ResetTrigger(oldAnimationTrigger);
         m_animator.SetTrigger(m_currentAttack.m_animationTrigger);
         oldAnimationTrigger = m_currentAttack.m_animationTrigger;
+
+        if (m_weaponSoundEffectSource != null && m_currentAttack.m_weaponSoundEffect != null)
+        {
+            if(!m_weaponSoundEffectSource.isPlaying)
+            {
+                m_weaponSoundEffectSource.clip = m_currentAttack.m_weaponSoundEffect;
+                m_weaponSoundEffectSource.Play();
+            }
+        }
     }
 
     public bool IsInAttack()
@@ -167,9 +181,18 @@ public class AttackComponent : MonoBehaviour
         return m_frameCount < (m_currentAttack.m_startUpFrames + m_currentAttack.m_activeFrames + m_currentAttack.m_recoveryFrames);
     }
 
-    public static void Hit(Collider2D collider, int damage)
+    public static void Hit(Collider2D collider, int damage, AudioSource hitSoundSource = null)
     {
         collider.BroadcastMessage("OnHit", damage);
+
+        if(hitSoundSource != null)
+        {
+            if(!hitSoundSource.isPlaying)
+            {
+                hitSoundSource.Play();
+            }
+            
+        }
     }
 
     bool IsInActiveWindow()

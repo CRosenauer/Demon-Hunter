@@ -21,5 +21,8 @@ public class AttackData : ScriptableObject
 
     [SerializeField] public AttackData m_nextAttack;
     [SerializeField] public int m_interruptableAsSoonAs;
+
+    [Space]
+    [SerializeField] public AudioClip m_weaponSoundEffect;
 }
 
