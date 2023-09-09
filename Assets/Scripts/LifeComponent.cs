@@ -5,7 +5,7 @@ using UnityEngine;
 public class LifeComponent : MonoBehaviour
 {
     const float hitFlashTime = 0.1f;
-
+    [SerializeField] AudioSource m_hitSoundSource;
     [SerializeField] Material m_hitMaterial;
 
     [SerializeField] float m_damageInvulnerableTime;
@@ -83,6 +83,11 @@ public class LifeComponent : MonoBehaviour
                 }
 
                 materialHitReactionCoroutine = StartCoroutine(ActivateHitMaterial(hitFlashTime));
+            }
+
+            if(m_hitSoundSource != null)
+            {
+                m_hitSoundSource.Play();
             }
         }
 
