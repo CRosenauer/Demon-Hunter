@@ -4,8 +4,15 @@ using UnityEngine;
 
 public class LifeComponent : MonoBehaviour
 {
+    const float hitFlashTime = 0.1f;
+
+    [SerializeField] Material m_hitMaterial;
+
     [SerializeField] float m_damageInvulnerableTime;
     [SerializeField] int m_maxHealth;
+
+    SpriteRenderer m_spriteRenderer;
+    Material m_defaultSpriteMaterial;
 
     public void SetActive(bool enable)
     {
@@ -14,6 +21,12 @@ public class LifeComponent : MonoBehaviour
 
     void Start()
     {
+        m_spriteRenderer = GetComponent<SpriteRenderer>();
+        if(m_spriteRenderer)
+        {
+            m_defaultSpriteMaterial = m_spriteRenderer.material;
+        }
+
         RestoreHealth();
         m_enable = true;
     }
@@ -72,7 +85,26 @@ public class LifeComponent : MonoBehaviour
         }
 
         m_enable = false;
+
+        if (m_spriteRenderer && m_hitMaterial)
+        {
+            if (materialHitReactionCoroutine != null)
+            {
+                StopCoroutine(materialHitReactionCoroutine);
+            }
+
+            materialHitReactionCoroutine = StartCoroutine(ActivateHitMaterial(hitFlashTime));
+        }
     }
+
+    IEnumerator ActivateHitMaterial(float duration)
+    {
+        m_spriteRenderer.material = m_hitMaterial;
+        yield return new WaitForSeconds(duration);
+        m_spriteRenderer.material = m_defaultSpriteMaterial;
+    }
+
+    Coroutine materialHitReactionCoroutine;
 
     float m_disableTimer;
 

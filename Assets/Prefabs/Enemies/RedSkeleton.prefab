@@ -145,6 +145,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bd4df208dbe568e4eb4e31ad0fcf7238, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_hitSoundSource: {fileID: 0}
+  m_weaponSoundEffectSource: {fileID: 0}
   m_hitBoxQueryLayer:
     serializedVersion: 2
     m_Bits: 0
@@ -208,6 +210,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b56f087363b98024bb488938ceeec5d7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_hitMaterial: {fileID: 2100000, guid: 8febd93ed8d50304b96984b3c2f0d148, type: 2}
   m_damageInvulnerableTime: 0.33333334
   m_maxHealth: 1
 --- !u!114 &9072057440038164441
