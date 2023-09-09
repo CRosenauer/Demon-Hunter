@@ -21,6 +21,9 @@ public class DestructibleComponent : MonoBehaviour
             return;
         }
 
+        Collider2D collider = GetComponent<BoxCollider2D>();
+        collider.enabled = false;
+
         if(m_animator)
         {
             m_animator.SetTrigger("OnHit");

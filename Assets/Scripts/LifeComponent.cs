@@ -73,6 +73,19 @@ public class LifeComponent : MonoBehaviour
             return;
         }
 
+        if(m_currentHealth > 0)
+        {
+            if (m_spriteRenderer && m_hitMaterial)
+            {
+                if (materialHitReactionCoroutine != null)
+                {
+                    StopCoroutine(materialHitReactionCoroutine);
+                }
+
+                materialHitReactionCoroutine = StartCoroutine(ActivateHitMaterial(hitFlashTime));
+            }
+        }
+
         m_currentHealth -= damage;
 
         m_disableTimer = m_damageInvulnerableTime;
@@ -85,16 +98,6 @@ public class LifeComponent : MonoBehaviour
         }
 
         m_enable = false;
-
-        if (m_spriteRenderer && m_hitMaterial)
-        {
-            if (materialHitReactionCoroutine != null)
-            {
-                StopCoroutine(materialHitReactionCoroutine);
-            }
-
-            materialHitReactionCoroutine = StartCoroutine(ActivateHitMaterial(hitFlashTime));
-        }
     }
 
     IEnumerator ActivateHitMaterial(float duration)

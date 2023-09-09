@@ -125,11 +125,8 @@ public class AttackComponent : MonoBehaviour
 
         if (m_weaponSoundEffectSource != null && m_currentAttack.m_weaponSoundEffect != null)
         {
-            if(!m_weaponSoundEffectSource.isPlaying)
-            {
-                m_weaponSoundEffectSource.clip = m_currentAttack.m_weaponSoundEffect;
-                m_weaponSoundEffectSource.Play();
-            }
+            m_weaponSoundEffectSource.clip = m_currentAttack.m_weaponSoundEffect;
+            m_weaponSoundEffectSource.Play();
         }
     }
 
