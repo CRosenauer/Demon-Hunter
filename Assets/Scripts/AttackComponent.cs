@@ -81,6 +81,21 @@ public class AttackComponent : MonoBehaviour
         }
     }
 
+    public bool IsAttackInterruptable()
+    {
+        if(!m_currentAttack)
+        {
+            return false;
+        }
+
+        if (m_frameCount < m_currentAttack.m_interruptableAsSoonAs)
+        {
+            return false;
+        }
+
+        return true;
+    }
+
     public void OnAttack(MovementComponent.MovementState playerMovementState)
     {
         bool consecutiveAttack = false;
@@ -88,7 +103,7 @@ public class AttackComponent : MonoBehaviour
         // check if we can actually attack
         if(m_currentAttack != null)
         {
-            if(m_frameCount < m_currentAttack.m_interruptableAsSoonAs)
+            if(!IsAttackInterruptable())
             {
                 return;
             }
@@ -149,7 +164,7 @@ public class AttackComponent : MonoBehaviour
     {
         if(IsInAttack())
         {
-            if(m_frameCount >= m_currentAttack.m_interruptableAsSoonAs)
+            if(IsAttackInterruptable())
             {
                 return true;
             }
@@ -166,6 +181,35 @@ public class AttackComponent : MonoBehaviour
         // for the case where the player gets it during an attack, or any other event where the player may end an attack early.
 
         m_currentAttack = null;
+    }
+
+    public bool TryCarryOverAttack(MovementComponent.MovementState playerMovementState)
+    {
+        AttackData interruptingAttack;
+        if (!m_attackDictionary.TryGetValue(playerMovementState, out interruptingAttack))
+        {
+            return false;
+        }
+
+        // if attack is cancelable just cancel into grounded state
+        // this code is really only for carrying on attacks when going from ground to air
+        if(IsAttackInterruptable())
+        {
+            return false;
+        }
+
+        // interrupt attack and replace with incoming attack
+
+        // replace attack data
+        m_currentAttack = interruptingAttack;
+        float duration = m_currentAttack.m_startUpFrames + m_currentAttack.m_activeFrames + m_currentAttack.m_recoveryFrames;
+        float timeInAnimation = m_frameCount / duration;
+        timeInAnimation = Mathf.Clamp01(timeInAnimation);
+
+        // replace animation
+        m_animator.Play("playerAttack", -1, timeInAnimation);
+
+        return true;
     }
 
     bool IsInAttackDuration()

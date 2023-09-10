@@ -68,9 +68,6 @@ public class PlayerMovement : MovementComponent
 			case MovementState.fall:
 				OnFallState();
 				break;
-			case MovementState.jumpLand:
-				OnJumpLandState();
-				break;
 			case MovementState.damageKnockback:
 				OnDamageKnockbackState();
 				break;
@@ -164,23 +161,29 @@ public class PlayerMovement : MovementComponent
 
 	void OnEnterIdleState()
 	{
-		// stub
-		// may be needed later?
+		m_animator.ResetTrigger("OnAirToGroundAttack");
 	}
 
 	void OnEnterJumpLand()
 	{
+		m_movementState = MovementState.idle;
+
 		if (IsOnGround())
 		{
 			m_animator.SetTrigger("OnJumpEnd");
 		}
 
-		m_attackComponent.OnAttackInterrupt();
+		if(m_attackComponent.IsInAttack())
+        {
+			if(!m_attackComponent.TryCarryOverAttack(m_movementState))
+            {
+				m_attackComponent.OnAttackInterrupt();
+			}
+		}
+
 		ClearAttackBuffer();
-		m_stateTimer = 1f / 6f;
 		Move(Vector2.zero);
 
-		m_movementState = MovementState.idle;
 	}
 
 	void OnEnterFallStateFromIdle()
@@ -222,7 +225,7 @@ public class PlayerMovement : MovementComponent
 		}
 		else if (IsOnGround())
 		{
-			m_movementState = MovementState.jumpLand;
+			m_movementState = MovementState.idle;
 			OnEnterJumpLand();
 			return;
 		}
@@ -230,29 +233,6 @@ public class PlayerMovement : MovementComponent
 		TryBufferAttack(m_userAttack, m_userXInput);
 
 		AirMove();
-	}
-
-	void OnJumpLandState()
-	{
-		if(m_shouldDie)
-        {
-			OnEnterDeadState();
-			m_movementState = MovementState.dead;
-			return;
-		}
-
-		m_stateTimer -= Time.fixedDeltaTime;
-
-		if (m_stateTimer <= 0f)
-		{
-			m_movementState = MovementState.idle;
-			OnEnterIdleState();
-			return;
-		}
-
-		m_attackBuffered = m_attackBuffered || m_userAttack;
-
-		m_rbody.velocity = Vector2.zero;
 	}
 
 	void OnEnterDamageKnockbackState()
@@ -400,7 +380,7 @@ public class PlayerMovement : MovementComponent
 	{
 		if (IsOnGround())
 		{
-			m_movementState = MovementState.jumpLand;
+			m_movementState = MovementState.idle;
 			OnEnterJumpLand();
 			m_animator.ResetTrigger("OnJump");
 		}
@@ -411,8 +391,6 @@ public class PlayerMovement : MovementComponent
 
 	void OnDamage(float damageInvulnerableTime)
 	{
-		// m_stateTimer = damageInvulnerableTime;
-
 		if(m_movementState == MovementState.walkOnStair)
         {
 			OnExitWalkOnStair();
@@ -470,8 +448,6 @@ public class PlayerMovement : MovementComponent
 
 	float m_userXInput = 0f;
 	float m_userYInput = 0f;
-
-	float m_stateTimer;
 
 	float m_airTargetVelocity;
 
