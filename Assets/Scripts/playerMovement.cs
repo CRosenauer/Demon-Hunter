@@ -161,7 +161,7 @@ public class PlayerMovement : MovementComponent
 
 	void OnEnterIdleState()
 	{
-		m_animator.ResetTrigger("OnAirToGroundAttack");
+		
 	}
 
 	void OnEnterJumpLand()
