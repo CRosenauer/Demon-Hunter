@@ -14,9 +14,17 @@ public class LifeComponent : MonoBehaviour
     SpriteRenderer m_spriteRenderer;
     Material m_defaultSpriteMaterial;
 
+    public delegate void HealthChange(int health);
+    public event HealthChange OnHealthChanged;
+
     public void SetActive(bool enable)
     {
         m_enable = enable;
+    }
+
+    public int GetMaxHealth()
+    {
+        return m_maxHealth;
     }
 
     void Start()
@@ -43,9 +51,18 @@ public class LifeComponent : MonoBehaviour
         }
     }
 
+    void SignalHealthChanged()
+    {
+        if(OnHealthChanged != null)
+        {
+            OnHealthChanged(m_currentHealth);
+        }
+    }
+
     void RestoreHealth()
     {
         m_currentHealth = m_maxHealth;
+        SignalHealthChanged();
     }
 
     void OnStartDisableHurtbox()
@@ -92,6 +109,7 @@ public class LifeComponent : MonoBehaviour
         }
 
         m_currentHealth -= damage;
+        SignalHealthChanged();
 
         m_disableTimer = m_damageInvulnerableTime;
 

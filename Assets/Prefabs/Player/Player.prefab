@@ -217,7 +217,7 @@ MonoBehaviour:
   m_hitSoundSource: {fileID: 740146830}
   m_hitMaterial: {fileID: 0}
   m_damageInvulnerableTime: 0.5
-  m_maxHealth: 10
+  m_maxHealth: 20
 --- !u!82 &740146828
 AudioSource:
   m_ObjectHideFlags: 0
