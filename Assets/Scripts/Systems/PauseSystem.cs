@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class PauseSystem : MonoBehaviour
 {
+    [SerializeField] AudioSource m_backgroundMusicSource;
+    [SerializeField] AudioSource m_pauseSoundSource;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -18,13 +21,13 @@ public class PauseSystem : MonoBehaviour
 
         if(pauseDown && !m_pauseDownLastUpdate)
         {
-            SetFreezeAll(!m_frozen);
+            SetPause(!m_frozen);
         }
 
         m_pauseDownLastUpdate = pauseDown;
     }
 
-    void SetFreezeAll(bool freeze)
+    void SetPause(bool freeze)
     {
         m_frozen = freeze;
         SignalPauseMenu(m_frozen);
@@ -43,12 +46,23 @@ public class PauseSystem : MonoBehaviour
 
     void OnPause()
     {
+        if(m_backgroundMusicSource)
+        {
+            m_backgroundMusicSource.Pause();
+        }
 
+        if(m_pauseSoundSource)
+        {
+            m_pauseSoundSource.Play();
+        }
     }
 
     void OnUnPause()
     {
-
+        if (m_backgroundMusicSource)
+        {
+            m_backgroundMusicSource.UnPause();
+        }
     }
 
     void SignalPauseMenu(bool open)
