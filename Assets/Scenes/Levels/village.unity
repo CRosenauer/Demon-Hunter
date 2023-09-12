@@ -1285,6 +1285,7 @@ GameObject:
   - component: {fileID: 456487894}
   - component: {fileID: 456487895}
   - component: {fileID: 456487896}
+  - component: {fileID: 456487897}
   m_Layer: 0
   m_Name: Systems
   m_TagString: Untagged
@@ -1413,6 +1414,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 3c4cb2fe2724aa54e85ba8f273d3ac05, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &456487897
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 456487893}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a5a316e6380ec304b975e67544ca0137, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &491900700
@@ -40209,9 +40222,13 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 0}
     - target: {fileID: 7262320515889450200, guid: 7d2ced54e1135a94a839e1ec6c295139, type: 3}
-      propertyPath: m_TileSpriteArray.Array.data[1].m_Data
+      propertyPath: m_TileSpriteArray.Array.data[0].m_Data
       value: 
       objectReference: {fileID: 0}
+    - target: {fileID: 7262320515889450200, guid: 7d2ced54e1135a94a839e1ec6c295139, type: 3}
+      propertyPath: m_TileSpriteArray.Array.data[1].m_Data
+      value: 
+      objectReference: {fileID: 2080920251, guid: 3b1cba2899daa1e4ba45be6ea813b5a6, type: 3}
     - target: {fileID: 7262320515889450200, guid: 7d2ced54e1135a94a839e1ec6c295139, type: 3}
       propertyPath: m_TileAssetArray.Array.data[1].m_RefCount
       value: 0
@@ -40225,8 +40242,16 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7262320515889450200, guid: 7d2ced54e1135a94a839e1ec6c295139, type: 3}
-      propertyPath: m_TileSpriteArray.Array.data[1].m_RefCount
+      propertyPath: m_TileSpriteArray.Array.data[0].m_RefCount
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7262320515889450200, guid: 7d2ced54e1135a94a839e1ec6c295139, type: 3}
+      propertyPath: m_TileSpriteArray.Array.data[1].m_RefCount
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7262320515889450200, guid: 7d2ced54e1135a94a839e1ec6c295139, type: 3}
+      propertyPath: m_Tiles.Array.data[0].second.m_TileSpriteIndex
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7262320516924103430, guid: 7d2ced54e1135a94a839e1ec6c295139, type: 3}
       propertyPath: m_RootOrder
