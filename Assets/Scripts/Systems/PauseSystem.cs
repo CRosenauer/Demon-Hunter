@@ -7,6 +7,8 @@ public class PauseSystem : MonoBehaviour
     [SerializeField] AudioSource m_backgroundMusicSource;
     [SerializeField] AudioSource m_pauseSoundSource;
 
+    [SerializeField] GameObject m_menus;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -55,6 +57,11 @@ public class PauseSystem : MonoBehaviour
         {
             m_pauseSoundSource.Play();
         }
+
+        if(m_menus)
+        {
+            m_menus.active = true;
+        }
     }
 
     void OnUnPause()
@@ -62,6 +69,11 @@ public class PauseSystem : MonoBehaviour
         if (m_backgroundMusicSource)
         {
             m_backgroundMusicSource.UnPause();
+        }
+
+        if (m_menus)
+        {
+            m_menus.active = false;
         }
     }
 
