@@ -1,12 +1,12 @@
 # Demon-Hunter
 A Castlevania inspired 2D action-platformer created in Unity3D
 
-Controls:
+# Controls
 - WASD to move
 - space to jump
 - j to attack
 
-Asset Credits:
+# Asset Credits
 Character and Enemy Graphics:
 https://didigameboy.itch.io/double-sword-warrior
 https://anokolisa.itch.io/legacy-vania-pack-vilage
