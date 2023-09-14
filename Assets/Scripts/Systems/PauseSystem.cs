@@ -23,10 +23,15 @@ public class PauseSystem : MonoBehaviour
 
         if(pauseDown && !m_pauseDownLastUpdate)
         {
-            SetPause(!m_frozen);
+            TogglePause();
         }
 
         m_pauseDownLastUpdate = pauseDown;
+    }
+
+    void TogglePause()
+    {
+        SetPause(!m_frozen);
     }
 
     void SetPause(bool freeze)
@@ -58,9 +63,10 @@ public class PauseSystem : MonoBehaviour
             m_pauseSoundSource.Play();
         }
 
-        if(m_menus)
+        GameObject player = GameObject.FindGameObjectWithTag("Player");
+        if(player)
         {
-            m_menus.active = true;
+            player.BroadcastMessage("OnPause");
         }
     }
 
@@ -70,16 +76,14 @@ public class PauseSystem : MonoBehaviour
         {
             m_backgroundMusicSource.UnPause();
         }
-
-        if (m_menus)
-        {
-            m_menus.active = false;
-        }
     }
 
     void SignalPauseMenu(bool open)
     {
-
+        if(m_menus)
+        {
+            m_menus.active = open;
+        }
     }
 
     bool m_frozen;

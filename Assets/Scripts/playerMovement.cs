@@ -50,6 +50,14 @@ public class PlayerMovement : MovementComponent
 		lastFrameInputFlag = attackDown;
 	}
 
+	void OnPause()
+    {
+		m_userAttack = false;
+		m_userAttackDownLastFrame = false;
+		m_userJump = false;
+		m_userJumpDownLastFrame = false;
+	}
+
 	void FixedUpdate()
 	{
 		QueryOnGround();
