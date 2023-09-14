@@ -41,21 +41,22 @@ public class PlayerMovement : MovementComponent
 
 	void UpdateUserInput(string button, ref bool inputFlag, ref bool lastFrameInputFlag)
 	{
-		bool attackDown = Input.GetButton(button);
+		bool buttonDown = Input.GetButton(button);
 
 		// only updates the input if it hasnt been consumed
 		// represents the button being first down on this frame (seen by the fixed update)
-		inputFlag = inputFlag || attackDown && !lastFrameInputFlag;
+		inputFlag = inputFlag || buttonDown && !lastFrameInputFlag;
 
-		lastFrameInputFlag = attackDown;
+		lastFrameInputFlag = buttonDown;
 	}
 
-	void OnPause()
+	void OnUnpause()
     {
+		// prevents the player from auto-buffering inputs made during pause menu navigation
 		m_userAttack = false;
-		m_userAttackDownLastFrame = false;
+		m_userAttackDownLastFrame = true;
 		m_userJump = false;
-		m_userJumpDownLastFrame = false;
+		m_userJumpDownLastFrame = true;
 	}
 
 	void FixedUpdate()

@@ -62,12 +62,6 @@ public class PauseSystem : MonoBehaviour
         {
             m_pauseSoundSource.Play();
         }
-
-        GameObject player = GameObject.FindGameObjectWithTag("Player");
-        if(player)
-        {
-            player.BroadcastMessage("OnPause");
-        }
     }
 
     void OnUnPause()
@@ -75,6 +69,12 @@ public class PauseSystem : MonoBehaviour
         if (m_backgroundMusicSource)
         {
             m_backgroundMusicSource.UnPause();
+        }
+
+        GameObject player = GameObject.FindGameObjectWithTag("Player");
+        if (player)
+        {
+            player.BroadcastMessage("OnUnpause");
         }
     }
 
