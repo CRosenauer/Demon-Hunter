@@ -6,7 +6,7 @@ Controls:
 - space to jump
 - j to attack
 
-Asset Credits:
+# Asset Credits:
 Character and Enemy Graphics:
 - https://didigameboy.itch.io/double-sword-warrior
 - https://anokolisa.itch.io/legacy-vania-pack-vilage
