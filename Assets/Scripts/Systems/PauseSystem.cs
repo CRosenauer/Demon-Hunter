@@ -62,6 +62,8 @@ public class PauseSystem : MonoBehaviour
         {
             m_pauseSoundSource.Play();
         }
+
+        m_menus.SendMessage("OnPause");
     }
 
     void OnUnPause()

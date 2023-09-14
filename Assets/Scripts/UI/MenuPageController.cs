@@ -18,11 +18,12 @@ public class MenuPageController : MonoBehaviour
         m_menuPage.SetActive(false);
         m_menuPage = menuPage;
         m_menuPage.SetActive(true);
+        m_menuPage.SendMessage("ResetCursorPosition");
     }
 
-    private void OnPause()
+    void OnPause()
     {
-        OpenMenuPage(m_menuPage);
+        OpenMenuPage(m_defaultMenuPage);
     }
 
     GameObject m_menuPage;

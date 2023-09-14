@@ -22,7 +22,7 @@ public class MenuNavigator : MonoBehaviour
         m_submitLastFrame = false;
         m_cancelLastFrame = false;
 
-        m_cursorPosition = 0;
+        ResetCursorPosition();
         m_maxCursorPosistion = m_menuItems.Count;
     }
 
@@ -91,6 +91,12 @@ public class MenuNavigator : MonoBehaviour
         cursorPosition.y = itemPosition.y;
 
         m_menuPointer.transform.position = cursorPosition;
+    }
+
+    public void ResetCursorPosition()
+    {
+        m_cursorPosition = 0;
+        UpdateCursorPosition();
     }
 
     void OnQuit()
