@@ -16,6 +16,8 @@ public class MenuNavigator : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+
+        m_horizontalLastFrame = 0f;
         m_verticalLastFrame = 0f;
         m_submitLastFrame = false;
         m_cancelLastFrame = false;

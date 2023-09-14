@@ -82,7 +82,7 @@ public class PauseSystem : MonoBehaviour
     {
         if(m_menus)
         {
-            m_menus.active = open;
+            m_menus.SetActive(open);
         }
     }
 

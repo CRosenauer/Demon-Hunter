@@ -50,11 +50,11 @@ public class HeathBarComponent : MonoBehaviour
             // likely a better way to do this. could revise in the future
             if (i < health)
             {
-                m_healthBarTicks[i].active = true;
+                m_healthBarTicks[i].SetActive(true);
             }
             else
             {
-                m_healthBarTicks[i].active = false;
+                m_healthBarTicks[i].SetActive(false);
             }
         }
     }
