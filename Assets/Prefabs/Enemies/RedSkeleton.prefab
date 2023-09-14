@@ -171,7 +171,7 @@ MonoBehaviour:
     m_Bits: 64
   m_collisionBounds: {x: 0.3125, y: 0.875}
   m_collisionOffset: {x: 0, y: -0.0625}
-  m_damage: 1
+  m_damage: 2
 --- !u!61 &7548005075730308612
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -210,6 +210,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b56f087363b98024bb488938ceeec5d7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_hitSoundSource: {fileID: 0}
   m_hitMaterial: {fileID: 2100000, guid: 8febd93ed8d50304b96984b3c2f0d148, type: 2}
   m_damageInvulnerableTime: 0.33333334
   m_maxHealth: 1
@@ -226,7 +227,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_movementState: 0
-  m_shouldDespawn: 1
+  m_shouldDespawn: 0
   m_bone: {fileID: 908688970402592725, guid: 68d592fc766b2724e9955bf57f45a1e8, type: 3}
   m_activeDistance: 10
   m_moveSpeed: 2

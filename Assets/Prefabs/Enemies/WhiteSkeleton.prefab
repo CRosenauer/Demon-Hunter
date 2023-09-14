@@ -145,6 +145,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bd4df208dbe568e4eb4e31ad0fcf7238, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_hitSoundSource: {fileID: 0}
+  m_weaponSoundEffectSource: {fileID: 0}
   m_hitBoxQueryLayer:
     serializedVersion: 2
     m_Bits: 0
@@ -169,7 +171,7 @@ MonoBehaviour:
     m_Bits: 64
   m_collisionBounds: {x: 0.3125, y: 0.875}
   m_collisionOffset: {x: 0, y: -0.0625}
-  m_damage: 1
+  m_damage: 2
 --- !u!61 &7548005075730308612
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -208,6 +210,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b56f087363b98024bb488938ceeec5d7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_hitSoundSource: {fileID: 0}
+  m_hitMaterial: {fileID: 0}
   m_damageInvulnerableTime: 0.33333334
   m_maxHealth: 1
 --- !u!114 &-935979807192983368
