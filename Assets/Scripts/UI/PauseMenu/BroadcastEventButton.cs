@@ -11,8 +11,6 @@ public class BroadcastEventButton : Button
     {
         Debug.Assert(m_targetObject);
         Debug.Assert(!string.IsNullOrEmpty(m_eventName));
-
-        base.Start();
     }
 
     public override void OnSelect() 

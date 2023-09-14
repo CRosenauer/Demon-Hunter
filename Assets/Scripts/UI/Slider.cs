@@ -1,66 +1,57 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public abstract class Slider : MonoBehaviour
 {
-    [SerializeField] GameObject m_unSelectedImage;
-    [SerializeField] GameObject m_selectedImage;
+    // public to give access to child class
+    [SerializeField] public GameObject m_sliderKnob;
 
-    [SerializeField] GameObject m_sliderKnob;
+    [SerializeField] public Vector2 m_sliderPositionRange;
+    [SerializeField] public Vector2 m_sliderValueRange;
+    [SerializeField] public float m_sliderStep;
+    [SerializeField] public float m_defaultSliderValue;
 
-    [SerializeField] Vector2 m_sliderRange;
-    [SerializeField, Range(0f, 1f)] float m_defaultSliderValue;
-
-    void Start()
+    protected void Awake()
     {
-        Debug.Assert(m_unSelectedImage);
-        Debug.Assert(m_selectedImage);
         Debug.Assert(m_sliderKnob);
-    }
 
-    void Awake()
-    {
         m_sliderValue = m_defaultSliderValue;
-
-        SetSliderPosition(m_sliderValue);
+        ClampSliderValue();
+        SetSliderPosition();
     }
 
-    void SetSliderPosition(float sliderValue)
+    void SetSliderPosition()
     {
-        float sliderRange = m_sliderRange.y - m_sliderRange.x;
-        float xPos = m_sliderRange.x + sliderValue * sliderRange;
+        float sliderRange = m_sliderPositionRange.y - m_sliderPositionRange.x;
+        float sliderPercentage = m_sliderValue / (m_sliderValueRange.y - m_sliderValueRange.x);
+        float xPos = m_sliderPositionRange.x + sliderPercentage * sliderRange;
 
-        Vector3 sliderPos = m_sliderKnob.transform.position;
+        RectTransform sliderTransform = m_sliderKnob.GetComponent<RectTransform>();
+        Vector3 sliderPos = sliderTransform.anchoredPosition;
         sliderPos.x = xPos;
 
-        m_sliderKnob.transform.position = sliderPos;
+        sliderTransform.anchoredPosition = sliderPos;
     }
 
-    void OnHover()
+    protected void MoveSlider(float amount)
     {
-        m_selectedImage.active = true;
-        m_unSelectedImage.active = false;
-    }
+        m_sliderValue = m_sliderValue + m_sliderStep * Mathf.Sign(amount);
 
-    void OnUnHover()
-    {
-        m_unSelectedImage.active = true;
-        m_selectedImage.active = false;
-    }
+        ClampSliderValue();
 
-    void MoveSlider(float sliderValueDelta)
-    {
-        m_sliderValue = m_sliderValue + sliderValueDelta;
-
-        m_sliderValue = Mathf.Clamp01(m_sliderValue);
-
-        SetSliderPosition(m_sliderValue);
+        SetSliderPosition();
 
         OnSliderMove();
     }
 
+    void ClampSliderValue()
+    {
+        m_sliderValue = Mathf.Clamp(m_sliderValue, m_sliderValueRange.x, m_sliderValueRange.y);
+    }
+
     public abstract void OnSliderMove();
 
-    float m_sliderValue;
+    protected float m_sliderValue;
 }

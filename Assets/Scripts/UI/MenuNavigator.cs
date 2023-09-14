@@ -27,6 +27,7 @@ public class MenuNavigator : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        float horizontalInput = Input.GetAxisRaw("Horizontal");
         float verticalInput = Input.GetAxisRaw("Vertical");
         bool submit = Input.GetButton("Submit");
         bool cancel = Input.GetButton("Cancel");
@@ -34,6 +35,11 @@ public class MenuNavigator : MonoBehaviour
         if(Mathf.Abs(m_verticalLastFrame) <= k_axisThreshold && Mathf.Abs(verticalInput) > k_axisThreshold)
         {
             MoveCursor((int) -Mathf.Sign(verticalInput));
+        }
+
+        if (Mathf.Abs(m_horizontalLastFrame) <= k_axisThreshold && Mathf.Abs(horizontalInput) > k_axisThreshold)
+        {
+            MoveSlider((int) Mathf.Sign(horizontalInput));
         }
 
         if (submit && !m_submitLastFrame)
@@ -46,6 +52,7 @@ public class MenuNavigator : MonoBehaviour
             OnQuit();
         }
 
+        m_horizontalLastFrame = horizontalInput;
         m_verticalLastFrame = verticalInput;
         m_submitLastFrame = submit;
         m_cancelLastFrame = cancel;
@@ -63,6 +70,11 @@ public class MenuNavigator : MonoBehaviour
         }
 
         UpdateCursorPosition();
+    }
+
+    void MoveSlider(int amount)
+    {
+        m_menuItems[m_cursorPosition].BroadcastMessage("MoveSlider", amount);
     }
 
     void SelectMenuItem()
@@ -84,6 +96,7 @@ public class MenuNavigator : MonoBehaviour
         Application.Quit();
     }
 
+    float m_horizontalLastFrame;
     float m_verticalLastFrame;
 
     int m_cursorPosition;
