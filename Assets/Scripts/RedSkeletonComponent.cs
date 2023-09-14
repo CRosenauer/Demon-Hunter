@@ -39,11 +39,13 @@ public class RedSkeletonComponent : MovementComponent
 
 	bool IsWithinCameraFrustum()
     {
+		const float distancePadding = 1f;
+
 		Vector3 screenPos = Camera.current.WorldToScreenPoint(transform.position);
 
-		if(screenPos.x == Mathf.Clamp(screenPos.x, 0, Screen.width))
+		if(screenPos.x == Mathf.Clamp(screenPos.x, -distancePadding, Screen.width + distancePadding))
         {
-			if(screenPos.y == Mathf.Clamp(screenPos.y, 0, Screen.height))
+			if(screenPos.y == Mathf.Clamp(screenPos.y, -distancePadding, Screen.height + distancePadding))
             {
 				return true;
             }
