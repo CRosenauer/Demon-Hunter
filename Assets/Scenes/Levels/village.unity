@@ -1481,7 +1481,6 @@ GameObject:
   m_Component:
   - component: {fileID: 456487894}
   - component: {fileID: 456487895}
-  - component: {fileID: 456487896}
   - component: {fileID: 456487897}
   - component: {fileID: 456487898}
   m_Layer: 0
@@ -1602,18 +1601,6 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
---- !u!114 &456487896
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 456487893}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3c4cb2fe2724aa54e85ba8f273d3ac05, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &456487897
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -38618,7 +38605,6 @@ MonoBehaviour:
   - {fileID: 1708111679}
   m_menuPointer: {fileID: 629772913}
   m_systemManager: {fileID: 456487893}
-  m_defaultMenuPage: {fileID: 0}
   m_menuSoundSource: {fileID: 1196212118}
 --- !u!82 &1196212118
 AudioSource:
@@ -40679,7 +40665,6 @@ MonoBehaviour:
   - {fileID: 1262469272}
   m_menuPointer: {fileID: 1238166370}
   m_systemManager: {fileID: 456487893}
-  m_defaultMenuPage: {fileID: 0}
   m_menuSoundSource: {fileID: 1437771983}
 --- !u!82 &1437771983
 AudioSource:
