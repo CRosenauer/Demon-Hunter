@@ -5,7 +5,6 @@ using UnityEngine;
 [RequireComponent(typeof(Rigidbody2D))]
 [RequireComponent(typeof(SpriteRenderer))]
 [RequireComponent(typeof(Animator))]
-[RequireComponent(typeof(AttackComponent))]
 public class MovementComponent : MonoBehaviour
 {
     // prob net best ot have all entities draw from this same state pool
@@ -145,8 +144,30 @@ public class MovementComponent : MonoBehaviour
         }
     }
 
+    protected bool IsWithinCameraFrustum()
+    {
+        const float distancePadding = 1f;
+
+        Vector3 screenPos = Camera.current.WorldToScreenPoint(transform.position);
+
+        if (screenPos.x == Mathf.Clamp(screenPos.x, -distancePadding, Screen.width + distancePadding))
+        {
+            if (screenPos.y == Mathf.Clamp(screenPos.y, -distancePadding, Screen.height + distancePadding))
+            {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
     protected bool TryAttack()
     {
+        if(!m_attackComponent)
+        {
+            return false;
+        }
+
         if ((m_attackBuffered || m_userAttack) && m_attackComponent.CanAttack())
         {
             m_attackComponent.OnAttack(m_movementState);
