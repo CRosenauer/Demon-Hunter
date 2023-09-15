@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PauseSystem : MonoBehaviour
 {
@@ -37,7 +38,6 @@ public class PauseSystem : MonoBehaviour
     void SetPause(bool freeze)
     {
         m_frozen = freeze;
-        SignalPauseMenu(m_frozen);
 
         if(m_frozen)
         {
@@ -63,6 +63,12 @@ public class PauseSystem : MonoBehaviour
             m_pauseSoundSource.Play();
         }
 
+        MenuPageController menuPageController = m_menus.GetComponent<MenuPageController>();
+        menuPageController.enabled = true;
+
+        Image pauseBackground = m_menus.GetComponent<Image>();
+        pauseBackground.enabled = true;
+
         m_menus.SendMessage("OnPause");
     }
 
@@ -78,14 +84,14 @@ public class PauseSystem : MonoBehaviour
         {
             player.BroadcastMessage("OnUnpause");
         }
-    }
 
-    void SignalPauseMenu(bool open)
-    {
-        if(m_menus)
-        {
-            m_menus.SetActive(open);
-        }
+        MenuPageController menuPageController = m_menus.GetComponent<MenuPageController>();
+        menuPageController.enabled = false;
+
+        Image pauseBackground = m_menus.GetComponent<Image>();
+        pauseBackground.enabled = false;
+
+        m_menus.SendMessage("OnUnpause");
     }
 
     bool m_frozen;

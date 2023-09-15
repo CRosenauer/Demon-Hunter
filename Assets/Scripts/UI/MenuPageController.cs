@@ -26,5 +26,14 @@ public class MenuPageController : MonoBehaviour
         OpenMenuPage(m_defaultMenuPage);
     }
 
+    void OnUnpause()
+    {
+        foreach(Transform child in transform)
+        {
+            GameObject obj = child.gameObject;
+            obj.SetActive(false);
+        }
+    }
+
     GameObject m_menuPage;
 }

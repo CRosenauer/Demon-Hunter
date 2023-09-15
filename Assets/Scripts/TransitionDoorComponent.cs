@@ -26,17 +26,17 @@ public class TransitionDoorComponent : MonoBehaviour
     [SerializeField] GameObject m_exitPoint;
     [SerializeField] GameObject m_level;
 
-    [SerializeField] Camera m_camera;
-
     [SerializeField] Vector2 m_exitDoorPosition;
 
     void Start()
     {
         m_currentObjects = new();
         m_animator = GetComponent<Animator>();
+        m_camera = Camera.main;
 
         Debug.Assert(m_scene != null);
         Debug.Assert(m_exitPoint);
+        Debug.Assert(m_camera);
     }
 
     void FixedUpdate()
@@ -266,6 +266,13 @@ public class TransitionDoorComponent : MonoBehaviour
 
         SceneManager.MoveGameObjectToScene(m_player, loadedScene);
         SceneManager.MoveGameObjectToScene(m_camera.gameObject, loadedScene);
+
+        GameObject[] coreObjects = GameObject.FindGameObjectsWithTag("Core");
+
+        foreach(GameObject obj in coreObjects)
+        {
+            SceneManager.MoveGameObjectToScene(obj, loadedScene);
+        }
     }
 
     void UnloadPreviousLevel()
@@ -275,6 +282,7 @@ public class TransitionDoorComponent : MonoBehaviour
 
     List<GameObject> m_currentObjects;
 
+    Camera m_camera;
     GameObject m_player;
     AsyncOperation m_sceneLoader;
 
