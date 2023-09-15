@@ -9185,7 +9185,7 @@ TextureImporter:
         width: 16
         height: 16
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -9193,6 +9193,48 @@ TextureImporter:
       bones: []
       spriteID: 556d0258822bc0c4fb793879e2012dfb
       internalID: 1160074492
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Village_433
+      rect:
+        serializedVersion: 2
+        x: 416
+        y: 224
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: df245598f099457458739556ef950e6c
+      internalID: -2125597855
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Village_434
+      rect:
+        serializedVersion: 2
+        x: 400
+        y: 208
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 792c93a9b04530a4299a73acbcb0f6c9
+      internalID: 396516929
       vertices: []
       indices: 
       edges: []
@@ -9580,6 +9622,8 @@ TextureImporter:
       Village_430: 1626891493
       Village_431: -676828293
       Village_432: 1160074492
+      Village_433: -2125597855
+      Village_434: 396516929
       Village_44: -563622828
       Village_45: -668280201
       Village_46: 338557386
