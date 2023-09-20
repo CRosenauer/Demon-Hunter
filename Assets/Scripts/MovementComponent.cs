@@ -20,6 +20,7 @@ public class MovementComponent : MonoBehaviour
         deathFall,
         spawn,
         walkOnStair,
+        secondaryWeapon,
     }
 
     public enum Direction

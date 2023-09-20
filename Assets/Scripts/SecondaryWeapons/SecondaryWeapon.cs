@@ -1,12 +1,11 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 
-[CreateAssetMenu(menuName = "RetroActionPlatformer/AttackData")]
-public class SeconaryWeapon : ScriptableObject
+[CreateAssetMenu(menuName = "RetroActionPlatformer/SecondaryWeapon")]
+public class SecondaryWeapon : ScriptableObject
 {
-    public Image m_HUDIcon;
+    public Sprite m_HUDIcon;
     [Space]
 
     public GameObject m_spawnedObject;

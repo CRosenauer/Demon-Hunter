@@ -9,6 +9,7 @@ using UnityEngine;
 [RequireComponent(typeof(Animator))]
 [RequireComponent(typeof(AttackComponent))]
 [RequireComponent(typeof(LifeComponent))]
+[RequireComponent(typeof(SecondaryWeaponManagerComponent))]
 public class PlayerMovement : MovementComponent
 {
 	[SerializeField] Vector2 m_onHitKnockbackVelocity;
@@ -20,6 +21,8 @@ public class PlayerMovement : MovementComponent
 	void Start()
 	{
 		ComponentInit();
+
+		m_secondaryWeapon = GetComponent<SecondaryWeaponManagerComponent>();
 
 		m_movementState = MovementState.init;
 
@@ -36,6 +39,7 @@ public class PlayerMovement : MovementComponent
 
 			UpdateUserInput("Jump", ref m_userJump, ref m_userJumpDownLastFrame);
 			UpdateUserInput("Attack", ref m_userAttack, ref m_userAttackDownLastFrame);
+			UpdateUserInput("Special", ref m_userSecondaryAttack, ref m_userSecondaryAttackDownLastFrame);
 		}
 	}
 
@@ -89,6 +93,9 @@ public class PlayerMovement : MovementComponent
 			case MovementState.walkOnStair:
 				OnWalkOnStair();
 				break;
+			case MovementState.secondaryWeapon:
+				OnSecondaryWeapon();
+				break;
 		}
 
 		m_userJump = false;
@@ -111,6 +118,12 @@ public class PlayerMovement : MovementComponent
 			m_movementState = MovementState.dead;
 			return;
 		}
+
+		if(m_userSecondaryAttack && CanSecondaryWeapon())
+        {
+			m_movementState = MovementState.secondaryWeapon;
+			OnEnterSecondaryWeapon();
+        }
 
 		bool isInAttack = m_attackComponent.IsInAttack();
 
@@ -195,13 +208,18 @@ public class PlayerMovement : MovementComponent
 
 	}
 
-	void OnEnterFallStateFromIdle()
+	void OnEnterFallState()
 	{
-		m_airTargetVelocity = 0f;
 		Move(m_rbody.velocity);
 
 		m_animator.ResetTrigger("OnJumpEnd");
 		m_animator.SetTrigger("OnJump");
+	}
+
+	void OnEnterFallStateFromIdle()
+	{
+		m_airTargetVelocity = 0f;
+		OnEnterFallState();
 	}
 
 	void OnEnterJumpState()
@@ -385,6 +403,50 @@ public class PlayerMovement : MovementComponent
 		}
 	}
 
+	void OnEnterSecondaryWeapon()
+    {
+		return;
+    }
+
+	void OnSecondaryWeapon()
+    {
+		if(ShouldExitSecondaryWeapon())
+        {
+			ExitSecondaryWeapon();
+		}
+    }
+
+	bool ShouldExitSecondaryWeapon()
+    {
+		return true;
+    }
+
+	void ExitSecondaryWeapon()
+    {
+		if(IsOnGround())
+        {
+			m_movementState = MovementState.idle;
+			OnEnterIdleState();
+        }
+		else
+        {
+			m_movementState = MovementState.fall;
+			OnEnterFallState();
+        }
+    }
+
+	void CancelSecondaryWeapon()
+    {
+		return;
+    }
+
+	bool CanSecondaryWeapon()
+    {
+		
+
+		return false;
+    }
+
 	void OnFallState()
 	{
 		if (IsOnGround())
@@ -403,6 +465,11 @@ public class PlayerMovement : MovementComponent
 		if(m_movementState == MovementState.walkOnStair)
         {
 			OnExitWalkOnStair();
+        }
+
+		if(m_movementState == MovementState.secondaryWeapon)
+        {
+			CancelSecondaryWeapon();
         }
 
 		OnEnterDamageKnockbackState();
@@ -453,6 +520,8 @@ public class PlayerMovement : MovementComponent
 	GameObject m_stairObject;
 	StairComponent m_stairComponent;
 
+	SecondaryWeaponManagerComponent m_secondaryWeapon;
+
 	float _gravity;
 
 	float m_userXInput = 0f;
@@ -462,6 +531,9 @@ public class PlayerMovement : MovementComponent
 
 	bool m_userJump = false;
 	bool m_userJumpDownLastFrame = false;
+
+	bool m_userSecondaryAttack = false;
+	bool m_userSecondaryAttackDownLastFrame = false;
 
 	bool m_shouldDie = false;
 	bool m_controlable = true;

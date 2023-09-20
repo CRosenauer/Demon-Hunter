@@ -10,7 +10,7 @@ public class SecondaryWeaponManagerComponent : MonoBehaviour
     public delegate void ManaChange(int health);
     public event ManaChange OnManaChanged;
 
-    public delegate void WeaponChange(Image weaponImage);
+    public delegate void WeaponChange(Sprite weaponImage);
     public event WeaponChange OnWeaponChanged;
 
     // Start is called before the first frame update
@@ -19,18 +19,26 @@ public class SecondaryWeaponManagerComponent : MonoBehaviour
         RestoreMana();
     }
 
-    void SetSecondaryWeapon(SeconaryWeapon weapon)
+    bool HasWeapon()
     {
-        m_seconaryWeapon = weapon;
+        return m_secondaryWeapon != null;
+    }
 
-        Image image = m_seconaryWeapon ? m_seconaryWeapon.m_HUDIcon : null;
+    void SetSecondaryWeapon(SecondaryWeapon weapon)
+    {
+        m_secondaryWeapon = weapon;
 
-        OnWeaponChanged(image);
+        Sprite sprite = m_secondaryWeapon ? m_secondaryWeapon.m_HUDIcon : null;
+
+        if (OnWeaponChanged != null)
+        {
+            OnWeaponChanged(sprite);
+        } 
     }
 
     void OnUseSecondaryWeapon()
     {
-        if(!m_seconaryWeapon)
+        if(!m_secondaryWeapon)
         {
             return;
         }
@@ -40,7 +48,7 @@ public class SecondaryWeaponManagerComponent : MonoBehaviour
 
     void OnSpawnWeapon()
     {
-        if (!m_seconaryWeapon)
+        if (!m_secondaryWeapon)
         {
             return;
         }
@@ -72,7 +80,7 @@ public class SecondaryWeaponManagerComponent : MonoBehaviour
         return m_maxMana;
     }
 
-    SeconaryWeapon m_seconaryWeapon;
+    SecondaryWeapon m_secondaryWeapon;
 
     int m_currentMana;
 }

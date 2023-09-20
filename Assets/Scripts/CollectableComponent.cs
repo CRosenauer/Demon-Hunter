@@ -54,14 +54,19 @@ public class CollectableComponent : MonoBehaviour
 
     delegate void CollectionCallback();
 
-    [SerializeField] GameObject m_item;
+    [SerializeField] SecondaryWeapon m_item;
     [SerializeField] CollectableFunction m_callback;
     [SerializeField] int m_quantity;
 
     // Start is called before the first frame update
     void Start()
     {
-        switch(m_callback)
+        InitCallback();
+    }
+
+    void InitCallback()
+    {
+        switch (m_callback)
         {
             case CollectableFunction.Equip:
                 m_callbackFunction = Equip;
@@ -90,18 +95,28 @@ public class CollectableComponent : MonoBehaviour
             return;
         }
 
+        // if something is overlapping the item as it spawns we can reach this function before start inits the callback.
+        if(m_callbackFunction == null)
+        {
+            InitCallback();
+        }
+
         m_callbackFunction();
         Destroy(gameObject);
     }
 
     void Equip()
     {
+        GameObject player = GameObject.FindGameObjectWithTag("Player");
 
+        Debug.Assert(player);
+
+        player.BroadcastMessage("SetSecondaryWeapon", m_item);
     }
 
     void ScreenClear()
     {
-
+        
     }
 
     void AlterLife()

@@ -10,10 +10,10 @@ public class ManaBarComponent : MonoBehaviour
         GameObject player = GameObject.FindGameObjectWithTag("Player");
         Debug.Assert(player);
 
-        SecondaryWeaponManagerComponent lifeComponent = player.GetComponent<SecondaryWeaponManagerComponent>();
-        Debug.Assert(lifeComponent);
+        SecondaryWeaponManagerComponent secondaryWeapon = player.GetComponent<SecondaryWeaponManagerComponent>();
+        Debug.Assert(secondaryWeapon);
 
-        lifeComponent.OnManaChanged += OnHManaChanged;
+        secondaryWeapon.OnManaChanged += OnHManaChanged;
 
         m_manaBarTicks = new();
 
@@ -23,7 +23,7 @@ public class ManaBarComponent : MonoBehaviour
             m_manaBarTicks.Add(child.gameObject);
         }
 
-        Debug.Assert(m_manaBarTicks.Count == lifeComponent.GetMaxMana());
+        Debug.Assert(m_manaBarTicks.Count == secondaryWeapon.GetMaxMana());
     }
 
     void OnDestroy()
