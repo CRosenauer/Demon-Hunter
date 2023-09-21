@@ -5,6 +5,7 @@ using UnityEngine;
 [RequireComponent(typeof(Animator))]
 public class SecondaryWeaponManagerComponent : MonoBehaviour
 {
+    [SerializeField] AudioSource m_secondaryWeaponUsageSound;
     [SerializeField] int m_maxMana;
 
     public delegate void ManaChange(int health);
@@ -16,6 +17,8 @@ public class SecondaryWeaponManagerComponent : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        Debug.Assert(m_secondaryWeaponUsageSound);
+
         m_animator = GetComponent<Animator>();
         RestoreMana();
     }
@@ -136,6 +139,8 @@ public class SecondaryWeaponManagerComponent : MonoBehaviour
 
     IEnumerator UseSecondaryWeapon()
     {
+        m_secondaryWeaponUsageSound.Play();
+
         m_animator.SetTrigger(m_inuseSecondaryWeapon.m_animationTrigger);
         yield return new WaitForSeconds(m_inuseSecondaryWeapon.m_startUpDuration);
 

@@ -27243,6 +27243,11 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 5173901498255341368, guid: 56a519ee3d768724db32b07fa355ba3e, type: 3}
   m_PrefabInstance: {fileID: 5173901499389140137}
   m_PrefabAsset: {fileID: 0}
+--- !u!82 &740146822 stripped
+AudioSource:
+  m_CorrespondingSourceObject: {fileID: 740146829, guid: 56a519ee3d768724db32b07fa355ba3e, type: 3}
+  m_PrefabInstance: {fileID: 5173901499389140137}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &747776937
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -44375,6 +44380,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 740146831, guid: 56a519ee3d768724db32b07fa355ba3e, type: 3}
+      propertyPath: m_secondaryWeaponUsageSound
+      value: 
+      objectReference: {fileID: 740146822}
     - target: {fileID: 5173901498255341368, guid: 56a519ee3d768724db32b07fa355ba3e, type: 3}
       propertyPath: m_Name
       value: Player
