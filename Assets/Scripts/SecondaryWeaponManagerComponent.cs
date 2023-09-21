@@ -162,6 +162,4 @@ public class SecondaryWeaponManagerComponent : MonoBehaviour
     Coroutine m_weaponSpawnCoroutine;
 
     int m_currentMana;
-
-    bool m_isInSecondaryWeapon;
 }
