@@ -11,7 +11,10 @@ public class SecondaryWeapon : ScriptableObject
     public GameObject m_spawnedObject;
     [Space]
 
+    public string m_animationTrigger;
+
     public float m_startUpDuration;
     public float m_timeInUsageDuration;
-    public string m_animationTrigger;
+
+    public int m_manaCost;
 }

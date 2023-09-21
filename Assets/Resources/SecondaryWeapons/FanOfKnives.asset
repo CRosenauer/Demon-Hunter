@@ -14,6 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_HUDIcon: {fileID: 21300000, guid: 5f8003388f7110b469e8c3a71dfc2246, type: 3}
   m_spawnedObject: {fileID: 2427014946569587887, guid: dae02363eab8b294abf33da7bc116618, type: 3}
-  m_startUpDuration: 0
-  m_timeInUsageDuration: 0
-  m_animationTrigger: 
+  m_animationTrigger: OnItem
+  m_startUpDuration: 0.083333336
+  m_timeInUsageDuration: 0.41666666
+  m_manaCost: 2

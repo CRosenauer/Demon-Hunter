@@ -47,16 +47,13 @@ public class MovementComponent : MonoBehaviour
         m_animator = GetComponent<Animator>();
         m_attackComponent = GetComponent<AttackComponent>();
 
+        // doesnt need to exist on the entity
+        m_secondaryWeapon = GetComponent<SecondaryWeaponManagerComponent>();
+
         Debug.Assert(m_rbody);
         Debug.Assert(m_spriteRenderer);
         Debug.Assert(m_animator);
         Debug.Assert(m_attackComponent);
-    }
-
-    // Update is called once per frame
-    void FixedUpdate()
-    {
-
     }
 
     protected void UpdateDirect(float direction)
@@ -126,7 +123,6 @@ public class MovementComponent : MonoBehaviour
 
     protected void TryBufferAttack(bool updateDirection = false, float direction = 1)
     {
-
         bool attacked = TryAttack();
 
         if (!attacked)
@@ -164,15 +160,22 @@ public class MovementComponent : MonoBehaviour
 
     protected bool TryAttack()
     {
-        if(!m_attackComponent)
+        if(m_attackComponent)
         {
-            return false;
+            if ((m_attackBuffered || m_userAttack) && m_attackComponent.CanAttack())
+            {
+                m_attackComponent.OnAttack(m_movementState);
+                return true;
+            }
         }
 
-        if ((m_attackBuffered || m_userAttack) && m_attackComponent.CanAttack())
+        if(m_secondaryWeapon)
         {
-            m_attackComponent.OnAttack(m_movementState);
-            return true;
+            if (m_userSecondaryAttack && m_secondaryWeapon.CanSecondaryAttack())
+            {
+                m_secondaryWeapon.OnUseSecondaryWeapon();
+                return true;
+            }
         }
 
         return false;
@@ -194,6 +197,7 @@ public class MovementComponent : MonoBehaviour
     SpriteRenderer m_spriteRenderer;
     protected Animator m_animator;
     protected AttackComponent m_attackComponent;
+    protected SecondaryWeaponManagerComponent m_secondaryWeapon;
 
     protected Direction m_direction = Direction.right;
 
@@ -201,6 +205,9 @@ public class MovementComponent : MonoBehaviour
 
     protected bool m_userAttack = false;
     protected bool m_userAttackDownLastFrame = false;
+
+    protected bool m_userSecondaryAttack = false;
+    protected bool m_userSecondaryAttackDownLastFrame = false;
 
     protected bool m_attackBuffered = false;
 }

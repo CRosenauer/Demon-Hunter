@@ -22,8 +22,6 @@ public class PlayerMovement : MovementComponent
 	{
 		ComponentInit();
 
-		m_secondaryWeapon = GetComponent<SecondaryWeaponManagerComponent>();
-
 		m_movementState = MovementState.init;
 
 		_gravity = m_rbody.gravityScale;
@@ -54,6 +52,13 @@ public class PlayerMovement : MovementComponent
 		lastFrameInputFlag = buttonDown;
 	}
 
+	void ClearUserInput()
+    {
+		m_userJump = false;
+		m_userAttack = false;
+		m_userSecondaryAttack = false;
+	}
+
 	void OnUnpause()
     {
 		// prevents the player from auto-buffering inputs made during pause menu navigation
@@ -61,6 +66,8 @@ public class PlayerMovement : MovementComponent
 		m_userAttackDownLastFrame = true;
 		m_userJump = false;
 		m_userJumpDownLastFrame = true;
+		m_userSecondaryAttack = false;
+		m_userSecondaryAttackDownLastFrame = true;
 	}
 
 	void FixedUpdate()
@@ -98,8 +105,7 @@ public class PlayerMovement : MovementComponent
 				break;
 		}
 
-		m_userJump = false;
-		m_userAttack = false;
+		ClearUserInput();
 	}
 
 	void OnInitState()
@@ -126,8 +132,11 @@ public class PlayerMovement : MovementComponent
         }
 
 		bool isInAttack = m_attackComponent.IsInAttack();
+		bool isInSecondaryWeapon = m_secondaryWeapon.IsInSecondaryWeaponAttack();
 
-		if (!isInAttack)
+		bool isAttacking = isInAttack || isInSecondaryWeapon;
+
+		if (!isAttacking)
 		{
 			UpdateDirect(m_userXInput);
 		}
@@ -140,7 +149,7 @@ public class PlayerMovement : MovementComponent
 			OnEnterFallStateFromIdle();
 			return;
 		}
-		else if (m_userJump && isOnGround && !isInAttack)
+		else if (m_userJump && isOnGround && !isAttacking)
 		{
 			m_movementState = MovementState.jump;
 			OnEnterJumpState();
@@ -149,7 +158,7 @@ public class PlayerMovement : MovementComponent
 
 		TryBufferAttack(m_attackComponent.IsInAttack(), m_userXInput);
 
-		if (!isInAttack)
+		if (!isAttacking)
 		{
 			if(m_stairObject && m_stairComponent)
             {
@@ -201,6 +210,11 @@ public class PlayerMovement : MovementComponent
             {
 				m_attackComponent.OnAttackInterrupt();
 			}
+		}
+
+		if(m_secondaryWeapon.IsInSecondaryWeaponAttack())
+        {
+			m_secondaryWeapon.CarryOverAttack();
 		}
 
 		ClearAttackBuffer();
@@ -380,8 +394,11 @@ public class PlayerMovement : MovementComponent
 		Vector2 movement = m_stairComponent.CalculateOnStairMovement(userInput, m_moveSpeed);
 
 		bool isInAttack = m_attackComponent.IsInAttack();
+		bool isInSecondaryWeapon = m_secondaryWeapon.IsInSecondaryWeaponAttack();
 
-		if (m_userJump && !isInAttack)
+		bool isAttacking = isInAttack || isInSecondaryWeapon;
+
+		if (m_userJump && !isAttacking)
 		{
 			m_movementState = MovementState.jump;
 			UpdateDirect(movement.x);
@@ -392,7 +409,7 @@ public class PlayerMovement : MovementComponent
 
 		TryBufferAttack();
 
-		if (!isInAttack)
+		if (!isAttacking)
         {
 			UpdateDirect(movement.x);
 			Move(movement);
@@ -520,8 +537,6 @@ public class PlayerMovement : MovementComponent
 	GameObject m_stairObject;
 	StairComponent m_stairComponent;
 
-	SecondaryWeaponManagerComponent m_secondaryWeapon;
-
 	float _gravity;
 
 	float m_userXInput = 0f;
@@ -531,9 +546,6 @@ public class PlayerMovement : MovementComponent
 
 	bool m_userJump = false;
 	bool m_userJumpDownLastFrame = false;
-
-	bool m_userSecondaryAttack = false;
-	bool m_userSecondaryAttackDownLastFrame = false;
 
 	bool m_shouldDie = false;
 	bool m_controlable = true;

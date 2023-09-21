@@ -43886,6 +43886,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 237255044978664019, guid: 46af028c770577a4b85d22a9340db2f7, type: 3}
+      propertyPath: m_dropObject
+      value: 
+      objectReference: {fileID: 7279518626750307788, guid: d0ec6f6b0df67134e80f72bd090bfd0d, type: 3}
     - target: {fileID: 237255044978664023, guid: 46af028c770577a4b85d22a9340db2f7, type: 3}
       propertyPath: m_Name
       value: Candle (3)
