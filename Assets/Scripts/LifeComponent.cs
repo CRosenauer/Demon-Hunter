@@ -27,6 +27,11 @@ public class LifeComponent : MonoBehaviour
         return m_maxHealth;
     }
 
+    public bool IsInvulnerable()
+    {
+        return m_dead;
+    }
+
     void Start()
     {
         m_spriteRenderer = GetComponent<SpriteRenderer>();
@@ -117,6 +122,7 @@ public class LifeComponent : MonoBehaviour
 
         if (m_currentHealth <= 0)
         {
+            m_dead = true;
             BroadcastMessage("OnDeath");
         }
 
@@ -136,4 +142,6 @@ public class LifeComponent : MonoBehaviour
 
     int m_currentHealth;
     bool m_enable;
+
+    bool m_dead = false;
 }

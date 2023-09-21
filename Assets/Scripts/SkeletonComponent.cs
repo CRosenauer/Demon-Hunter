@@ -22,12 +22,15 @@ public class SkeletonComponent : MovementComponent
 
 		m_persistentHitboxComponent = GetComponent<PersistentHitboxComponent>();
 		m_lifeComponent = GetComponent<LifeComponent>();
+		Collider2D collider = GetComponent<Collider2D>();
 
 		Debug.Assert(m_persistentHitboxComponent);
 		Debug.Assert(m_lifeComponent);
 
 		m_lifeComponent.SetActive(false);
 		m_persistentHitboxComponent.SetActive(false);
+		collider.enabled = false;
+		m_rbody.bodyType = RigidbodyType2D.Static;
 
 		m_movementState = MovementState.init;
 	}
@@ -99,6 +102,10 @@ public class SkeletonComponent : MovementComponent
     {
 		m_lifeComponent.SetActive(true);
 		m_persistentHitboxComponent.SetActive(true);
+
+		Collider2D collider = GetComponent<Collider2D>();
+		collider.enabled = true;
+		m_rbody.bodyType = RigidbodyType2D.Dynamic;
 	}
 
 	protected virtual void OnIdleState()
