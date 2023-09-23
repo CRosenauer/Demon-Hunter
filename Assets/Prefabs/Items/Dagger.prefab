@@ -173,7 +173,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: df5a2a0ec1535de4cb0337dfa0928840, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_triggerBox: {fileID: 4625230928420806941}
   m_item: {fileID: 11400000, guid: 013a4690b5f7b5e48b2ec56907ca670d, type: 2}
   m_callback: 0
   m_quantity: 0

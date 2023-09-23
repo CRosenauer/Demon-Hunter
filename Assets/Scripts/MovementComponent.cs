@@ -145,7 +145,29 @@ public class MovementComponent : MonoBehaviour
     {
         const float distancePadding = 1f;
 
-        Vector3 screenPos = Camera.current.WorldToScreenPoint(transform.position);
+        Vector3 screenPos = Camera.main.WorldToScreenPoint(transform.position);
+
+        if (screenPos.x == Mathf.Clamp(screenPos.x, -distancePadding, Screen.width + distancePadding))
+        {
+            if (screenPos.y == Mathf.Clamp(screenPos.y, -distancePadding, Screen.height + distancePadding))
+            {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    public static bool IsWithinCameraFrustum(Transform transform)
+    {
+        const float distancePadding = 1f;
+
+        if(!Camera.main)
+        {
+            return false;
+        }
+
+        Vector3 screenPos = Camera.main.WorldToScreenPoint(transform.position);
 
         if (screenPos.x == Mathf.Clamp(screenPos.x, -distancePadding, Screen.width + distancePadding))
         {
