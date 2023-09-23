@@ -267,12 +267,8 @@ public class TransitionDoorComponent : MonoBehaviour
         SceneManager.MoveGameObjectToScene(m_player, loadedScene);
         SceneManager.MoveGameObjectToScene(m_camera.gameObject, loadedScene);
 
-        GameObject[] coreObjects = GameObject.FindGameObjectsWithTag("Core");
-
-        foreach(GameObject obj in coreObjects)
-        {
-            SceneManager.MoveGameObjectToScene(obj, loadedScene);
-        }
+        GameObject obj = GameObject.Find("Core(Clone)");
+        SceneManager.MoveGameObjectToScene(obj, loadedScene);
     }
 
     void UnloadPreviousLevel()
