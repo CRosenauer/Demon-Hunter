@@ -37,23 +37,6 @@ public class RedSkeletonComponent : MovementComponent
 		m_stateTimer = Random.Range(m_minThrowTime, m_maxThrowTime);
 	}
 
-	bool IsWithinCameraFrustum()
-    {
-		const float distancePadding = 1f;
-
-		Vector3 screenPos = Camera.current.WorldToScreenPoint(transform.position);
-
-		if(screenPos.x == Mathf.Clamp(screenPos.x, -distancePadding, Screen.width + distancePadding))
-        {
-			if(screenPos.y == Mathf.Clamp(screenPos.y, -distancePadding, Screen.height + distancePadding))
-            {
-				return true;
-            }
-        }
-
-		return false;
-	}
-
 	void FixedUpdate()
 	{
 		QueryOnGround();

@@ -46,24 +46,31 @@ public class PersistentHitboxComponent : MonoBehaviour
             }
         }
 
-        if (m_enable)
+        Vector2 playerBasePos = new(transform.position.x, transform.position.y);
+        Vector2 hitboxOffset = m_collisionOffset;
+        Collider2D[] colliders = Physics2D.OverlapBoxAll(playerBasePos + hitboxOffset, m_collisionBounds, 0f, m_hitBoxQueryLayer);
+
+        bool hitSomething = false;
+
+        foreach (Collider2D collider in colliders)
         {
-            Vector2 playerBasePos = new(transform.position.x, transform.position.y);
-            Vector2 hitboxOffset = m_collisionOffset;
-            Collider2D[] colliders = Physics2D.OverlapBoxAll(playerBasePos + hitboxOffset, m_collisionBounds, 0f, m_hitBoxQueryLayer);
+            LifeComponent lifeComponent = collider.GetComponent<LifeComponent>();
 
-            bool hitSomething = false;
-
-            foreach (Collider2D collider in colliders)
+            if(lifeComponent)
             {
-                hitSomething = true;
-                AttackComponent.Hit(collider, m_damage);
+                if(lifeComponent.IsInvulnerable())
+                {
+                     continue;
+                }
             }
 
-            if(hitSomething)
-            {
-                BroadcastMessage("OnHitOther");
-            }
+            hitSomething = true;
+            AttackComponent.Hit(collider, m_damage);
+        }
+
+        if(hitSomething)
+        {
+            BroadcastMessage("OnHitOther");
         }
     }
 

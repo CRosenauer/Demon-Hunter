@@ -99,7 +99,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_trackingObject: {fileID: 0}
   m_trackingAxis: 0
-  m_cameraPositionOffset: {x: 1, y: 0, z: 0}
+  m_cameraPositionOffset: {x: 0.5, y: 0, z: 0}
   m_minPosition: 0
-  m_maxPosition: 23
+  m_maxPosition: 83.38
+  m_boundLimitEnabled: 1
   m_offsetBuffer: 0.5
+  m_movementMode: 0
