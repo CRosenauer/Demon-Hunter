@@ -136,6 +136,21 @@ public class LifeComponent : MonoBehaviour
         m_spriteRenderer.material = m_defaultSpriteMaterial;
     }
 
+    IEnumerator ClearFlicker()
+    {
+        m_spriteRenderer.material = m_hitMaterial;
+        yield return new WaitForSecondsRealtime(1f/30f);
+        m_spriteRenderer.material = m_defaultSpriteMaterial;
+        yield return new WaitForSecondsRealtime(1f / 30f);
+
+        StartCoroutine(ClearFlicker());
+    }
+
+    void OnClear()
+    {
+        StartCoroutine(ClearFlicker());
+    }
+
     Coroutine materialHitReactionCoroutine;
 
     float m_disableTimer;

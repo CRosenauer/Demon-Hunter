@@ -26,7 +26,7 @@ public class BookComponent : SecondaryWeaponComponent
             if (MovementComponent.IsWithinCameraFrustum(enemy.transform))
             {
                 onScreenEnemies.Add(enemy);
-                Destroy(enemy);
+                enemy.BroadcastMessage("OnClear");
             }
         }
 
