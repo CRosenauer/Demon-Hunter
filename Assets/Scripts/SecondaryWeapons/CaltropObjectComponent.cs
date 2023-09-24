@@ -27,7 +27,7 @@ public class CaltropObjectComponent : MovementComponent
         int contactCount = m_rbody.GetContacts(contacts);
         if (contactCount > 0)
         {
-            m_rbody.constraints = RigidbodyConstraints2D.FreezeAll;
+            m_rbody.constraints = RigidbodyConstraints2D.FreezePositionX | RigidbodyConstraints2D.FreezeRotation;
             return;
         }
 
