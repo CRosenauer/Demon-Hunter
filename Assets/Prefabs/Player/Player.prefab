@@ -194,7 +194,7 @@ MonoBehaviour:
   m_weaponSoundEffectSource: {fileID: 740146829}
   m_hitBoxQueryLayer:
     serializedVersion: 2
-    m_Bits: 256
+    m_Bits: 33024
   m_movementStates: 0100000002000000030000000400000009000000
   m_attackComponents:
   - {fileID: 11400000, guid: 9ec154866f41b954e9d46b7808bb4dbb, type: 2}

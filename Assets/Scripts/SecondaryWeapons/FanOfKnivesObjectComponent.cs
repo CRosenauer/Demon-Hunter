@@ -31,7 +31,14 @@ public class FanOfKnivesObjectComponent : MovementComponent
 
     void OnHitOther()
     {
-        m_destructionCoroutine = StartCoroutine(SetupDestroy());
+        Collider2D collider = GetComponent<Collider2D>();
+
+        // hit something but is not touching destructible means we must have touched an enemy
+        // er go destroy this!
+        if(!collider.IsTouchingLayers(LayerMask.NameToLayer("Destructible")))
+        {
+            m_destructionCoroutine = StartCoroutine(SetupDestroy());
+        }
     }
 
     IEnumerator DeathTimer()
