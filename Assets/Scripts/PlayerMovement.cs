@@ -17,6 +17,9 @@ public class PlayerMovement : MovementComponent
 	[SerializeField] float m_moveSpeed;
 	[SerializeField] float m_jumpSpeed;
 
+	public delegate void PlayerDeath();
+	public event PlayerDeath OnPlayerDeath;
+
 	// Start is called before the first frame update
 	void Start()
 	{
@@ -316,12 +319,16 @@ public class PlayerMovement : MovementComponent
 		Move(Vector2.zero);
 		m_animator.SetTrigger("OnDeath");
 		BroadcastMessage("OnDisableHurtbox");
+
+		if (OnPlayerDeath != null)
+		{
+			OnPlayerDeath();
+		}
 	}
 
 	void OnDeadState()
 	{
-		// hack. prob doesnt matter?
-		// m_animator.ResetTrigger("OnDeath");
+		// placeholder. could need it later
 	}
 
 	void OnDeathFallState()

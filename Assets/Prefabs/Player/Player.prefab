@@ -519,4 +519,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eea4cf6ed4210a343b379793d3222792, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_secondaryWeaponUsageSound: {fileID: 740146829}
   m_maxMana: 20

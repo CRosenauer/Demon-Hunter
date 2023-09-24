@@ -4,12 +4,16 @@ using UnityEngine;
 
 public class MenuNavigator : MonoBehaviour
 {
+    [SerializeField] GameObject m_menuPages;
+
     [SerializeField] List<GameObject> m_menuItems;
     [SerializeField] GameObject m_menuPointer;
 
     [SerializeField] GameObject m_systemManager;
 
     [SerializeField] AudioSource m_menuSoundSource;
+
+    [SerializeField] GameObject m_returnMenu;
 
     const float k_axisThreshold = 0.1f;
 
@@ -24,6 +28,12 @@ public class MenuNavigator : MonoBehaviour
 
         ResetCursorPosition();
         m_maxCursorPosistion = m_menuItems.Count;
+    }
+
+    void OnEnable()
+    {
+        m_submitLastFrame = true;
+        m_cancelLastFrame = true;
     }
 
     // Update is called once per frame
@@ -51,7 +61,7 @@ public class MenuNavigator : MonoBehaviour
 
         if (cancel && !m_cancelLastFrame)
         {
-            OnQuit();
+            OnReturnMenu();
         }
 
         m_horizontalLastFrame = horizontalInput;
@@ -99,9 +109,16 @@ public class MenuNavigator : MonoBehaviour
         UpdateCursorPosition();
     }
 
-    void OnQuit()
+    void OnReturnMenu()
     {
-        Application.Quit();
+        if(m_returnMenu)
+        {
+            m_menuPages.SendMessage("OpenMenuPage", m_returnMenu);
+        }
+        else
+        {
+            m_systemManager.SendMessage("TogglePause");
+        }
     }
 
     float m_horizontalLastFrame;

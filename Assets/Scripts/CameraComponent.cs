@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class CameraComponent : MonoBehaviour
 {
-    enum TrackingAxis
+    public enum TrackingAxis
     {
         X,
         Y
@@ -130,13 +130,34 @@ public class CameraComponent : MonoBehaviour
         m_trackingObject = obj;
     }
 
-    void ChangeCameraMovementMode(CameraMovementMode movementMode)
+    void SetTrackingAxis(TrackingAxis trackingAxis)
     {
-        m_movementMode = movementMode;
+        m_trackingAxis = trackingAxis;
+    }
+
+    void SetOffsetPosition(Vector3 offset)
+    {
+        m_cameraPositionOffset = offset;
+    }
+
+    void SetPositionBounds(Vector2 bounds)
+    {
+        m_minPosition = bounds.x;
+        m_maxPosition = bounds.y;
     }
 
     void EnableCameraBounds(bool enable)
     {
         m_boundLimitEnabled = enable;
+    }
+
+    void SetOffsetBuffer(float buffer)
+    {
+        m_offsetBuffer = buffer;
+    }
+
+    void ChangeCameraMovementMode(CameraMovementMode movementMode)
+    {
+        m_movementMode = movementMode;
     }
 }
