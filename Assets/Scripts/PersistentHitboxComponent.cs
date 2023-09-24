@@ -46,6 +46,8 @@ public class PersistentHitboxComponent : MonoBehaviour
             }
         }
 
+        int touchingLayers = 0;
+
         Vector2 playerBasePos = new(transform.position.x, transform.position.y);
         Vector2 hitboxOffset = m_collisionOffset;
         Collider2D[] colliders = Physics2D.OverlapBoxAll(playerBasePos + hitboxOffset, m_collisionBounds, 0f, m_hitBoxQueryLayer);
@@ -54,6 +56,8 @@ public class PersistentHitboxComponent : MonoBehaviour
 
         foreach (Collider2D collider in colliders)
         {
+            touchingLayers = touchingLayers | (1 << collider.gameObject.layer);
+
             LifeComponent lifeComponent = collider.GetComponent<LifeComponent>();
 
             if(lifeComponent)
@@ -70,7 +74,7 @@ public class PersistentHitboxComponent : MonoBehaviour
 
         if(hitSomething)
         {
-            BroadcastMessage("OnHitOther");
+            BroadcastMessage("OnHitOther", touchingLayers);
         }
     }
 

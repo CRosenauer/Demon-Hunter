@@ -15,7 +15,7 @@ public class EnergyBallComponent : MonoBehaviour
         m_rbody.velocity = m_direction.normalized * m_speed;
     }
 
-    void OnHitOther()
+    void OnHitOther(int layerMask)
     {
         Destroy(gameObject);
     }

@@ -35,7 +35,7 @@ public class RedBoneComponent : MovementComponent
         }
     }
 
-    void OnHitOther()
+    void OnHitOther(int layerMask)
     {
         Destroy(gameObject);
     }

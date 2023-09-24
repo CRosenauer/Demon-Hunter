@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5243948953169607269}
   - component: {fileID: 5243948953169607274}
-  m_Layer: 0
+  m_Layer: 15
   m_Name: Village_172
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -97,7 +97,7 @@ GameObject:
   - component: {fileID: 5243948953346827963}
   - component: {fileID: 5243948953346827962}
   - component: {fileID: 5243948953346827961}
-  m_Layer: 8
+  m_Layer: 15
   m_Name: Lamp
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -243,7 +243,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5243948953981510844}
   - component: {fileID: 5243948953981510845}
-  m_Layer: 0
+  m_Layer: 15
   m_Name: Village_198
   m_TagString: Untagged
   m_Icon: {fileID: 0}

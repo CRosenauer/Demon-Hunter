@@ -15,6 +15,13 @@ public class Bootstrap : MonoBehaviour
     {
         GameObject player = CheckObjectExistance("Player", m_playerPrefab);
 
+        GameObject[] enemies = GameObject.FindGameObjectsWithTag("Enemy");
+
+        foreach(GameObject enemy in enemies)
+        {
+            enemy.SendMessage("SetPlayer", player);
+        }
+
         CheckObjectExistance("MainCamera", m_cameraPrefab);
         CameraBootstrap.LoadCameraParams();
 

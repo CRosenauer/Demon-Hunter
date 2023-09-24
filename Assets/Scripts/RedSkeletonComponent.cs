@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class RedSkeletonComponent : MovementComponent
+public class RedSkeletonComponent : EnemyComponent
 {
 	[SerializeField] bool m_shouldDespawn;
 	[Space]
@@ -139,8 +139,6 @@ public class RedSkeletonComponent : MovementComponent
 			spawnedBone.transform.SetParent(transform.parent);
 		}
 	}
-
-	GameObject m_player;
 
 	float m_stateTimer;
 	float m_boneThrowTimer;

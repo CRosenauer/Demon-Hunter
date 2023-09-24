@@ -46,7 +46,7 @@ public class CaltropObjectComponent : MovementComponent
         Move(movementVector);
     }
 
-    void OnHitOther()
+    void OnHitOther(int layerMask)
     {
         m_audioSource.Play();
     }

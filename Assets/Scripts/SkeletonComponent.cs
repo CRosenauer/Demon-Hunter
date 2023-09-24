@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SkeletonComponent : MovementComponent
+public class SkeletonComponent : EnemyComponent
 {
 	[SerializeField] bool m_shouldDespawn;
 	[Space]
@@ -173,8 +173,6 @@ public class SkeletonComponent : MovementComponent
 		Destroy(gameObject, 1f);
 		m_animator.SetTrigger("OnDeath");
     }
-
-    GameObject m_player;
 
 	protected PersistentHitboxComponent m_persistentHitboxComponent;
 	protected LifeComponent m_lifeComponent;

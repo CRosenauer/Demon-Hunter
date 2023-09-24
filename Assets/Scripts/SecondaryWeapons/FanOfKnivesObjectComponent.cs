@@ -29,15 +29,21 @@ public class FanOfKnivesObjectComponent : MovementComponent
         }
     }
 
-    void OnHitOther()
+    void OnHitOther(int layerMask)
     {
-        Collider2D collider = GetComponent<Collider2D>();
-
         // hit something but is not touching destructible means we must have touched an enemy
         // er go destroy this!
-        if(!collider.IsTouchingLayers(LayerMask.NameToLayer("Destructible")))
+
+        int destructibleMask = LayerMask.NameToLayer("Destructible");
+        destructibleMask = 1 << destructibleMask;
+
+        if ((layerMask & destructibleMask) == 0)
         {
             m_destructionCoroutine = StartCoroutine(SetupDestroy());
+        }
+        else
+        {
+            m_audioSource.Play();
         }
     }
 
