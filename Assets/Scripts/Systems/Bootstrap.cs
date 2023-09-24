@@ -13,8 +13,10 @@ public class Bootstrap : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        CheckObjectExistance("MainCamera", m_cameraPrefab);
         GameObject player = CheckObjectExistance("Player", m_playerPrefab);
+
+        CheckObjectExistance("MainCamera", m_cameraPrefab);
+        CameraBootstrap.LoadCameraParams();
 
         if(player)
         {
@@ -26,7 +28,7 @@ public class Bootstrap : MonoBehaviour
             }
         }
 
-        CheckCoreExistance("Core", m_corePrefab);
+        CheckCoreExistance("Core(Clone)", m_corePrefab);
     }
 
     GameObject CheckObjectExistance(string tag, GameObject fallbackSpawnedObject)

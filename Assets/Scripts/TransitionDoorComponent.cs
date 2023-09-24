@@ -221,6 +221,7 @@ public class TransitionDoorComponent : MonoBehaviour
         enabled = false;
 
         RebaseGameObjects();
+        CameraBootstrap.LoadCameraParams();
         UnloadPreviousLevel();
     }
 
