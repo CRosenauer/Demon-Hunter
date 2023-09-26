@@ -175,6 +175,7 @@ SpriteAtlas:
   - {fileID: -315308173, guid: 3b1cba2899daa1e4ba45be6ea813b5a6, type: 3}
   - {fileID: 241340934, guid: 3b1cba2899daa1e4ba45be6ea813b5a6, type: 3}
   - {fileID: 2055692562, guid: 3b1cba2899daa1e4ba45be6ea813b5a6, type: 3}
+  - {fileID: 282798942, guid: 3b1cba2899daa1e4ba45be6ea813b5a6, type: 3}
   - {fileID: -1654040752, guid: 3b1cba2899daa1e4ba45be6ea813b5a6, type: 3}
   - {fileID: -875263657, guid: 3b1cba2899daa1e4ba45be6ea813b5a6, type: 3}
   - {fileID: 1112659203, guid: 3b1cba2899daa1e4ba45be6ea813b5a6, type: 3}
@@ -222,6 +223,7 @@ SpriteAtlas:
   - {fileID: -2011816060, guid: 3b1cba2899daa1e4ba45be6ea813b5a6, type: 3}
   - {fileID: 2053286677, guid: 3b1cba2899daa1e4ba45be6ea813b5a6, type: 3}
   - {fileID: -556491011, guid: 3b1cba2899daa1e4ba45be6ea813b5a6, type: 3}
+  - {fileID: 1357369574, guid: 3b1cba2899daa1e4ba45be6ea813b5a6, type: 3}
   - {fileID: 1108256813, guid: 3b1cba2899daa1e4ba45be6ea813b5a6, type: 3}
   - {fileID: -2046349896, guid: 3b1cba2899daa1e4ba45be6ea813b5a6, type: 3}
   - {fileID: 1326901918, guid: 3b1cba2899daa1e4ba45be6ea813b5a6, type: 3}
@@ -613,6 +615,7 @@ SpriteAtlas:
   - Village_425
   - Village_414
   - Village_422
+  - Village_438
   - Village_318
   - Village_423
   - Village_361
@@ -660,6 +663,7 @@ SpriteAtlas:
   - Village_205
   - Village_219
   - Village_299
+  - Village_437
   - Village_202
   - Village_218
   - Village_298

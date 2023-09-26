@@ -105,14 +105,12 @@ public class StairComponent : MonoBehaviour
 
     void OnEnterStair()
     {
-        BoxCollider2D upperCollider = m_upperCollider.GetComponent<BoxCollider2D>();
-        upperCollider.enabled = false;
+        m_upperCollider.SetActive(false);
     }
 
     void OnExitStair()
     {
-        BoxCollider2D upperCollider = m_upperCollider.GetComponent<BoxCollider2D>();
-        upperCollider.enabled = true;
+        m_upperCollider.SetActive(true);
     }
 
     // why are we even passing anything?
