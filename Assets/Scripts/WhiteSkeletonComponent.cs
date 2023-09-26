@@ -10,7 +10,7 @@ public class WhiteSkeletonComponent : SkeletonComponent
     {
         if(IsOnWall())
         {
-            UpdateDirection(m_direction == Direction.left ? Direction.right : Direction.left);
+            // UpdateDirection(m_direction == Direction.left ? Direction.right : Direction.left);
         }
 
         base.OnIdleState();
@@ -52,7 +52,7 @@ public class WhiteSkeletonComponent : SkeletonComponent
         List<ContactPoint2D> contacts = new List<ContactPoint2D>();
         m_rbody.GetContacts(contacts);
 
-        Vector2 compareVector = m_direction == Direction.left ? Vector2.left : Vector2.right;
+        Vector2 compareVector = Vector2.right * transform.localScale.x;
 
         foreach (ContactPoint2D contact in contacts)
         {

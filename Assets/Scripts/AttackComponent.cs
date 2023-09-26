@@ -44,10 +44,7 @@ public class AttackComponent : MonoBehaviour
             Vector2 playerBasePos = new(transform.position.x, transform.position.y);
             Vector2 hitboxOffset = m_currentAttack.m_collisionOffset;
 
-            if (m_playerMovementComponent.GetDirection() == MovementComponent.Direction.left)
-            {
-                hitboxOffset.x = -hitboxOffset.x;
-            }
+            hitboxOffset.x = hitboxOffset.x * transform.localScale.x;
 
             Collider2D[] colliders = Physics2D.OverlapBoxAll(playerBasePos + hitboxOffset, m_currentAttack.m_collisionBounds, 0f, m_hitBoxQueryLayer);
 
@@ -70,10 +67,7 @@ public class AttackComponent : MonoBehaviour
 
                 Vector3 hitboxOffset = new(m_currentAttack.m_collisionOffset.x, m_currentAttack.m_collisionOffset.y, 0f);
 
-                if (m_playerMovementComponent.GetDirection() == MovementComponent.Direction.left)
-                {
-                    hitboxOffset.x = -hitboxOffset.x;
-                }
+                hitboxOffset.x = hitboxOffset.x * transform.localScale.x;
 
                 Vector3 hitboxBounds = new(m_currentAttack.m_collisionBounds.x, m_currentAttack.m_collisionBounds.y, 1f);
                 Gizmos.DrawCube(transform.position + hitboxOffset, hitboxBounds);
