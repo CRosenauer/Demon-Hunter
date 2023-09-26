@@ -4,10 +4,17 @@ using UnityEngine;
 
 public class EnemyComponent : MovementComponent
 {
-    void SetPlayer(GameObject player)
+    protected void SetPlayer(GameObject player)
     {
         m_player = player;
-    }
+	}
 
-    protected GameObject m_player;
+	protected void QueryDirectionToPlayer()
+	{
+		float xToPlayer = m_player.transform.position.x - transform.position.x;
+
+		UpdateDirection(xToPlayer);
+	}
+
+	protected GameObject m_player;
 }

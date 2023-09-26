@@ -83,21 +83,6 @@ public class SkeletonComponent : EnemyComponent
 		m_movementState = MovementState.spawn;
 	}
 
-	protected void QueryDirectionToPlayer()
-    {
-		float xToPlayer = transform.position.x - m_player.transform.position.x;
-
-		if (xToPlayer >= 0)
-		{
-			UpdateDirection(-1f);
-
-		}
-		else
-		{
-			UpdateDirection(1f);
-		}
-	}
-
 	void OnEnterIdleState()
     {
 		m_lifeComponent.SetActive(true);
