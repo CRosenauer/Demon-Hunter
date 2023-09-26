@@ -4,10 +4,12 @@ using UnityEngine;
 
 public class SpawnerComponent : MonoBehaviour
 {
-    const int m_enemyLimit = 10;
+    const int m_enemyLimit = 15;
 
     [SerializeField] GameObject m_spawnedObject;
     [Space]
+
+    [SerializeField] List<SpawnPattern> m_spawnPatterns;
 
     [SerializeField] float m_minTime;
     [SerializeField] float m_maxTime;
@@ -49,12 +51,31 @@ public class SpawnerComponent : MonoBehaviour
                 position.y = m_yPos;
                 position.z = 0f;
 
-                GameObject spawnedEnemy = Instantiate(m_spawnedObject, position, Quaternion.identity);
-                m_spawnedEnemies.Add(spawnedEnemy);
-                spawnedEnemy.transform.SetParent(transform.parent);
+                if (m_spawnPatterns.Count == 0)
+                {
+                    SpawnEnemy(m_spawnedObject, position);
+                }
+                else
+                {
+                    int spawnPatternIndex = Random.Range(0, m_spawnPatterns.Count);
 
+                    SpawnPattern spawnPattern = m_spawnPatterns[spawnPatternIndex];
 
-                if (m_spawnedEnemies.Count > m_enemyLimit)
+                    foreach(Vector3 offset in spawnPattern.m_positionOffsets)
+                    {
+                        SpawnEnemy(m_spawnedObject, position + offset);
+                    }
+                }
+
+                for(int i = 0; i < m_spawnedEnemies.Count; ++i)
+                {
+                    if(!m_spawnedEnemies[i])
+                    {
+                        m_spawnedEnemies.RemoveAt(i);
+                    }
+                }
+
+                while (m_spawnedEnemies.Count > m_enemyLimit)
                 {
                     Destroy(m_spawnedEnemies[0]);
                     m_spawnedEnemies.RemoveAt(0);
@@ -67,13 +88,30 @@ public class SpawnerComponent : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D other)
     {
-        m_player = other.gameObject;
-        m_timer = Random.Range(m_minTime, m_maxTime);
+        LayerMask playerLayer = LayerMask.NameToLayer("Player");
+
+        if(other.gameObject.layer == playerLayer)
+        {
+            m_player = other.gameObject;
+            m_timer = Random.Range(m_minTime, m_maxTime);
+        }
     }
 
     void OnTriggerExit2D(Collider2D other)
     {
-        m_player = null;
+        LayerMask playerLayer = LayerMask.NameToLayer("Player");
+
+        if (other.gameObject.layer == playerLayer)
+        {
+            m_player = null;
+        }
+    }
+
+    void SpawnEnemy(GameObject enemy, Vector3 position)
+    {
+        GameObject spawnedEnemy = Instantiate(enemy, position, Quaternion.identity);
+        m_spawnedEnemies.Add(spawnedEnemy);
+        spawnedEnemy.transform.SetParent(transform.parent);
     }
 
     List<GameObject> m_spawnedEnemies = new();
