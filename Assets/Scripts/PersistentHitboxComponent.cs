@@ -86,10 +86,7 @@ public class PersistentHitboxComponent : MonoBehaviour
 
             Vector3 hitboxOffset = new(m_collisionOffset.x, m_collisionOffset.y, 0f);
 
-            if (m_movementComponent.GetDirection() == MovementComponent.Direction.left)
-            {
-                hitboxOffset.x = -hitboxOffset.x;
-            }
+            hitboxOffset.x = hitboxOffset.x * transform.localScale.x;
 
             Vector3 hitboxBounds = new(m_collisionBounds.x, m_collisionBounds.y, 1f);
             Gizmos.DrawCube(transform.position + hitboxOffset, hitboxBounds);

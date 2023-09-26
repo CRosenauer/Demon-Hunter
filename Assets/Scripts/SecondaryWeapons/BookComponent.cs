@@ -5,9 +5,8 @@ using UnityEngine;
 [RequireComponent(typeof(AudioSource))]
 public class BookComponent : SecondaryWeaponComponent
 {
-    public override void OnSpawn(MovementComponent.Direction direction)
+    public override void OnSpawn(float direction)
     {
-
         m_audioSource = GetComponent<AudioSource>();
 
         GameObject[] enemies = GameObject.FindGameObjectsWithTag("Enemy");

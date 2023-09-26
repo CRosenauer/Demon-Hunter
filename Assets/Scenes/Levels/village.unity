@@ -571,6 +571,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: RedSkeleton (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 7548005075730308620, guid: e05a39fe5e00ada4290bdcbd6b935c1b, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 9072057440038164441, guid: e05a39fe5e00ada4290bdcbd6b935c1b, type: 3}
       propertyPath: m_shouldDespawn
       value: 0
@@ -59104,6 +59108,10 @@ PrefabInstance:
     - target: {fileID: 6129811760294143419, guid: 4a57be5d07ebb1b44afea7257f579a6b, type: 3}
       propertyPath: m_Name
       value: Bootstrap
+      objectReference: {fileID: 0}
+    - target: {fileID: 6129811760294143419, guid: 4a57be5d07ebb1b44afea7257f579a6b, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4a57be5d07ebb1b44afea7257f579a6b, type: 3}

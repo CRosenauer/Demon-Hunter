@@ -23,17 +23,6 @@ public class MovementComponent : MonoBehaviour
         secondaryWeapon,
     }
 
-    public enum Direction
-    {
-        right,
-        left
-    }
-
-    public Direction GetDirection()
-    {
-        return m_direction;
-    }
-
     // Start is called before the first frame update
     void Start()
     {
@@ -56,7 +45,7 @@ public class MovementComponent : MonoBehaviour
         Debug.Assert(m_attackComponent);
     }
 
-    protected void UpdateDirect(float direction)
+    protected void UpdateDirection(float direction)
     {
         if (Mathf.Approximately(direction, 0f))
         {
@@ -65,23 +54,9 @@ public class MovementComponent : MonoBehaviour
 
         direction = Mathf.Sign(direction);
 
-        if (direction == 1f)
-        {
-            m_direction = Direction.right;
-            m_spriteRenderer.flipX = false;
-        }
-        else if (direction == -1f)
-        {
-            m_direction = Direction.left;
-            m_spriteRenderer.flipX = true;
-        }
-    }
-
-    protected void UpdateDirection(Direction direction)
-    {
-        m_direction = direction;
-
-        m_spriteRenderer.flipX = direction == Direction.right ? true: false;
+        Vector3 scale = transform.localScale;
+        scale.x = direction;
+        transform.localScale = scale;
     }
 
     protected void QueryOnGround()
@@ -135,7 +110,7 @@ public class MovementComponent : MonoBehaviour
 
             if (updateDirection)
             {
-                UpdateDirect(direction);
+                UpdateDirection(direction);
             }
 
         }
@@ -218,8 +193,6 @@ public class MovementComponent : MonoBehaviour
     protected Animator m_animator;
     protected AttackComponent m_attackComponent;
     protected SecondaryWeaponManagerComponent m_secondaryWeapon;
-
-    protected Direction m_direction = Direction.right;
 
     protected bool m_isOnGround = true;
 

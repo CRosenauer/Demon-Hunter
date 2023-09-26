@@ -95,9 +95,7 @@ public class SecondaryWeaponManagerComponent : MonoBehaviour
 
         MovementComponent movementComponent = GetComponent<MovementComponent>();
 
-        MovementComponent.Direction direction = movementComponent ? movementComponent.GetDirection() : MovementComponent.Direction.left;
-
-        spawnedWeapon.BroadcastMessage("OnSpawn", direction);
+        spawnedWeapon.BroadcastMessage("OnSpawn", Mathf.Sign(transform.localScale.x));
     }
 
     void OnInterrupt()

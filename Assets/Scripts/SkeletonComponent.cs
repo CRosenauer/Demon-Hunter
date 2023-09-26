@@ -89,12 +89,12 @@ public class SkeletonComponent : EnemyComponent
 
 		if (xToPlayer >= 0)
 		{
-			UpdateDirection(Direction.left);
+			UpdateDirection(-1f);
 
 		}
 		else
 		{
-			UpdateDirection(Direction.right);
+			UpdateDirection(1f);
 		}
 	}
 
@@ -110,7 +110,7 @@ public class SkeletonComponent : EnemyComponent
 
 	protected virtual void OnIdleState()
 	{
-		Vector2 movement = m_direction == Direction.right ? Vector2.right : Vector2.left;
+		Vector2 movement = Vector2.right * transform.localScale.x;
 
 		movement = movement * m_moveSpeed;
 		movement.y = m_rbody.velocity.y;

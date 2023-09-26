@@ -19,7 +19,7 @@ public class RedBoneComponent : MovementComponent
         Debug.Assert(m_player);
 
         Vector3 thisToPlayer = m_player.transform.position - transform.position;
-        UpdateDirect(-thisToPlayer.x);
+        UpdateDirection(thisToPlayer.x);
 
         Vector2 velocity = new( thisToPlayer.x >= 0f ? m_xSpeed : -m_xSpeed, m_ySpeed);
         m_rbody.velocity = velocity;

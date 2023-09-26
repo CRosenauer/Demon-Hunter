@@ -80,7 +80,7 @@ public class RedSkeletonComponent : EnemyComponent
 		if(IsOnGround())
         {
 			Vector3 thisToPlayer = m_player.transform.position - transform.position;
-			UpdateDirect(-thisToPlayer.x);
+			UpdateDirection(thisToPlayer.x);
 
             m_animator.ResetTrigger("OnThrow");
 			m_animator.ResetTrigger("OnTallJump");

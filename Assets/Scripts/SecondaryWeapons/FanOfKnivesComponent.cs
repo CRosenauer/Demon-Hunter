@@ -7,22 +7,11 @@ public class FanOfKnivesComponent : SecondaryWeaponComponent
     [SerializeField] GameObject m_knifeObject;
     [SerializeField] List<float> m_kniveAngles;
 
-    void Update()
-    {
-        /* debug code
-        if(Input.GetButton("Special"))
-        {
-            PlayerMovement playerMovement = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerMovement>();
-            OnSpawn(playerMovement.GetDirection());
-        }
-        */
-    }
-
-    public override void OnSpawn(MovementComponent.Direction direction)
+    public override void OnSpawn(float direction)
     {
         foreach (float angle in m_kniveAngles)
         {
-            float correctedAngle = direction == MovementComponent.Direction.left ? 180f - angle : angle;
+            float correctedAngle = direction > 0f ? angle : 180f - angle;
 
             Quaternion orientation = Quaternion.AngleAxis(correctedAngle, Vector3.forward);
             Instantiate(m_knifeObject, transform.position, orientation, transform.parent);

@@ -141,7 +141,7 @@ public class PlayerMovement : MovementComponent
 
 		if (!isAttacking)
 		{
-			UpdateDirect(m_userXInput);
+			UpdateDirection(m_userXInput);
 		}
 
 		bool isOnGround = IsOnGround();
@@ -177,7 +177,7 @@ public class PlayerMovement : MovementComponent
 						return;
                     }
 
-					UpdateDirect(moveToStair.x);
+					UpdateDirection(moveToStair.x);
 					Move(moveToStair);
 
 					return;
@@ -283,10 +283,7 @@ public class PlayerMovement : MovementComponent
 	{
 		Vector2 knockbackVelocity = m_onHitKnockbackVelocity;
 
-		if(GetDirection() == Direction.left)
-        {
-			knockbackVelocity.x = -knockbackVelocity.x;
-		}
+		knockbackVelocity.x = knockbackVelocity.x * transform.localScale.x;
 
 		Move(knockbackVelocity);
 
@@ -408,7 +405,7 @@ public class PlayerMovement : MovementComponent
 		if (m_userJump && !isAttacking)
 		{
 			m_movementState = MovementState.jump;
-			UpdateDirect(movement.x);
+			UpdateDirection(movement.x);
 			OnExitWalkOnStairToPreJump();
 			OnEnterJumpState();
 			return;
@@ -418,7 +415,7 @@ public class PlayerMovement : MovementComponent
 
 		if (!isAttacking)
         {
-			UpdateDirect(movement.x);
+			UpdateDirection(movement.x);
 			Move(movement);
 		}
 		else
