@@ -110,6 +110,8 @@ public class SpawnerComponent : MonoBehaviour
     void SpawnEnemy(GameObject enemy, Vector3 position)
     {
         GameObject spawnedEnemy = Instantiate(enemy, position, Quaternion.identity);
+        spawnedEnemy.AddComponent<DespawnComponent>();
+        spawnedEnemy.SendMessage("SetDespawnTolerance", 200f);
         m_spawnedEnemies.Add(spawnedEnemy);
         spawnedEnemy.transform.SetParent(transform.parent);
     }
