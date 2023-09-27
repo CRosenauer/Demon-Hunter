@@ -50,16 +50,20 @@ public class CultistComponent : EnemyComponent
         Debug.Assert(m_ledgeCheckEnd);
         Debug.Assert(m_playerDetector);
 
-        Trigger2DSubscriber triggerDistributer = m_playerDetector.GetComponent<Trigger2DSubscriber>();
-        triggerDistributer.OnTriggerEnter += SetRetreatFlag;
-        triggerDistributer.OnTriggerExit += ResetRetreatFlag;
+        m_playerDetectorCollider = m_playerDetector.GetComponent<Collider2D>();
+        // triggerDistributer.OnTriggerEnter += SetRetreatFlag;
+        // triggerDistributer.OnTriggerExit += ResetRetreatFlag;
 
         GameObject player = GameObject.FindGameObjectWithTag("Player");
 
+        // failsafe. in some cases the player isnt cached immidately but the object needs it immediately
+        // player will be cached by the object after this point
         if(player)
         {
             SetPlayer(player);
         }
+
+        m_playerCollider = m_player.GetComponent<Collider2D>();
 
         QueryDirectionToPlayer();
 
@@ -122,7 +126,7 @@ public class CultistComponent : EnemyComponent
 
     void OnIdleState()
     {
-        if (m_shouldRetreat && !IsApprochingWall())
+        if (ShouldRetreat() && !IsApprochingWall())
         {
             m_state = CultistState.retreat;
             OnExitIdleState();
@@ -156,7 +160,7 @@ public class CultistComponent : EnemyComponent
     {
         MoveAwayFromPlayer();
 
-        if (!m_shouldRetreat || IsApprochingWall())
+        if (!ShouldRetreat() || IsApprochingWall())
         {
             OnExitRetreatState();
             OnEnterIdleState();
@@ -347,14 +351,9 @@ public class CultistComponent : EnemyComponent
         return away ? -deltaPosition : deltaPosition;
     }
 
-    void SetRetreatFlag()
+    bool ShouldRetreat()
     {
-        m_shouldRetreat = true;
-    }
-
-    void ResetRetreatFlag()
-    {
-         m_shouldRetreat = false;
+        return Physics2D.IsTouching(m_playerDetectorCollider, m_playerCollider);
     }
 
     // used by life component to signal this has died
@@ -394,10 +393,12 @@ public class CultistComponent : EnemyComponent
         m_attackTimerCoroutine = null;
     }
 
+    Collider2D m_playerDetectorCollider;
+    Collider2D m_playerCollider;
+
     Coroutine m_attackTimerCoroutine;
 
     CultistState m_state;
 
     bool m_shouldAttack = false;
-    bool m_shouldRetreat = false;
 }

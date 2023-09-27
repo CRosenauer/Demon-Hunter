@@ -381,7 +381,6 @@ GameObject:
   m_Component:
   - component: {fileID: 5452684265524348569}
   - component: {fileID: 1832041184709374229}
-  - component: {fileID: 7494327920226722718}
   m_Layer: 11
   m_Name: PlayerRetreatCheck
   m_TagString: Untagged
@@ -430,18 +429,6 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 6, y: 2}
   m_EdgeRadius: 0
---- !u!114 &7494327920226722718
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4028149182462234131}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5e621bb6e921e7644ada7473c0d6c0b8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &5143366024601879290
 GameObject:
   m_ObjectHideFlags: 0
