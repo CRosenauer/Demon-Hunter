@@ -15,7 +15,9 @@ GameObject:
   - component: {fileID: 908688970402592721}
   - component: {fileID: 908688970402592727}
   - component: {fileID: 908688970402592724}
-  m_Layer: 0
+  - component: {fileID: 4738614782676760832}
+  - component: {fileID: 3754060968011638631}
+  m_Layer: 12
   m_Name: RedBone
   m_TagString: Enemy
   m_Icon: {fileID: 0}
@@ -167,7 +169,7 @@ MonoBehaviour:
   m_hitBoxQueryLayer:
     serializedVersion: 2
     m_Bits: 64
-  m_collisionBounds: {x: 0, y: 0}
+  m_collisionBounds: {x: 0.25, y: 0.25}
   m_collisionOffset: {x: 0, y: 0}
   m_damage: 2
 --- !u!114 &908688970402592724
@@ -186,3 +188,28 @@ MonoBehaviour:
   m_activeDistance: 10
   m_xSpeed: 4
   m_ySpeed: 12
+--- !u!114 &4738614782676760832
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 908688970402592725}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 090e65daf4989f84eb5e4d57b6f62f9d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &3754060968011638631
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 908688970402592725}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4ad3fddc208d5d44296b6c7c56d7686e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_duration: 3

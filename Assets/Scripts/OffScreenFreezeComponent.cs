@@ -6,7 +6,6 @@ public class OffScreenFreezeComponent : FreezeComponent
 {
     void Start()
     {
-        InitializeComponents();
         Freeze();
     }
 

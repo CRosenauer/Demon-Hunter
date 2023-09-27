@@ -61339,10 +61339,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 7548005075730308614, guid: 9e4e940e15022554885e795b6429498a, type: 3}
-      propertyPath: m_shouldDespawn
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 7548005075730308620, guid: 9e4e940e15022554885e795b6429498a, type: 3}
       propertyPath: m_Name
       value: Skeleton

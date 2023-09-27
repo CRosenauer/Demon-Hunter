@@ -4,22 +4,11 @@ using UnityEngine;
 
 public class FreezeComponent : MonoBehaviour
 {
-    [SerializeField] public List<Behaviour> m_componentsToFreeze;
+    [SerializeField] public List<Behaviour> m_componentsToExclude;
 
     void Start()
     {
-        InitializeComponents();
-    }
-
-    protected void InitializeComponents()
-    {
-        if (m_componentsToFreeze.Count == 0)
-        {
-            foreach (MonoBehaviour component in gameObject.GetComponents<MonoBehaviour>())
-            {
-                m_componentsToFreeze.Add(component);
-            }
-        }
+        m_componentsToExclude.Add(this);
     }
 
     protected void Freeze()
@@ -30,9 +19,15 @@ public class FreezeComponent : MonoBehaviour
             movementComponent.SendMessage("FreezeMovement");
         }
 
-        foreach (MonoBehaviour component in m_componentsToFreeze)
+        Behaviour[] components = gameObject.GetComponents<Behaviour>();
+        foreach (Behaviour component in components)
         {
             component.enabled = false;
+        }
+
+        foreach (Behaviour component in m_componentsToExclude)
+        {
+            component.enabled = true;
         }
     }
 
@@ -44,7 +39,8 @@ public class FreezeComponent : MonoBehaviour
             movementComponent.SendMessage("UnfreezeMovement");
         }
 
-        foreach (MonoBehaviour component in m_componentsToFreeze)
+        Behaviour[] components = gameObject.GetComponents<Behaviour>();
+        foreach (Behaviour component in components)
         {
             component.enabled = true;
         }

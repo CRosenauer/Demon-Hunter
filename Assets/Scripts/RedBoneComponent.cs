@@ -22,16 +22,6 @@ public class RedBoneComponent : EnemyComponent
         m_rbody.velocity = velocity;
     }
 
-    void FixedUpdate()
-    {
-        Vector3 distSquared = transform.position - m_player.transform.position;
-
-        if (distSquared.sqrMagnitude > m_activeDistance * m_activeDistance)
-        {
-            Destroy(gameObject);
-        }
-    }
-
     void OnHitOther(int layerMask)
     {
         Destroy(gameObject);

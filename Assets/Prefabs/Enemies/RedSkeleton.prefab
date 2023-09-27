@@ -17,6 +17,8 @@ GameObject:
   - component: {fileID: 7548005075730308612}
   - component: {fileID: 7548005075730308615}
   - component: {fileID: 9072057440038164441}
+  - component: {fileID: 5551349853484132335}
+  - component: {fileID: 4625283125074809103}
   m_Layer: 8
   m_Name: RedSkeleton
   m_TagString: Enemy
@@ -227,7 +229,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_movementState: 0
-  m_shouldDespawn: 0
   m_bone: {fileID: 908688970402592725, guid: 68d592fc766b2724e9955bf57f45a1e8, type: 3}
   m_activeDistance: 10
   m_moveSpeed: 2
@@ -236,3 +237,32 @@ MonoBehaviour:
   m_tallJumpChance: 0.4
   m_minThrowTime: 0.5
   m_maxThrowTime: 1
+--- !u!114 &5551349853484132335
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7548005075730308620}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 25893652845253b489c58556d81e50d6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_componentsToExclude:
+  - {fileID: 5551349853484132335}
+  - {fileID: 7548005075730308612}
+--- !u!114 &4625283125074809103
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7548005075730308620}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ba0d7fc2e31b86a4fa80aa7c863a2328, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_componentsToExclude: []
+  m_freezeDuration: 0.033333335

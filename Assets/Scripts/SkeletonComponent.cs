@@ -4,9 +4,6 @@ using UnityEngine;
 
 public class SkeletonComponent : EnemyComponent
 {
-	[SerializeField] bool m_shouldDespawn;
-	[Space]
-
 	[SerializeField] float m_activeDistance;
 	[Space]
 
@@ -20,15 +17,12 @@ public class SkeletonComponent : EnemyComponent
 
 		m_persistentHitboxComponent = GetComponent<PersistentHitboxComponent>();
 		m_lifeComponent = GetComponent<LifeComponent>();
-		Collider2D collider = GetComponent<Collider2D>();
 
 		Debug.Assert(m_persistentHitboxComponent);
 		Debug.Assert(m_lifeComponent);
 
 		m_lifeComponent.SetActive(false);
 		m_persistentHitboxComponent.SetActive(false);
-		collider.enabled = false;
-		m_rbody.bodyType = RigidbodyType2D.Static;
 
 		m_movementState = MovementState.init;
 	}
@@ -38,37 +32,24 @@ public class SkeletonComponent : EnemyComponent
 	{
 		QueryOnGround();
 
-		Vector3 distSquared = transform.position - m_player.transform.position;
-
-		if(distSquared.sqrMagnitude < m_activeDistance * m_activeDistance)
-        {
-			switch (m_movementState)
-			{
-				case MovementState.init:
-					OnInitState();
-					break;
-				case MovementState.idle:
-					OnIdleState();
-					break;
-				case MovementState.damageKnockback:
-				 	OnDamageKnockbackState();
-				 	break;
-				case MovementState.dead:
-					OnDeadState();
-					break;
-				case MovementState.spawn:
-					OnSpawnState();
-					break;
-			}
+		switch (m_movementState)
+		{
+			case MovementState.init:
+				OnInitState();
+				break;
+			case MovementState.idle:
+				OnIdleState();
+				break;
+			case MovementState.damageKnockback:
+				OnDamageKnockbackState();
+				break;
+			case MovementState.dead:
+				OnDeadState();
+				break;
+			case MovementState.spawn:
+				OnSpawnState();
+				break;
 		}
-		else if(m_shouldDespawn && m_movementState != MovementState.init && distSquared.sqrMagnitude > 4 * m_activeDistance * m_activeDistance)
-        {
-			Destroy(gameObject);
-        }
-		else
-        {
-			Move(Vector2.zero);
-        }
 	}
 
 	void OnInitState()

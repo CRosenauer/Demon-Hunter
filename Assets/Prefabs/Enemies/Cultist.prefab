@@ -247,7 +247,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ba0d7fc2e31b86a4fa80aa7c863a2328, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_componentsToFreeze: []
+  m_componentsToExclude: []
   m_freezeDuration: 0.033333335
 --- !u!114 &6128318112931458223
 MonoBehaviour:
@@ -261,7 +261,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 25893652845253b489c58556d81e50d6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_componentsToFreeze: []
+  m_componentsToExclude:
+  - {fileID: 1513549560692225936}
+  - {fileID: 6128318112931458223}
 --- !u!114 &3781269413697798733
 MonoBehaviour:
   m_ObjectHideFlags: 0
