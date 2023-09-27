@@ -11,8 +11,6 @@ public class CaltropObjectComponent : MovementComponent
     // Start is called before the first frame update
     void Start()
     {
-        ComponentInit();
-
         m_movementDirection = transform.rotation * new Vector2(1f, 0f);
 
         Destroy(gameObject, m_deathTimer);

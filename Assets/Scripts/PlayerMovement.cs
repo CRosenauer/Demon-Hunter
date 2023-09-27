@@ -23,8 +23,6 @@ public class PlayerMovement : MovementComponent
 	// Start is called before the first frame update
 	void Start()
 	{
-		ComponentInit();
-
 		m_movementState = MovementState.init;
 
 		_gravity = m_rbody.gravityScale;

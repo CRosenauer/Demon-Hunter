@@ -12,8 +12,6 @@ public class FanOfKnivesObjectComponent : MovementComponent
     // Start is called before the first frame update
     void Start()
     {
-        ComponentInit();
-
         m_movementDirection = transform.rotation * new Vector2(1f, 0f);
 
         StartCoroutine(DeathTimer());

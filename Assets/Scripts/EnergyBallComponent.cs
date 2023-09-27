@@ -5,13 +5,12 @@ using UnityEngine;
 [RequireComponent(typeof(Rigidbody2D))]
 public class EnergyBallComponent : MonoBehaviour
 {
+    [SerializeField] Rigidbody2D m_rbody;
     [SerializeField] float m_speed;
 
-    void OnSetDirection(Vector3 targetPosition)
+    void OnSetDirection(Vector2 targetDirection)
     {
-        Vector3 thisToTarget = targetPosition - transform.position;
-
-        Vector2 m_direction = new(thisToTarget.x, thisToTarget.y);
+        Vector2 m_direction = new(targetDirection.x, 0);
         m_rbody.velocity = m_direction.normalized * m_speed;
     }
 
@@ -19,6 +18,4 @@ public class EnergyBallComponent : MonoBehaviour
     {
         Destroy(gameObject);
     }
-
-    Rigidbody2D m_rbody;
 }

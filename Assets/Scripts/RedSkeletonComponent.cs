@@ -27,8 +27,6 @@ public class RedSkeletonComponent : EnemyComponent
 	// Start is called before the first frame update
 	void Start()
     {
-		ComponentInit();
-
 		m_player = GameObject.FindGameObjectWithTag("Player");
 		Debug.Assert(m_player);
 

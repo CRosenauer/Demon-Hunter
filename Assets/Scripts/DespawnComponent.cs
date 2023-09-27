@@ -4,18 +4,8 @@ using UnityEngine;
 
 public class DespawnComponent : MonoBehaviour
 {
-    void Update()
+    void OnExitCamera()
     {
-        if(!MovementComponent.IsWithinCameraFrustum(gameObject.transform, m_tolerance))
-        {
-            Destroy(gameObject);
-        }
+        Destroy(gameObject);
     }
-
-    void SetDespawnTolerance(float f)
-    {
-        m_tolerance = f;
-    }
-
-    float m_tolerance = 0f;
 }

@@ -15,8 +15,6 @@ public class SkeletonComponent : EnemyComponent
 	// Start is called before the first frame update
 	protected virtual void Start()
 	{
-		ComponentInit();
-
 		m_player = GameObject.FindGameObjectWithTag("Player");
 		Debug.Assert(m_player);
 

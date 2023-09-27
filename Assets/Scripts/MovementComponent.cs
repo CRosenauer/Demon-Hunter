@@ -23,8 +23,7 @@ public class MovementComponent : MonoBehaviour
         secondaryWeapon,
     }
 
-    // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
         ComponentInit();
     }
@@ -94,6 +93,21 @@ public class MovementComponent : MonoBehaviour
         m_rbody.velocity = velocity;
 
         m_animator.SetFloat("Speed", Mathf.Abs(velocity.x));
+    }
+
+    void FreezeMovement()
+    {
+        if(!m_rbody)
+        {
+            m_rbody = GetComponent<Rigidbody2D>();
+        }
+
+        m_rbody.constraints = RigidbodyConstraints2D.FreezeAll;
+    }
+
+    void UnfreezeMovement()
+    {
+        m_rbody.constraints = RigidbodyConstraints2D.FreezeRotation;
     }
 
     protected void TryBufferAttack(bool updateDirection = false, float direction = 1)
