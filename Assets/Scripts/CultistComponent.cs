@@ -142,7 +142,9 @@ public class CultistComponent : EnemyComponent
             return;
         }
 
-        if (ShouldRetreat() && !IsWallBehind() && !IsLedgeBehind())
+        if (ShouldRetreat()
+            && !IsWallBehind(m_wallCheckBehindStart.transform.position, m_wallCheckBehindEnd.transform.position, m_physicsLayerMask)
+            && !IsLedgeBehind(m_ledgeBehindCheckStart.transform.position, m_ledgeBehindCheckEnd.transform.position, m_physicsLayerMask))
         {
             m_state = CultistState.retreat;
             OnExitIdleState();
@@ -185,7 +187,7 @@ public class CultistComponent : EnemyComponent
 
         MoveAwayFromPlayer();
 
-        if (!ShouldRetreat() || IsApprochingWall())
+        if (!ShouldRetreat() || IsApprochingWall(m_wallCheckBehindStart.transform.position, m_wallCheckBehindEnd.transform.position, m_physicsLayerMask))
         {
             OnExitRetreatState();
             OnEnterIdleState();
@@ -193,7 +195,7 @@ public class CultistComponent : EnemyComponent
             return;
         }
 
-        if(IsApproachingLedge())
+        if(IsApproachingLedge(m_ledgeCheckStart.transform.position, m_ledgeCheckEnd.transform.position, m_physicsLayerMask))
         {
             if(IsEscapePlatform())
             {
@@ -326,67 +328,18 @@ public class CultistComponent : EnemyComponent
 
     }
 
-    bool QueryStartEndRaycast(Vector2 startObjectPosition, Vector2 endObjectPosition)
-    {
-        Vector2 delta = endObjectPosition - startObjectPosition;
-
-        bool result = Physics2D.Raycast(startObjectPosition, delta.normalized, delta.magnitude, m_physicsLayerMask);
-        return result;
-    }
-
-    bool IsApproachingLedge()
-    {
-        bool result = !QueryStartEndRaycast(m_ledgeCheckStart.transform.position, m_ledgeCheckEnd.transform.position);
-        return result;
-    }
-
-    bool IsLedgeBehind()
-    {
-        bool result = !QueryStartEndRaycast(m_ledgeBehindCheckStart.transform.position, m_ledgeBehindCheckEnd.transform.position);
-        return result;
-    }
-
-    bool QueryPointOverlap(Vector2 point)
-    {
-        Collider2D wallOverlapCollider = Physics2D.OverlapPoint(point, m_physicsLayerMask);
-
-        return wallOverlapCollider;
-    }
-
-    bool IsApprochingWall()
-    {
-        bool result = IsWallBetweenPoints(m_wallCheckStart.transform.position, m_wallCheckEnd.transform.position);
-        return result;
-    }
-
-    bool IsWallBehind()
-    {
-        bool result = IsWallBetweenPoints(m_wallCheckBehindStart.transform.position, m_wallCheckBehindEnd.transform.position);
-        return result;
-    }
-
-    bool IsWallBetweenPoints(Vector2 start, Vector2 end)
-    {
-        if (QueryPointOverlap(start))
-        {
-            return true;
-        }
-
-        return QueryStartEndRaycast(start, end);
-    }
-
     bool IsEscapePlatform()
     {
         Vector3 startPos = m_escapePlatformCheckStart.transform.position;
         Vector3 endPos = m_escapePlatformCheckEnd.transform.position;
 
         // if the starting point in in a wall we assume the ledge is too high
-        if (QueryPointOverlap(startPos))
+        if (QueryPointOverlap(startPos, m_physicsLayerMask))
         {
             return false;
         }
 
-        return QueryStartEndRaycast(startPos, endPos);
+        return QueryStartEndRaycast(startPos, endPos, m_physicsLayerMask);
     }
 
     void MoveAwayFromPlayer()

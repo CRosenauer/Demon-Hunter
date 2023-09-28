@@ -4,10 +4,16 @@ using UnityEngine;
 
 public class SkeletonComponent : EnemyComponent
 {
+	[SerializeField] GameObject m_wallDetectorStart;
+	[SerializeField] GameObject m_wallDetectorEnd;
+
 	[SerializeField] float m_activeDistance;
 	[Space]
 
 	[SerializeField] float m_moveSpeed;
+	[Space]
+
+	[SerializeField] LayerMask m_physicsLayerMask;
 
 	// Start is called before the first frame update
 	protected virtual void Start()
@@ -74,6 +80,11 @@ public class SkeletonComponent : EnemyComponent
 
 	protected virtual void OnIdleState()
 	{
+		if(IsApprochingWall(m_wallDetectorStart.transform.position, m_wallDetectorEnd.transform.position, m_physicsLayerMask))
+        {
+			UpdateDirection(-Mathf.Sign(transform.localScale.x));
+        }
+
 		Vector2 movement = Vector2.right * transform.localScale.x;
 
 		movement = movement * m_moveSpeed;
