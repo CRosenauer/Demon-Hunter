@@ -195,9 +195,17 @@ PrefabInstance:
       value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 7723567461736512958, guid: 92022aa600e342f4abdb528a5d0ce93b, type: 3}
+      propertyPath: m_enemyLimit
+      value: 15
+      objectReference: {fileID: 0}
+    - target: {fileID: 7723567461736512958, guid: 92022aa600e342f4abdb528a5d0ce93b, type: 3}
       propertyPath: m_spawnedObject
       value: 
       objectReference: {fileID: 7548005075730308620, guid: 9e4e940e15022554885e795b6429498a, type: 3}
+    - target: {fileID: 7723567461736512958, guid: 92022aa600e342f4abdb528a5d0ce93b, type: 3}
+      propertyPath: m_spawnIfWillExceedLimit
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 7723567461736512958, guid: 92022aa600e342f4abdb528a5d0ce93b, type: 3}
       propertyPath: m_spawnPatterns.Array.size
       value: 3
@@ -61482,9 +61490,17 @@ PrefabInstance:
       value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 7723567461736512958, guid: 92022aa600e342f4abdb528a5d0ce93b, type: 3}
+      propertyPath: m_enemyLimit
+      value: 15
+      objectReference: {fileID: 0}
+    - target: {fileID: 7723567461736512958, guid: 92022aa600e342f4abdb528a5d0ce93b, type: 3}
       propertyPath: m_spawnedObject
       value: 
       objectReference: {fileID: 7548005075730308620, guid: 9e4e940e15022554885e795b6429498a, type: 3}
+    - target: {fileID: 7723567461736512958, guid: 92022aa600e342f4abdb528a5d0ce93b, type: 3}
+      propertyPath: m_spawnIfWillExceedLimit
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 7723567461736512958, guid: 92022aa600e342f4abdb528a5d0ce93b, type: 3}
       propertyPath: m_spawnPatterns.Array.size
       value: 7
