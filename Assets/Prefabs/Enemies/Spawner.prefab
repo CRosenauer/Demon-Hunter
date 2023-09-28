@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 7723567461736512959}
   m_Layer: 11
   m_Name: Spawner
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -45,7 +45,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4a528a1d8683ff84bbb46e86c56a0ae0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_enemyLimit: 0
+  m_spawnIfWillExceedLimit: 0
+  m_absoluteWorldPosition: 0
   m_spawnedObject: {fileID: 0}
+  m_spawnPatterns: []
   m_minTime: 1
   m_maxTime: 3
   m_xMax: 8
