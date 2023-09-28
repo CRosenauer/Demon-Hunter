@@ -13,7 +13,7 @@ public class SkeletonComponent : EnemyComponent
 	[SerializeField] float m_moveSpeed;
 	[Space]
 
-	[SerializeField] LayerMask m_physicsLayerMask;
+	[SerializeField] protected LayerMask m_physicsLayerMask;
 
 	// Start is called before the first frame update
 	protected virtual void Start()
