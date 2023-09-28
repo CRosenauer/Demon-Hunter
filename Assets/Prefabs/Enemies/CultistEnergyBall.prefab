@@ -199,7 +199,7 @@ MonoBehaviour:
     m_Bits: 64
   m_collisionBounds: {x: 0.25, y: 0.25}
   m_collisionOffset: {x: 0, y: 0}
-  m_damage: 1
+  m_damage: 3
 --- !u!114 &404212602268502097
 MonoBehaviour:
   m_ObjectHideFlags: 0
