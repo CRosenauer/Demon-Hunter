@@ -68,12 +68,16 @@ public class CultistComponent : EnemyComponent
             SetPlayer(player);
         }
 
-        m_playerCollider = m_player.GetComponent<Collider2D>();
-
         QueryDirectionToPlayer();
 
         m_state = CultistState.init;
         OnEnterInitState();
+    }
+
+    protected override void SetPlayer(GameObject player)
+    {
+        m_player = player;
+        m_playerCollider = m_player.GetComponent<Collider2D>();
     }
 
     void FixedUpdate()
@@ -302,7 +306,7 @@ public class CultistComponent : EnemyComponent
 
     IEnumerator ExitAttackCoroutine()
     {
-        yield return new WaitForSeconds(1.25f);
+        yield return new WaitForSeconds(1.0f);
 
         if(m_state == CultistState.attack)
         {

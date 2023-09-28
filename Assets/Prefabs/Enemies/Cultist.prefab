@@ -77,8 +77,8 @@ MonoBehaviour:
   m_ledgeBehindCheckStart: {fileID: 8905577908117395834}
   m_ledgeBehindCheckEnd: {fileID: 5994179746448702135}
   m_playerDetector: {fileID: 4028149182462234131}
-  m_attackDelayRange: {x: 1, y: 2.25}
-  m_moveSpeed: 2
+  m_attackDelayRange: {x: 1.05, y: 2}
+  m_moveSpeed: 2.5
   m_jumpSpeed: 10
   m_physicsLayerMask:
     serializedVersion: 2
@@ -129,7 +129,7 @@ BoxCollider2D:
   m_AutoTiling: 0
   serializedVersion: 2
   m_Size: {x: 0.3125, y: 0.875}
-  m_EdgeRadius: 0
+  m_EdgeRadius: 0.01
 --- !u!212 &1513549560692225938
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -241,7 +241,7 @@ MonoBehaviour:
     m_Bits: 64
   m_collisionBounds: {x: 0.3125, y: 0.875}
   m_collisionOffset: {x: 0, y: -0.1875}
-  m_damage: 1
+  m_damage: 3
 --- !u!114 &4659835124993649299
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -254,7 +254,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ba0d7fc2e31b86a4fa80aa7c863a2328, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_componentsToExclude: []
+  m_componentsToExclude:
+  - {fileID: 1513549560692225936}
   m_freezeDuration: 0.033333335
 --- !u!114 &6128318112931458223
 MonoBehaviour:

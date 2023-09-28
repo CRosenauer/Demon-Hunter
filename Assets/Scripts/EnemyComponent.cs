@@ -29,7 +29,7 @@ public class EnemyComponent : MovementComponent
         return QueryStartEndRaycast(start, end, physicsLayerMask);
     }
 
-    protected void SetPlayer(GameObject player)
+    protected virtual void SetPlayer(GameObject player)
     {
         m_player = player;
 	}

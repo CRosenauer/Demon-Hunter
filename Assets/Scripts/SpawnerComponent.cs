@@ -4,7 +4,9 @@ using UnityEngine;
 
 public class SpawnerComponent : MonoBehaviour
 {
-    const int m_enemyLimit = 15;
+    [SerializeField] int m_enemyLimit;
+    [SerializeField] bool m_spawnIfWillExceedLimit;
+    [SerializeField] bool m_absoluteWorldPosition;
 
     [SerializeField] GameObject m_spawnedObject;
     [Space]
@@ -37,6 +39,14 @@ public class SpawnerComponent : MonoBehaviour
 
             if(m_timer <= 0f)
             {
+                for (int i = 0; i < m_spawnedEnemies.Count; ++i)
+                {
+                    if (!m_spawnedEnemies[i])
+                    {
+                        m_spawnedEnemies.RemoveAt(i);
+                    }
+                }
+
                 Vector3 position = new();
 
                 position.x = Random.Range(m_xMin, m_xMax);
@@ -47,12 +57,21 @@ public class SpawnerComponent : MonoBehaviour
                     return;
                 }
 
-                position.x += m_player.transform.position.x;
+                position.x = m_absoluteWorldPosition? position.x :  position.x += m_player.transform.position.x;
                 position.y = m_yPos;
                 position.z = 0f;
 
                 if (m_spawnPatterns.Count == 0)
                 {
+                    if(!m_spawnIfWillExceedLimit)
+                    {
+                        if(m_spawnedEnemies.Count + 1 > m_enemyLimit)
+                        {
+                            SetTimer();
+                            return;
+                        }
+                    }
+
                     SpawnEnemy(m_spawnedObject, position);
                 }
                 else
@@ -61,17 +80,18 @@ public class SpawnerComponent : MonoBehaviour
 
                     SpawnPattern spawnPattern = m_spawnPatterns[spawnPatternIndex];
 
-                    foreach(Vector3 offset in spawnPattern.m_positionOffsets)
+                    if (!m_spawnIfWillExceedLimit)
+                    {
+                        if (m_spawnedEnemies.Count + spawnPattern.m_positionOffsets.Count > m_enemyLimit)
+                        {
+                            SetTimer();
+                            return;
+                        }
+                    }
+
+                    foreach (Vector3 offset in spawnPattern.m_positionOffsets)
                     {
                         SpawnEnemy(m_spawnedObject, position + offset);
-                    }
-                }
-
-                for(int i = 0; i < m_spawnedEnemies.Count; ++i)
-                {
-                    if(!m_spawnedEnemies[i])
-                    {
-                        m_spawnedEnemies.RemoveAt(i);
                     }
                 }
 
@@ -81,9 +101,14 @@ public class SpawnerComponent : MonoBehaviour
                     m_spawnedEnemies.RemoveAt(0);
                 }
 
-                m_timer = Random.Range(m_minTime, m_maxTime);
+                SetTimer();
             }
         }
+    }
+
+    void SetTimer()
+    {
+        m_timer = Random.Range(m_minTime, m_maxTime);
     }
 
     void OnTriggerEnter2D(Collider2D other)
@@ -111,7 +136,6 @@ public class SpawnerComponent : MonoBehaviour
     {
         GameObject spawnedEnemy = Instantiate(enemy, position, Quaternion.identity);
         spawnedEnemy.AddComponent<DespawnComponent>();
-        spawnedEnemy.SendMessage("SetDespawnTolerance", 200f);
         m_spawnedEnemies.Add(spawnedEnemy);
         spawnedEnemy.transform.SetParent(transform.parent);
     }

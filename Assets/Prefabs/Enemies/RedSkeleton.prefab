@@ -199,7 +199,7 @@ BoxCollider2D:
   m_AutoTiling: 0
   serializedVersion: 2
   m_Size: {x: 0.3125, y: 0.875}
-  m_EdgeRadius: 0
+  m_EdgeRadius: 0.01
 --- !u!114 &7548005075730308615
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -264,5 +264,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ba0d7fc2e31b86a4fa80aa7c863a2328, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_componentsToExclude: []
+  m_componentsToExclude:
+  - {fileID: 7548005075730308612}
   m_freezeDuration: 0.033333335

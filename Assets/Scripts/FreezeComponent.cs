@@ -19,15 +19,15 @@ public class FreezeComponent : MonoBehaviour
             movementComponent.SendMessage("FreezeMovement");
         }
 
-        Behaviour[] components = gameObject.GetComponents<Behaviour>();
+        List<Behaviour> components = new(gameObject.GetComponents<Behaviour>());
+        foreach(Behaviour component in m_componentsToExclude)
+        {
+            components.Remove(component);
+        }
+
         foreach (Behaviour component in components)
         {
             component.enabled = false;
-        }
-
-        foreach (Behaviour component in m_componentsToExclude)
-        {
-            component.enabled = true;
         }
     }
 
@@ -39,7 +39,12 @@ public class FreezeComponent : MonoBehaviour
             movementComponent.SendMessage("UnfreezeMovement");
         }
 
-        Behaviour[] components = gameObject.GetComponents<Behaviour>();
+        List<Behaviour> components = new(gameObject.GetComponents<Behaviour>());
+        foreach (Behaviour component in m_componentsToExclude)
+        {
+            components.Remove(component);
+        }
+
         foreach (Behaviour component in components)
         {
             component.enabled = true;
