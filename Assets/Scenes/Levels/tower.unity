@@ -13018,10 +13018,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: WhiteSkeleton
       objectReference: {fileID: 0}
-    - target: {fileID: 8032156523712244871, guid: 7408e5e11dc6f8c43b18000a80265915, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: -0.875
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7408e5e11dc6f8c43b18000a80265915, type: 3}
 --- !u!1001 &994243518

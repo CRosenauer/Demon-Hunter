@@ -142,9 +142,19 @@ public class CultistComponent : EnemyComponent
             return;
         }
 
+        bool isBehindWall = QueryRaycastAndStartPoint(
+            m_wallCheckBehindStart.transform.position,
+            m_wallCheckBehindEnd.transform.position,
+            m_physicsLayerMask);
+
+        bool isBehindLedge = !QueryStartEndRaycast(
+            m_ledgeBehindCheckStart.transform.position,
+            m_ledgeBehindCheckEnd.transform.position,
+            m_physicsLayerMask);
+
         if (ShouldRetreat()
-            && !IsWallBehind(m_wallCheckBehindStart.transform.position, m_wallCheckBehindEnd.transform.position, m_physicsLayerMask)
-            && !IsLedgeBehind(m_ledgeBehindCheckStart.transform.position, m_ledgeBehindCheckEnd.transform.position, m_physicsLayerMask))
+            && !isBehindWall
+            && !isBehindLedge)
         {
             m_state = CultistState.retreat;
             OnExitIdleState();
@@ -187,7 +197,12 @@ public class CultistComponent : EnemyComponent
 
         MoveAwayFromPlayer();
 
-        if (!ShouldRetreat() || IsApprochingWall(m_wallCheckBehindStart.transform.position, m_wallCheckBehindEnd.transform.position, m_physicsLayerMask))
+        bool isApproachingWall = QueryRaycastAndStartPoint(
+            m_wallCheckStart.transform.position,
+            m_wallCheckEnd.transform.position,
+            m_physicsLayerMask);
+
+        if (!ShouldRetreat() || isApproachingWall)
         {
             OnExitRetreatState();
             OnEnterIdleState();
@@ -195,7 +210,8 @@ public class CultistComponent : EnemyComponent
             return;
         }
 
-        if(IsApproachingLedge(m_ledgeCheckStart.transform.position, m_ledgeCheckEnd.transform.position, m_physicsLayerMask))
+        bool isApproachingLedge = !QueryStartEndRaycast(m_ledgeCheckStart.transform.position, m_ledgeCheckEnd.transform.position, m_physicsLayerMask);
+        if (isApproachingLedge)
         {
             if(IsEscapePlatform())
             {

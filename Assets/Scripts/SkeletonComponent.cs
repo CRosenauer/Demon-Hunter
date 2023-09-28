@@ -80,7 +80,12 @@ public class SkeletonComponent : EnemyComponent
 
 	protected virtual void OnIdleState()
 	{
-		if(IsApprochingWall(m_wallDetectorStart.transform.position, m_wallDetectorEnd.transform.position, m_physicsLayerMask))
+		bool isApproachingWall = QueryRaycastAndStartPoint(
+			m_wallDetectorStart.transform.position,
+			m_wallDetectorEnd.transform.position,
+			m_physicsLayerMask);
+
+		if (isApproachingWall)
         {
 			UpdateDirection(-Mathf.Sign(transform.localScale.x));
         }

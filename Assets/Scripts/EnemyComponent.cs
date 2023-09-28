@@ -12,18 +12,6 @@ public class EnemyComponent : MovementComponent
         return result;
     }
 
-    protected bool IsApproachingLedge(Vector2 startPos, Vector2 endPos, LayerMask physicsLayerMask)
-    {
-        bool result = !QueryStartEndRaycast(startPos, endPos, physicsLayerMask);
-        return result;
-    }
-
-    protected bool IsLedgeBehind(Vector2 startPos, Vector2 endPos, LayerMask physicsLayerMask)
-    {
-        bool result = !QueryStartEndRaycast(startPos, endPos, physicsLayerMask);
-        return result;
-    }
-
     protected bool QueryPointOverlap(Vector2 point, LayerMask physicsLayerMask)
     {
         Collider2D wallOverlapCollider = Physics2D.OverlapPoint(point, physicsLayerMask);
@@ -31,19 +19,7 @@ public class EnemyComponent : MovementComponent
         return wallOverlapCollider;
     }
 
-    protected bool IsApprochingWall(Vector2 startPos, Vector2 endPos, LayerMask physicsLayerMask)
-    {
-        bool result = IsWallBetweenPoints(startPos, endPos, physicsLayerMask);
-        return result;
-    }
-
-    protected bool IsWallBehind(Vector2 startPos, Vector2 endPos, LayerMask physicsLayerMask)
-    {
-        bool result = IsWallBetweenPoints(startPos, endPos, physicsLayerMask);
-        return result;
-    }
-
-    protected bool IsWallBetweenPoints(Vector2 start, Vector2 end, LayerMask physicsLayerMask)
+    protected bool QueryRaycastAndStartPoint(Vector2 start, Vector2 end, LayerMask physicsLayerMask)
     {
         if (QueryPointOverlap(start, physicsLayerMask))
         {
