@@ -10,10 +10,14 @@ public class CultistComponent : EnemyComponent
 
     [SerializeField] GameObject m_wallCheckStart;
     [SerializeField] GameObject m_wallCheckEnd;
+    [SerializeField] GameObject m_wallCheckBehindStart;
+    [SerializeField] GameObject m_wallCheckBehindEnd;
     [SerializeField] GameObject m_escapePlatformCheckStart;
     [SerializeField] GameObject m_escapePlatformCheckEnd;
     [SerializeField] GameObject m_ledgeCheckStart;
     [SerializeField] GameObject m_ledgeCheckEnd;
+    [SerializeField] GameObject m_ledgeBehindCheckStart;
+    [SerializeField] GameObject m_ledgeBehindCheckEnd;
     [Space]
 
     [SerializeField] GameObject m_playerDetector;
@@ -35,7 +39,8 @@ public class CultistComponent : EnemyComponent
         retreat,
         jump,
         attack,
-        death,s
+        death,
+        fall,
     }
 
     void Start()
@@ -44,6 +49,8 @@ public class CultistComponent : EnemyComponent
         Debug.Assert(m_projectileSpawnPoint);
         Debug.Assert(m_wallCheckStart);
         Debug.Assert(m_wallCheckEnd);
+        Debug.Assert(m_wallCheckBehindStart);
+        Debug.Assert(m_wallCheckBehindEnd);
         Debug.Assert(m_escapePlatformCheckStart);
         Debug.Assert(m_escapePlatformCheckEnd);
         Debug.Assert(m_ledgeCheckStart);
@@ -51,8 +58,6 @@ public class CultistComponent : EnemyComponent
         Debug.Assert(m_playerDetector);
 
         m_playerDetectorCollider = m_playerDetector.GetComponent<Collider2D>();
-        // triggerDistributer.OnTriggerEnter += SetRetreatFlag;
-        // triggerDistributer.OnTriggerExit += ResetRetreatFlag;
 
         GameObject player = GameObject.FindGameObjectWithTag("Player");
 
@@ -92,6 +97,9 @@ public class CultistComponent : EnemyComponent
             case CultistState.attack:
                 OnAttackState();
                 break;
+            case CultistState.fall:
+                OnFallState();
+                break;
         }
     }
 
@@ -126,11 +134,20 @@ public class CultistComponent : EnemyComponent
 
     void OnIdleState()
     {
-        if (ShouldRetreat() && !IsApprochingWall())
+        if (!IsOnGround())
+        {
+            OnExitIdleState();
+            OnEnterFallState();
+            m_state = CultistState.fall;
+            return;
+        }
+
+        if (ShouldRetreat() && !IsWallBehind() && !IsLedgeBehind())
         {
             m_state = CultistState.retreat;
             OnExitIdleState();
             OnEnterRetreatState();
+            return;
         }
 
         if (m_shouldAttack)
@@ -158,6 +175,14 @@ public class CultistComponent : EnemyComponent
 
     void OnRetreatState()
     {
+        if (!IsOnGround())
+        {
+            OnExitRetreatState();
+            OnEnterFallState();
+            m_state = CultistState.fall;
+            return;
+        }
+
         MoveAwayFromPlayer();
 
         if (!ShouldRetreat() || IsApprochingWall())
@@ -168,12 +193,19 @@ public class CultistComponent : EnemyComponent
             return;
         }
 
-        if(IsApproachingLedge() && IsEscapePlatform())
+        if(IsApproachingLedge())
         {
+            if(IsEscapePlatform())
+            {
+                OnExitRetreatState();
+                OnEnterJumpState();
+                m_state = CultistState.jump;
+                return;
+            }
+
             OnExitRetreatState();
-            OnEnterJumpState();
-            m_state = CultistState.jump;
-            return;
+            OnEnterIdleState();
+            m_state = CultistState.idle;
         }
     }
 
@@ -219,11 +251,34 @@ public class CultistComponent : EnemyComponent
         m_animator.ResetTrigger("OnSpecial");
     }
 
+    void OnEnterFallState()
+    {
+        m_animator.SetTrigger("OnFall");
+        Move(Vector2.zero);
+    }
+
+    void OnFallState()
+    {
+        if(IsOnGround())
+        {
+            OnExitFallState();
+            OnEnterIdleState();
+            m_state = CultistState.idle;
+        }
+    }
+
+    void OnExitFallState()
+    {
+        m_animator.ResetTrigger("OnFall");
+    }
+
     void ANIMATION_LaunchAttack()
     {
         GameObject projectile = Instantiate(m_attackProjectile, m_projectileSpawnPoint.transform.position, Quaternion.identity, transform.parent);
 
-        Vector2 targetDirection = GetXDirectionToPlayer(false);
+        // shoots in the direction the cultist is facing
+        Vector2 targetDirection = new(Mathf.Sign(transform.localScale.x), 0f);
+        
         projectile.SendMessage("OnSetDirection", targetDirection);
     }
 
@@ -271,41 +326,53 @@ public class CultistComponent : EnemyComponent
 
     }
 
-    bool QueryStartEndRaycast(Vector3 startObjectPosition, Vector3 endObjectPosition)
+    bool QueryStartEndRaycast(Vector2 startObjectPosition, Vector2 endObjectPosition)
     {
-        Vector2 start = new(startObjectPosition.x, startObjectPosition.y);
-        Vector2 end = new(endObjectPosition.x, endObjectPosition.y);
+        Vector2 delta = endObjectPosition - startObjectPosition;
 
-        Vector2 delta = end - start;
-
-        return Physics2D.Raycast(start, delta.normalized, delta.magnitude, m_physicsLayerMask);
+        bool result = Physics2D.Raycast(startObjectPosition, delta.normalized, delta.magnitude, m_physicsLayerMask);
+        return result;
     }
 
     bool IsApproachingLedge()
     {
-        return !QueryStartEndRaycast(m_ledgeCheckStart.transform.position, m_ledgeCheckEnd.transform.position);
+        bool result = !QueryStartEndRaycast(m_ledgeCheckStart.transform.position, m_ledgeCheckEnd.transform.position);
+        return result;
     }
 
-    bool QueryPointOverlap(Vector3 point)
+    bool IsLedgeBehind()
     {
-        Vector2 pointR2 = new(point.x, point.y);
-        Collider2D wallOverlapCollider = Physics2D.OverlapPoint(pointR2, m_physicsLayerMask);
+        bool result = !QueryStartEndRaycast(m_ledgeBehindCheckStart.transform.position, m_ledgeBehindCheckEnd.transform.position);
+        return result;
+    }
+
+    bool QueryPointOverlap(Vector2 point)
+    {
+        Collider2D wallOverlapCollider = Physics2D.OverlapPoint(point, m_physicsLayerMask);
 
         return wallOverlapCollider;
     }
 
     bool IsApprochingWall()
     {
-        Vector3 startPos = m_wallCheckStart.transform.position;
-        Vector3 endPos = m_wallCheckEnd.transform.position;
+        bool result = IsWallBetweenPoints(m_wallCheckStart.transform.position, m_wallCheckEnd.transform.position);
+        return result;
+    }
 
-        if(QueryPointOverlap(startPos))
+    bool IsWallBehind()
+    {
+        bool result = IsWallBetweenPoints(m_wallCheckBehindStart.transform.position, m_wallCheckBehindEnd.transform.position);
+        return result;
+    }
+
+    bool IsWallBetweenPoints(Vector2 start, Vector2 end)
+    {
+        if (QueryPointOverlap(start))
         {
             return true;
         }
 
-        return QueryStartEndRaycast(startPos, endPos);
-
+        return QueryStartEndRaycast(start, end);
     }
 
     bool IsEscapePlatform()

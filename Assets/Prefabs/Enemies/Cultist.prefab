@@ -45,6 +45,9 @@ Transform:
   - {fileID: 7509029559119089111}
   - {fileID: 2361726770568215294}
   - {fileID: 5452684265524348569}
+  - {fileID: 4688279117061689692}
+  - {fileID: 3881701415344187337}
+  - {fileID: 8649996961032822676}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -65,17 +68,21 @@ MonoBehaviour:
   m_projectileSpawnPoint: {fileID: 3919935980931585168}
   m_wallCheckStart: {fileID: 2880402053121383404}
   m_wallCheckEnd: {fileID: 9169309678944469318}
+  m_wallCheckBehindStart: {fileID: 7389625865350617003}
+  m_wallCheckBehindEnd: {fileID: 8905577908117395834}
   m_escapePlatformCheckStart: {fileID: 5671247573578746924}
   m_escapePlatformCheckEnd: {fileID: 2428383356715935625}
   m_ledgeCheckStart: {fileID: 9169309678944469318}
   m_ledgeCheckEnd: {fileID: 5143366024601879290}
+  m_ledgeBehindCheckStart: {fileID: 8905577908117395834}
+  m_ledgeBehindCheckEnd: {fileID: 5994179746448702135}
   m_playerDetector: {fileID: 4028149182462234131}
-  m_attackDelayRange: {x: 1.5, y: 3}
+  m_attackDelayRange: {x: 1, y: 2.25}
   m_moveSpeed: 2
   m_jumpSpeed: 10
   m_physicsLayerMask:
     serializedVersion: 2
-    m_Bits: 128
+    m_Bits: 65664
 --- !u!50 &1513549560692225951
 Rigidbody2D:
   serializedVersion: 4
@@ -366,7 +373,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3919935980931585168}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.34375, y: 0.3125, z: 0}
+  m_LocalPosition: {x: 0.34375, y: 0.125, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -486,12 +493,105 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5671247573578746924}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1.5, y: -0.125, z: 0}
+  m_LocalPosition: {x: 1.5, y: 0.00000011920929, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1513549560692225950}
   m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &5994179746448702135
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8649996961032822676}
+  m_Layer: 8
+  m_Name: LedgeCheckBehindEnd
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &8649996961032822676
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5994179746448702135}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0.1875, y: -0.875, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1513549560692225950}
+  m_RootOrder: 9
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &7389625865350617003
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4688279117061689692}
+  m_Layer: 8
+  m_Name: WallCheckBehindStart
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4688279117061689692
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7389625865350617003}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0.1875, y: 0.25, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1513549560692225950}
+  m_RootOrder: 7
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &8905577908117395834
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3881701415344187337}
+  m_Layer: 8
+  m_Name: WallCheckBehindEnd
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &3881701415344187337
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8905577908117395834}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0.1875, y: -0.525, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1513549560692225950}
+  m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &9169309678944469318
 GameObject:
