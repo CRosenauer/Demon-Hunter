@@ -28,6 +28,16 @@ public class TransitionDoorComponent : MonoBehaviour
 
     [SerializeField] Vector2 m_exitDoorPosition;
 
+    public static void SignalSceneLoadedActions()
+    {
+        GameObject[] sceneLoadedActionObjects = GameObject.FindGameObjectsWithTag("SceneLoadAction");
+
+        foreach (GameObject go in sceneLoadedActionObjects)
+        {
+            go.SendMessage("OnSceneLoad");
+        }
+    }
+
     void Start()
     {
         m_currentObjects = new();
@@ -230,6 +240,8 @@ public class TransitionDoorComponent : MonoBehaviour
         RebaseGameObjects();
         CameraBootstrap.LoadCameraParams();
         UnloadPreviousLevel();
+
+        SignalSceneLoadedActions();
     }
 
     void OnTriggerEnter2D(Collider2D other)
