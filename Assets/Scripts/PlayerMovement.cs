@@ -365,11 +365,24 @@ public class PlayerMovement : MovementComponent
 		Move(Vector2.zero);
 	}
 
+	void OnExitWalkOnStairDamage()
+	{
+		m_rbody.gravityScale = _gravity;
+
+		if (m_stairObject)
+		{
+			m_stairObject.BroadcastMessage("OnExitStairJump");
+		}
+
+		m_isOnGround = true;
+		Move(Vector2.zero);
+	}
+
 	void OnExitWalkOnStairToPreJump()
 	{
 		if (m_stairObject)
 		{
-			m_stairObject.BroadcastMessage("OnExitStair");
+			m_stairObject.BroadcastMessage("OnExitStairJump");
 		}
 
 		m_isOnGround = true;
@@ -483,7 +496,7 @@ public class PlayerMovement : MovementComponent
 	{
 		if(m_movementState == MovementState.walkOnStair)
         {
-			OnExitWalkOnStair();
+			OnExitWalkOnStairDamage();
         }
 
 		if(m_movementState == MovementState.secondaryWeapon)
