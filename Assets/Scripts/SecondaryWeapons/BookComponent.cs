@@ -11,10 +11,10 @@ public class BookComponent : SecondaryWeaponComponent
 
         GameObject[] enemies = GameObject.FindGameObjectsWithTag("Enemy");
 
-        StartCoroutine(ScreenClear(enemies));
+        StartCoroutine(ScreenClear(enemies, m_audioSource, gameObject));
     }
 
-    IEnumerator ScreenClear(GameObject[] enemies)
+    public static IEnumerator ScreenClear(GameObject[] enemies, AudioSource audioSource, GameObject objectToDestroy)
     {
         Time.timeScale = 0f;
 
@@ -29,7 +29,7 @@ public class BookComponent : SecondaryWeaponComponent
             }
         }
 
-        m_audioSource.Play();
+        audioSource.Play();
 
         yield return new WaitForSecondsRealtime(1f);
 
@@ -38,7 +38,10 @@ public class BookComponent : SecondaryWeaponComponent
             Destroy(enemy);
         }
 
-        Destroy(gameObject);
+        if(objectToDestroy)
+        {
+            Destroy(objectToDestroy);
+        }
 
         Time.timeScale = 1f;
     }

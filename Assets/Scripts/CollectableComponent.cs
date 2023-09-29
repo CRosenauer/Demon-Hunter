@@ -12,9 +12,11 @@ public class CollectableComponent : MonoBehaviour
         SerializedProperty m_callback;
         SerializedProperty m_quantity;
         SerializedProperty m_item;
+        SerializedProperty m_audioSource;
 
         void OnEnable()
         {
+            m_audioSource = serializedObject.FindProperty("m_audioSource");
             m_callback = serializedObject.FindProperty("m_callback");
             m_quantity = serializedObject.FindProperty("m_quantity");
             m_item = serializedObject.FindProperty("m_item");
@@ -32,6 +34,7 @@ public class CollectableComponent : MonoBehaviour
                 {
                     EditorGUILayout.PropertyField(m_quantity);
                 }
+                EditorGUILayout.PropertyField(m_audioSource);
             }
             else
             {
@@ -54,6 +57,7 @@ public class CollectableComponent : MonoBehaviour
 
     delegate void CollectionCallback();
 
+    [SerializeField] AudioSource m_audioSource;
     [SerializeField] SecondaryWeapon m_item;
     [SerializeField] CollectableFunction m_callback;
     [SerializeField] int m_quantity;
@@ -102,6 +106,22 @@ public class CollectableComponent : MonoBehaviour
         }
 
         m_callbackFunction();
+    }
+
+    IEnumerator DestroyCallback()
+    {
+        SpriteRenderer spriteRenderer = GetComponent<SpriteRenderer>();
+        spriteRenderer.enabled = false;
+
+        Collider2D[] colliders = GetComponents<Collider2D>();
+        
+        // only want to disable the trigger for picking up this item
+        foreach(Collider2D collider in colliders)
+        {
+            collider.enabled = false;
+        }
+
+        yield return new WaitForSeconds(m_audioSource.clip.length);
         Destroy(gameObject);
     }
 
@@ -112,26 +132,36 @@ public class CollectableComponent : MonoBehaviour
         Debug.Assert(player);
 
         player.BroadcastMessage("SetSecondaryWeapon", m_item);
+        Destroy(gameObject);
     }
 
     void ScreenClear()
     {
-        
+        GameObject[] enemies = GameObject.FindGameObjectsWithTag("Enemy");
+        StartCoroutine(BookComponent.ScreenClear(enemies, m_audioSource, gameObject));
     }
 
     void AlterLife()
     {
-
+        GameObject player = GameObject.FindGameObjectWithTag("Player");
+        player.SendMessage("Heal", m_quantity);
+        m_audioSource.Play();
+        StartCoroutine(DestroyCallback());
     }
 
     void AlterMagic()
     {
-
+        GameObject player = GameObject.FindGameObjectWithTag("Player");
+        player.SendMessage("AlterMana", m_quantity);
+        m_audioSource.Play();
+        StartCoroutine(DestroyCallback());
     }
 
     void AlterScore()
     {
-
+        // todo: implement score items alter score
+        m_audioSource.Play();
+        StartCoroutine(DestroyCallback());
     }
 
     CollectionCallback m_callbackFunction;

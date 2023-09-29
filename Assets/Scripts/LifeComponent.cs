@@ -70,6 +70,12 @@ public class LifeComponent : MonoBehaviour
         SignalHealthChanged();
     }
 
+    void Heal(int amount)
+    {
+        m_currentHealth = Mathf.Clamp(m_currentHealth + amount, 0, m_maxHealth);
+        SignalHealthChanged();
+    }
+
     void OnStartDisableHurtbox()
     {
         m_enable = false;
