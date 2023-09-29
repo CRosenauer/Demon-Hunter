@@ -23,8 +23,8 @@ public class MenuNavigator : MonoBehaviour
 
         m_horizontalLastFrame = 0f;
         m_verticalLastFrame = 0f;
-        m_submitLastFrame = false;
-        m_cancelLastFrame = false;
+        m_submitLastFrame = true;
+        m_cancelLastFrame = true;
 
         ResetCursorPosition();
         m_maxCursorPosistion = m_menuItems.Count;
@@ -117,7 +117,10 @@ public class MenuNavigator : MonoBehaviour
         }
         else
         {
-            m_systemManager.SendMessage("TogglePause");
+            if(m_systemManager)
+            {
+                m_systemManager.SendMessage("TogglePause");
+            }
         }
     }
 
