@@ -23,19 +23,7 @@ public class MovementComponent : MonoBehaviour
         secondaryWeapon,
     }
 
-    public enum Direction
-    {
-        right,
-        left
-    }
-
-    public Direction GetDirection()
-    {
-        return m_direction;
-    }
-
-    // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
         ComponentInit();
     }
@@ -56,7 +44,7 @@ public class MovementComponent : MonoBehaviour
         Debug.Assert(m_attackComponent);
     }
 
-    protected void UpdateDirect(float direction)
+    protected void UpdateDirection(float direction)
     {
         if (Mathf.Approximately(direction, 0f))
         {
@@ -65,23 +53,9 @@ public class MovementComponent : MonoBehaviour
 
         direction = Mathf.Sign(direction);
 
-        if (direction == 1f)
-        {
-            m_direction = Direction.right;
-            m_spriteRenderer.flipX = false;
-        }
-        else if (direction == -1f)
-        {
-            m_direction = Direction.left;
-            m_spriteRenderer.flipX = true;
-        }
-    }
-
-    protected void UpdateDirection(Direction direction)
-    {
-        m_direction = direction;
-
-        m_spriteRenderer.flipX = direction == Direction.right ? true: false;
+        Vector3 scale = transform.localScale;
+        scale.x = direction;
+        transform.localScale = scale;
     }
 
     protected void QueryOnGround()
@@ -121,6 +95,21 @@ public class MovementComponent : MonoBehaviour
         m_animator.SetFloat("Speed", Mathf.Abs(velocity.x));
     }
 
+    void FreezeMovement()
+    {
+        if(!m_rbody)
+        {
+            m_rbody = GetComponent<Rigidbody2D>();
+        }
+
+        m_rbody.constraints = RigidbodyConstraints2D.FreezeAll;
+    }
+
+    void UnfreezeMovement()
+    {
+        m_rbody.constraints = RigidbodyConstraints2D.FreezeRotation;
+    }
+
     protected void TryBufferAttack(bool updateDirection = false, float direction = 1)
     {
         bool attacked = TryAttack();
@@ -135,7 +124,7 @@ public class MovementComponent : MonoBehaviour
 
             if (updateDirection)
             {
-                UpdateDirect(direction);
+                UpdateDirection(direction);
             }
 
         }
@@ -158,10 +147,8 @@ public class MovementComponent : MonoBehaviour
         return false;
     }
 
-    public static bool IsWithinCameraFrustum(Transform transform)
+    public static bool IsWithinCameraFrustum(Transform transform, float tolerance = 0f)
     {
-        const float distancePadding = 1f;
-
         if(!Camera.main)
         {
             return false;
@@ -169,9 +156,9 @@ public class MovementComponent : MonoBehaviour
 
         Vector3 screenPos = Camera.main.WorldToScreenPoint(transform.position);
 
-        if (screenPos.x == Mathf.Clamp(screenPos.x, -distancePadding, Screen.width + distancePadding))
+        if (screenPos.x == Mathf.Clamp(screenPos.x, -tolerance, Screen.width + tolerance))
         {
-            if (screenPos.y == Mathf.Clamp(screenPos.y, -distancePadding, Screen.height + distancePadding))
+            if (screenPos.y == Mathf.Clamp(screenPos.y, -tolerance, Screen.height + tolerance))
             {
                 return true;
             }
@@ -220,8 +207,6 @@ public class MovementComponent : MonoBehaviour
     protected Animator m_animator;
     protected AttackComponent m_attackComponent;
     protected SecondaryWeaponManagerComponent m_secondaryWeapon;
-
-    protected Direction m_direction = Direction.right;
 
     protected bool m_isOnGround = true;
 

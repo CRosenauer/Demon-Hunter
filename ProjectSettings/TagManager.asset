@@ -7,11 +7,12 @@ TagManager:
   - Core
   - Enemy
   - CameraBootstrap
+  - SceneLoadAction
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - Camera
   - Water
   - UI
   - Player

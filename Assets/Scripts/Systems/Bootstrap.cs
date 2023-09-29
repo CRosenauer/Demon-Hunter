@@ -35,7 +35,13 @@ public class Bootstrap : MonoBehaviour
             }
         }
 
-        CheckCoreExistance("Core(Clone)", m_corePrefab);
+        // a bit hacky.
+        // if we need to create the core components it means we're hard loading into this scene
+        // no transition door will activate scene loaded actions! so we load them here
+        if(CheckCoreExistance("Core(Clone)", m_corePrefab))
+        {
+            TransitionDoorComponent.SignalSceneLoadedActions();
+        }
     }
 
     GameObject CheckObjectExistance(string tag, GameObject fallbackSpawnedObject)
@@ -49,12 +55,16 @@ public class Bootstrap : MonoBehaviour
         return null;
     }
 
-    void CheckCoreExistance(string name, GameObject fallbackPrespawnedObject)
+    // returns if an object was created
+    bool CheckCoreExistance(string name, GameObject fallbackPrespawnedObject)
     {
         GameObject core = GameObject.Find(name);
         if (!core)
         {
             Instantiate(fallbackPrespawnedObject, transform.parent);
+            return true;
         }
+
+        return false;
     }
 }

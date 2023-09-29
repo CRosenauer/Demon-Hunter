@@ -121,6 +121,11 @@ public class MenuNavigator : MonoBehaviour
         }
     }
 
+    void OnQuit()
+    {
+        Application.Quit();
+    }
+
     float m_horizontalLastFrame;
     float m_verticalLastFrame;
 

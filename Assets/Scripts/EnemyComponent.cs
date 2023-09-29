@@ -4,10 +4,42 @@ using UnityEngine;
 
 public class EnemyComponent : MovementComponent
 {
-    void SetPlayer(GameObject player)
+    protected bool QueryStartEndRaycast(Vector2 startObjectPosition, Vector2 endObjectPosition, LayerMask physicsLayerMask)
     {
-        m_player = player;
+        Vector2 delta = endObjectPosition - startObjectPosition;
+
+        bool result = Physics2D.Raycast(startObjectPosition, delta.normalized, delta.magnitude, physicsLayerMask);
+        return result;
     }
 
-    protected GameObject m_player;
+    protected bool QueryPointOverlap(Vector2 point, LayerMask physicsLayerMask)
+    {
+        Collider2D wallOverlapCollider = Physics2D.OverlapPoint(point, physicsLayerMask);
+
+        return wallOverlapCollider;
+    }
+
+    protected bool QueryRaycastAndStartPoint(Vector2 start, Vector2 end, LayerMask physicsLayerMask)
+    {
+        if (QueryPointOverlap(start, physicsLayerMask))
+        {
+            return true;
+        }
+
+        return QueryStartEndRaycast(start, end, physicsLayerMask);
+    }
+
+    protected virtual void SetPlayer(GameObject player)
+    {
+        m_player = player;
+	}
+
+	protected void QueryDirectionToPlayer()
+	{
+		float xToPlayer = m_player.transform.position.x - transform.position.x;
+
+		UpdateDirection(xToPlayer);
+	}
+
+	protected GameObject m_player;
 }

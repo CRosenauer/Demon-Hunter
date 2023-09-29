@@ -12,8 +12,6 @@ public class FanOfKnivesObjectComponent : MovementComponent
     // Start is called before the first frame update
     void Start()
     {
-        ComponentInit();
-
         m_movementDirection = transform.rotation * new Vector2(1f, 0f);
 
         StartCoroutine(DeathTimer());
@@ -22,10 +20,14 @@ public class FanOfKnivesObjectComponent : MovementComponent
     void FixedUpdate()
     {
         Move(m_movementDirection * m_speed);
+    }
 
-        if(!IsWithinCameraFrustum() && m_destructionCoroutine != null)
+    void OnDestroy()
+    {
+        if(m_destructionCoroutine != null)
         {
-            Destroy(gameObject);
+            StopCoroutine(m_destructionCoroutine);
+            m_destructionCoroutine = null;
         }
     }
 

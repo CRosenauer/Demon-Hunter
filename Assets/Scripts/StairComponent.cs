@@ -12,6 +12,22 @@ public class StairComponent : MonoBehaviour
     {
         m_dirToOtherStair = m_destinationStair.transform.position - transform.position;
         m_dirToOtherStair.Normalize();
+        m_checkEnableUpperCollider = false;
+        m_upperColliderBox = m_upperCollider.GetComponent<BoxCollider2D>();
+    }
+
+    void FixedUpdate()
+    {
+        // allows for proper 1 way collisions
+        // am not using platform collider since it can cause the player to collide inside of the platform
+        if(m_checkEnableUpperCollider)
+        {
+            if (!IsPlayerInUpperCollider())
+            {
+                m_checkEnableUpperCollider = false;
+                m_upperCollider.SetActive(true);
+            }
+        }
     }
 
     public Vector2 CalculateToStairMovement(Vector3 playerPosition, Vector2 userInput, float speed)
@@ -105,14 +121,33 @@ public class StairComponent : MonoBehaviour
 
     void OnEnterStair()
     {
-        BoxCollider2D upperCollider = m_upperCollider.GetComponent<BoxCollider2D>();
-        upperCollider.enabled = false;
+        m_upperCollider.SetActive(false);
     }
 
     void OnExitStair()
     {
-        BoxCollider2D upperCollider = m_upperCollider.GetComponent<BoxCollider2D>();
-        upperCollider.enabled = true;
+         m_upperCollider.SetActive(true);
+    }
+
+    void OnExitStairJump()
+    {
+
+        if (IsPlayerInUpperCollider())
+        {
+            m_checkEnableUpperCollider = true;
+        }
+        else
+        {
+            m_upperCollider.SetActive(true);
+        }
+    }
+
+    bool IsPlayerInUpperCollider()
+    {
+        Vector2 point = m_upperColliderBox.offset + (Vector2) m_upperColliderBox.transform.position;
+        int layerMask = LayerMask.NameToLayer("Player");
+        Collider2D foundCollider = Physics2D.OverlapBox(point, m_upperColliderBox.size, 0f, 1 << layerMask);
+        return foundCollider != null;
     }
 
     // why are we even passing anything?
@@ -136,6 +171,18 @@ public class StairComponent : MonoBehaviour
         }
     }
 
+    void OnDrawGizmos()
+    {
+        if(m_upperColliderBox)
+        {
+            Gizmos.color = Color.yellow;
+            Vector2 point = m_upperColliderBox.offset + (Vector2)m_upperColliderBox.transform.position;
+            Gizmos.DrawCube(point, m_upperColliderBox.size);
+        }
+    }
+
     GameObject m_player;
+    BoxCollider2D m_upperColliderBox;
     Vector2 m_dirToOtherStair;
+    bool m_checkEnableUpperCollider;
 }

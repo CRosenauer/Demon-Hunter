@@ -4,9 +4,6 @@ using UnityEngine;
 
 public class RedSkeletonComponent : EnemyComponent
 {
-	[SerializeField] bool m_shouldDespawn;
-	[Space]
-
 	[SerializeField] GameObject m_bone;
 	[Space]
 
@@ -27,8 +24,6 @@ public class RedSkeletonComponent : EnemyComponent
 	// Start is called before the first frame update
 	void Start()
     {
-		ComponentInit();
-
 		m_player = GameObject.FindGameObjectWithTag("Player");
 		Debug.Assert(m_player);
 
@@ -41,28 +36,14 @@ public class RedSkeletonComponent : EnemyComponent
 	{
 		QueryOnGround();
 
-		Vector3 distSquared = transform.position - m_player.transform.position;
-		distSquared.z = 0f;
-
-		if (distSquared.sqrMagnitude < m_activeDistance * m_activeDistance || IsWithinCameraFrustum())
+		switch (m_movementState)
 		{
-			switch (m_movementState)
-			{
-				case MovementState.idle:
-					OnIdleState();
-					break;
-				case MovementState.dead:
-					OnDeadState();
-					break;
-			}
-		}
-		else if (m_shouldDespawn && m_movementState != MovementState.init && distSquared.sqrMagnitude > 4 * m_activeDistance * m_activeDistance)
-		{
-			Destroy(gameObject);
-		}
-		else
-		{
-			Move(Vector2.zero);
+			case MovementState.idle:
+				OnIdleState();
+				break;
+			case MovementState.dead:
+				OnDeadState();
+				break;
 		}
 	}
 
@@ -79,8 +60,7 @@ public class RedSkeletonComponent : EnemyComponent
 
 		if(IsOnGround())
         {
-			Vector3 thisToPlayer = m_player.transform.position - transform.position;
-			UpdateDirect(-thisToPlayer.x);
+			QueryDirectionToPlayer();
 
             m_animator.ResetTrigger("OnThrow");
 			m_animator.ResetTrigger("OnTallJump");

@@ -5,6 +5,7 @@ using UnityEngine;
 public class DestructibleComponent : MonoBehaviour
 {
     [SerializeField] GameObject m_dropObject;
+    [SerializeField] bool m_destroyAfterHit;
 
     // Start is called before the first frame update
     void Start()
@@ -35,6 +36,11 @@ public class DestructibleComponent : MonoBehaviour
         }
 
         m_isHit = true;
+
+        if(m_destroyAfterHit)
+        {
+            Destroy(gameObject);
+        }
     }
 
     Animator m_animator;

@@ -4,33 +4,31 @@ using UnityEngine;
 
 public class SkeletonComponent : EnemyComponent
 {
-	[SerializeField] bool m_shouldDespawn;
-	[Space]
+	[SerializeField] GameObject m_wallDetectorStart;
+	[SerializeField] GameObject m_wallDetectorEnd;
 
 	[SerializeField] float m_activeDistance;
 	[Space]
 
 	[SerializeField] float m_moveSpeed;
+	[Space]
+
+	[SerializeField] protected LayerMask m_physicsLayerMask;
 
 	// Start is called before the first frame update
 	protected virtual void Start()
 	{
-		ComponentInit();
-
 		m_player = GameObject.FindGameObjectWithTag("Player");
 		Debug.Assert(m_player);
 
 		m_persistentHitboxComponent = GetComponent<PersistentHitboxComponent>();
 		m_lifeComponent = GetComponent<LifeComponent>();
-		Collider2D collider = GetComponent<Collider2D>();
 
 		Debug.Assert(m_persistentHitboxComponent);
 		Debug.Assert(m_lifeComponent);
 
 		m_lifeComponent.SetActive(false);
 		m_persistentHitboxComponent.SetActive(false);
-		collider.enabled = false;
-		m_rbody.bodyType = RigidbodyType2D.Static;
 
 		m_movementState = MovementState.init;
 	}
@@ -40,37 +38,24 @@ public class SkeletonComponent : EnemyComponent
 	{
 		QueryOnGround();
 
-		Vector3 distSquared = transform.position - m_player.transform.position;
-
-		if(distSquared.sqrMagnitude < m_activeDistance * m_activeDistance)
-        {
-			switch (m_movementState)
-			{
-				case MovementState.init:
-					OnInitState();
-					break;
-				case MovementState.idle:
-					OnIdleState();
-					break;
-				case MovementState.damageKnockback:
-				 	OnDamageKnockbackState();
-				 	break;
-				case MovementState.dead:
-					OnDeadState();
-					break;
-				case MovementState.spawn:
-					OnSpawnState();
-					break;
-			}
+		switch (m_movementState)
+		{
+			case MovementState.init:
+				OnInitState();
+				break;
+			case MovementState.idle:
+				OnIdleState();
+				break;
+			case MovementState.damageKnockback:
+				OnDamageKnockbackState();
+				break;
+			case MovementState.dead:
+				OnDeadState();
+				break;
+			case MovementState.spawn:
+				OnSpawnState();
+				break;
 		}
-		else if(m_shouldDespawn && m_movementState != MovementState.init && distSquared.sqrMagnitude > 4 * m_activeDistance * m_activeDistance)
-        {
-			Destroy(gameObject);
-        }
-		else
-        {
-			Move(Vector2.zero);
-        }
 	}
 
 	void OnInitState()
@@ -81,21 +66,6 @@ public class SkeletonComponent : EnemyComponent
 
 		OnEnterSpawnState();
 		m_movementState = MovementState.spawn;
-	}
-
-	protected void QueryDirectionToPlayer()
-    {
-		float xToPlayer = transform.position.x - m_player.transform.position.x;
-
-		if (xToPlayer >= 0)
-		{
-			UpdateDirection(Direction.left);
-
-		}
-		else
-		{
-			UpdateDirection(Direction.right);
-		}
 	}
 
 	void OnEnterIdleState()
@@ -110,7 +80,17 @@ public class SkeletonComponent : EnemyComponent
 
 	protected virtual void OnIdleState()
 	{
-		Vector2 movement = m_direction == Direction.right ? Vector2.right : Vector2.left;
+		bool isApproachingWall = QueryRaycastAndStartPoint(
+			m_wallDetectorStart.transform.position,
+			m_wallDetectorEnd.transform.position,
+			m_physicsLayerMask);
+
+		if (isApproachingWall)
+        {
+			UpdateDirection(-Mathf.Sign(transform.localScale.x));
+        }
+
+		Vector2 movement = Vector2.right * transform.localScale.x;
 
 		movement = movement * m_moveSpeed;
 		movement.y = m_rbody.velocity.y;

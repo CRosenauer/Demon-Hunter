@@ -4,10 +4,14 @@ using UnityEngine;
 
 public class SpawnerComponent : MonoBehaviour
 {
-    const int m_enemyLimit = 10;
+    [SerializeField] int m_enemyLimit;
+    [SerializeField] bool m_spawnIfWillExceedLimit;
+    [SerializeField] bool m_absoluteWorldPosition;
 
     [SerializeField] GameObject m_spawnedObject;
     [Space]
+
+    [SerializeField] List<SpawnPattern> m_spawnPatterns;
 
     [SerializeField] float m_minTime;
     [SerializeField] float m_maxTime;
@@ -35,6 +39,14 @@ public class SpawnerComponent : MonoBehaviour
 
             if(m_timer <= 0f)
             {
+                for (int i = 0; i < m_spawnedEnemies.Count; ++i)
+                {
+                    if (!m_spawnedEnemies[i])
+                    {
+                        m_spawnedEnemies.RemoveAt(i);
+                    }
+                }
+
                 Vector3 position = new();
 
                 position.x = Random.Range(m_xMin, m_xMax);
@@ -45,35 +57,87 @@ public class SpawnerComponent : MonoBehaviour
                     return;
                 }
 
-                position.x += m_player.transform.position.x;
+                position.x = m_absoluteWorldPosition? position.x :  position.x += m_player.transform.position.x;
                 position.y = m_yPos;
                 position.z = 0f;
 
-                GameObject spawnedEnemy = Instantiate(m_spawnedObject, position, Quaternion.identity);
-                m_spawnedEnemies.Add(spawnedEnemy);
-                spawnedEnemy.transform.SetParent(transform.parent);
+                if (m_spawnPatterns.Count == 0)
+                {
+                    if(!m_spawnIfWillExceedLimit)
+                    {
+                        if(m_spawnedEnemies.Count + 1 > m_enemyLimit)
+                        {
+                            SetTimer();
+                            return;
+                        }
+                    }
 
+                    SpawnEnemy(m_spawnedObject, position);
+                }
+                else
+                {
+                    int spawnPatternIndex = Random.Range(0, m_spawnPatterns.Count);
 
-                if (m_spawnedEnemies.Count > m_enemyLimit)
+                    SpawnPattern spawnPattern = m_spawnPatterns[spawnPatternIndex];
+
+                    if (!m_spawnIfWillExceedLimit)
+                    {
+                        if (m_spawnedEnemies.Count + spawnPattern.m_positionOffsets.Count > m_enemyLimit)
+                        {
+                            SetTimer();
+                            return;
+                        }
+                    }
+
+                    foreach (Vector3 offset in spawnPattern.m_positionOffsets)
+                    {
+                        SpawnEnemy(m_spawnedObject, position + offset);
+                    }
+                }
+
+                while (m_spawnedEnemies.Count > m_enemyLimit)
                 {
                     Destroy(m_spawnedEnemies[0]);
                     m_spawnedEnemies.RemoveAt(0);
                 }
 
-                m_timer = Random.Range(m_minTime, m_maxTime);
+                SetTimer();
             }
         }
     }
 
+    void SetTimer()
+    {
+        m_timer = Random.Range(m_minTime, m_maxTime);
+    }
+
     void OnTriggerEnter2D(Collider2D other)
     {
-        m_player = other.gameObject;
-        m_timer = Random.Range(m_minTime, m_maxTime);
+        LayerMask playerLayer = LayerMask.NameToLayer("Player");
+
+        if(other.gameObject.layer == playerLayer)
+        {
+            m_player = other.gameObject;
+            m_timer = Random.Range(m_minTime, m_maxTime);
+        }
     }
 
     void OnTriggerExit2D(Collider2D other)
     {
-        m_player = null;
+        LayerMask playerLayer = LayerMask.NameToLayer("Player");
+
+        if (other.gameObject.layer == playerLayer)
+        {
+            m_player = null;
+        }
+    }
+
+    void SpawnEnemy(GameObject enemy, Vector3 position)
+    {
+        GameObject spawnedEnemy = Instantiate(enemy, position, Quaternion.identity);
+        spawnedEnemy.AddComponent<DespawnComponent>();
+        m_spawnedEnemies.Add(spawnedEnemy);
+        spawnedEnemy.transform.SetParent(transform.parent);
     }
 
     List<GameObject> m_spawnedEnemies = new();

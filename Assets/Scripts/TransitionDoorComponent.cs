@@ -28,6 +28,16 @@ public class TransitionDoorComponent : MonoBehaviour
 
     [SerializeField] Vector2 m_exitDoorPosition;
 
+    public static void SignalSceneLoadedActions()
+    {
+        GameObject[] sceneLoadedActionObjects = GameObject.FindGameObjectsWithTag("SceneLoadAction");
+
+        foreach (GameObject go in sceneLoadedActionObjects)
+        {
+            go.SendMessage("OnSceneLoad");
+        }
+    }
+
     void Start()
     {
         m_currentObjects = new();
@@ -102,6 +112,13 @@ public class TransitionDoorComponent : MonoBehaviour
             m_camera.gameObject.SetActive(true);
 
             m_state = TransitionState.MoveCamera;
+
+            m_nextSceneEnemies = GameObject.FindGameObjectsWithTag("Enemy");
+
+            foreach(GameObject enemy in m_nextSceneEnemies)
+            {
+                enemy.SetActive(false);
+            }
         }
     }
 
@@ -223,6 +240,8 @@ public class TransitionDoorComponent : MonoBehaviour
         RebaseGameObjects();
         CameraBootstrap.LoadCameraParams();
         UnloadPreviousLevel();
+
+        SignalSceneLoadedActions();
     }
 
     void OnTriggerEnter2D(Collider2D other)
@@ -253,6 +272,11 @@ public class TransitionDoorComponent : MonoBehaviour
 
     void ReactivateGame()
     {
+        foreach (GameObject enemy in m_nextSceneEnemies)
+        {
+            enemy.SetActive(true);
+        }
+
         m_player.BroadcastMessage("SetControl", true);
 
         CameraComponent cameraComponent = m_camera.GetComponent<CameraComponent>();
@@ -278,6 +302,9 @@ public class TransitionDoorComponent : MonoBehaviour
     }
 
     List<GameObject> m_currentObjects;
+
+    GameObject[] m_nextSceneEnemies;
+
 
     Camera m_camera;
     GameObject m_player;

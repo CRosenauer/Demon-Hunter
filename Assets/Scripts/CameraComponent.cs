@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+[RequireComponent(typeof(BoxCollider2D))]
 public class CameraComponent : MonoBehaviour
 {
     public enum TrackingAxis
@@ -159,5 +160,15 @@ public class CameraComponent : MonoBehaviour
     void ChangeCameraMovementMode(CameraMovementMode movementMode)
     {
         m_movementMode = movementMode;
+    }
+
+    void OnTriggerEnter2D(Collider2D collision)
+    {
+        collision.SendMessage("OnEnterCamera");
+    }
+
+    void OnTriggerExit2D(Collider2D collision)
+    {
+        collision.SendMessage("OnExitCamera");
     }
 }
