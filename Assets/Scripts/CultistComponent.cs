@@ -24,6 +24,7 @@ public class CultistComponent : EnemyComponent
     [Space]
 
     [SerializeField] Vector2 m_attackDelayRange;
+    [SerializeField] int m_attackGroupingCount;
     [Space]
 
     [SerializeField] float m_moveSpeed;
@@ -69,6 +70,8 @@ public class CultistComponent : EnemyComponent
         }
 
         QueryDirectionToPlayer();
+
+        m_attackCounter = 0;
 
         m_state = CultistState.init;
         OnEnterInitState();
@@ -426,7 +429,18 @@ public class CultistComponent : EnemyComponent
 
     IEnumerator AttackTimerCoroutine()
     {
-        float delayTime = Random.Range(m_attackDelayRange.x, m_attackDelayRange.y);
+        float delayTime;
+        m_attackCounter++;
+        if (m_attackCounter >= m_attackGroupingCount)
+        {
+            delayTime = m_attackDelayRange.y;
+            m_attackCounter = 0;
+        }
+        else
+        {
+            delayTime = m_attackDelayRange.x;
+        }
+
         yield return new WaitForSeconds(delayTime);
 
         m_shouldAttack = true;
@@ -439,6 +453,8 @@ public class CultistComponent : EnemyComponent
     Coroutine m_attackTimerCoroutine;
 
     CultistState m_state;
+
+    int m_attackCounter;
 
     bool m_shouldAttack = false;
 }

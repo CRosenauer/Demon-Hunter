@@ -1001,7 +1001,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7548005075730308609, guid: e05a39fe5e00ada4290bdcbd6b935c1b, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -2.25
+      value: -5.625
       objectReference: {fileID: 0}
     - target: {fileID: 7548005075730308609, guid: e05a39fe5e00ada4290bdcbd6b935c1b, type: 3}
       propertyPath: m_LocalPosition.y
@@ -16678,6 +16678,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 237255044978664019, guid: 46af028c770577a4b85d22a9340db2f7, type: 3}
+      propertyPath: m_dropObject
+      value: 
+      objectReference: {fileID: 7279518626750307788, guid: de0fd8ec3159a2e47b7a743ed5634cd2, type: 3}
     - target: {fileID: 237255044978664023, guid: 46af028c770577a4b85d22a9340db2f7, type: 3}
       propertyPath: m_Name
       value: Candle (3)
@@ -36672,6 +36676,10 @@ PrefabInstance:
     - target: {fileID: 7723567461736512957, guid: 92022aa600e342f4abdb528a5d0ce93b, type: 3}
       propertyPath: m_Name
       value: Spawner (7)
+      objectReference: {fileID: 0}
+    - target: {fileID: 7723567461736512957, guid: 92022aa600e342f4abdb528a5d0ce93b, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7723567461736512958, guid: 92022aa600e342f4abdb528a5d0ce93b, type: 3}
       propertyPath: m_xMax

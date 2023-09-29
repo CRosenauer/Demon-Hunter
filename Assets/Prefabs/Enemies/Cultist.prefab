@@ -77,7 +77,8 @@ MonoBehaviour:
   m_ledgeBehindCheckStart: {fileID: 8905577908117395834}
   m_ledgeBehindCheckEnd: {fileID: 5994179746448702135}
   m_playerDetector: {fileID: 4028149182462234131}
-  m_attackDelayRange: {x: 1.5, y: 2}
+  m_attackDelayRange: {x: 1.25, y: 3}
+  m_attackGroupingCount: 3
   m_moveSpeed: 2.5
   m_jumpSpeed: 10
   m_physicsLayerMask:
