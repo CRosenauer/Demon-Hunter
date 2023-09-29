@@ -130,43 +130,6 @@ public class MovementComponent : MonoBehaviour
         }
     }
 
-    protected bool IsWithinCameraFrustum()
-    {
-        const float distancePadding = 1f;
-
-        Vector3 screenPos = Camera.main.WorldToScreenPoint(transform.position);
-
-        if (screenPos.x == Mathf.Clamp(screenPos.x, -distancePadding, Screen.width + distancePadding))
-        {
-            if (screenPos.y == Mathf.Clamp(screenPos.y, -distancePadding, Screen.height + distancePadding))
-            {
-                return true;
-            }
-        }
-
-        return false;
-    }
-
-    public static bool IsWithinCameraFrustum(Transform transform, float tolerance = 0f)
-    {
-        if(!Camera.main)
-        {
-            return false;
-        }
-
-        Vector3 screenPos = Camera.main.WorldToScreenPoint(transform.position);
-
-        if (screenPos.x == Mathf.Clamp(screenPos.x, -tolerance, Screen.width + tolerance))
-        {
-            if (screenPos.y == Mathf.Clamp(screenPos.y, -tolerance, Screen.height + tolerance))
-            {
-                return true;
-            }
-        }
-
-        return false;
-    }
-
     protected bool TryAttack()
     {
         if(m_attackComponent)

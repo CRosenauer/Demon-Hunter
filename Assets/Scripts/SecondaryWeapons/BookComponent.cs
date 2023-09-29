@@ -20,12 +20,19 @@ public class BookComponent : SecondaryWeaponComponent
 
         List<GameObject> onScreenEnemies = new();
 
-        foreach (GameObject enemy in enemies)
+        Camera camera = Camera.main;
+        Collider2D onCameraCollider = camera.GetComponent<Collider2D>();
+        List<Collider2D> onCameraObjects = new();
+        onCameraCollider.GetContacts(onCameraObjects);
+
+        foreach(Collider2D collider in onCameraObjects)
         {
-            if (MovementComponent.IsWithinCameraFrustum(enemy.transform))
+            GameObject go = collider.gameObject;
+
+            if(go.tag == "Enemy" || go.tag == "EnemyProjectile")
             {
-                onScreenEnemies.Add(enemy);
-                enemy.BroadcastMessage("OnClear");
+                onScreenEnemies.Add(go);
+                go.BroadcastMessage("OnClear");
             }
         }
 
