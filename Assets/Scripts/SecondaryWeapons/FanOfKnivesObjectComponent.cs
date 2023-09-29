@@ -36,10 +36,10 @@ public class FanOfKnivesObjectComponent : MovementComponent
         // hit something but is not touching destructible means we must have touched an enemy
         // er go destroy this!
 
-        int destructibleMask = LayerMask.NameToLayer("Destructible");
-        destructibleMask = 1 << destructibleMask;
+        int enemyMask = LayerMask.NameToLayer("Enemy");
+        enemyMask = 1 << enemyMask;
 
-        if ((layerMask & destructibleMask) == 0)
+        if ((layerMask & enemyMask) != 0)
         {
             m_destructionCoroutine = StartCoroutine(SetupDestroy());
         }

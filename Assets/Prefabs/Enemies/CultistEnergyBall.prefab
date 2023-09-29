@@ -18,7 +18,7 @@ GameObject:
   - component: {fileID: 3199178923010900433}
   - component: {fileID: 404212602268502097}
   - component: {fileID: 5712829511504530694}
-  m_Layer: 8
+  m_Layer: 17
   m_Name: CultistEnergyBall
   m_TagString: Untagged
   m_Icon: {fileID: 0}
