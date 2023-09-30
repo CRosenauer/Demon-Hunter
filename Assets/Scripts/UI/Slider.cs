@@ -46,12 +46,20 @@ public abstract class Slider : MonoBehaviour
         OnSliderMove();
     }
 
+    void ForceSetSliderValue(float value)
+    {
+        value = Mathf.Clamp01(value);
+        m_sliderValue = Mathf.Lerp(m_sliderValueRange.x, m_sliderValueRange.y, value);
+        SetSliderPosition();
+        OnSliderMove(false);
+    }
+
     void ClampSliderValue()
     {
         m_sliderValue = Mathf.Clamp(m_sliderValue, m_sliderValueRange.x, m_sliderValueRange.y);
     }
 
-    public abstract void OnSliderMove();
+    public abstract void OnSliderMove(bool playSound = true);
 
     protected float m_sliderValue;
 }
