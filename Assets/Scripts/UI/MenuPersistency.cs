@@ -33,6 +33,11 @@ public class MenuPersistency : MonoBehaviour
         {
             CreateDefaultMenuOptions();
         }
+
+        VolumeSlider musicslider = m_music.GetComponent<VolumeSlider>();
+        musicslider.ForceSetSliderValue(m_menuOptions[MenuOption.music]);
+        VolumeSlider soundslider = m_sound.GetComponent<VolumeSlider>();
+        soundslider.ForceSetSliderValue(m_menuOptions[MenuOption.sound]);
     }
 
     bool RestoreMenuOptions()

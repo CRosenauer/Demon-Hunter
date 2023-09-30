@@ -6,7 +6,7 @@ using UnityEngine.Audio;
 public class VolumeSlider : Slider
 {
     [SerializeField] GameObject m_menuPersistencyUpdator;
-    [SerializeField] MenuPersistency.MenuOption m_menuOption;
+    [SerializeField] public MenuPersistency.MenuOption m_menuOption;
     [Space]
 
     [SerializeField] AudioMixer m_mixer;
