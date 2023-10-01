@@ -5,6 +5,7 @@ Gameplay Controls:
 - WASD to move
 - space to jump
 - j to attack
+- k to use secondary weapons
 
 Menu Controls:
 - enter to open/close the pause menu
