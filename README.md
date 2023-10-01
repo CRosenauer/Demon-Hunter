@@ -15,6 +15,7 @@ Menu Controls:
 Character and Enemy Graphics:
 - https://didigameboy.itch.io/double-sword-warrior
 - https://anokolisa.itch.io/legacy-vania-pack-vilage
+- https://didigameboy.itch.io/legacy-vania-blue-mage-staff
 
 Background Graphics:
 - https://anokolisa.itch.io/legacy-vania-pack-vilage
