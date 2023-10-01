@@ -549,6 +549,13 @@ public class PlayerMovement : MovementComponent
 		m_userYInput = input.y;
 	}
 
+	void ForceDeath()
+    {
+		// don't need to worry about proper state exits. object will be reloaded on respawn
+		m_movementState = MovementState.dead;
+		OnEnterDeadState();
+    }
+
 	GameObject m_stairObject;
 	StairComponent m_stairComponent;
 
