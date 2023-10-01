@@ -172,7 +172,13 @@ public class CultistComponent : EnemyComponent
         if (m_shouldAttack)
         {
             m_shouldAttack = false;
+
+            if (m_attackTimerCoroutine != null)
+            {
+                StopCoroutine(m_attackTimerCoroutine);
+            }
             m_attackTimerCoroutine = StartCoroutine(AttackTimerCoroutine());
+
             m_state = CultistState.attack;
             OnExitIdleState();
             OnEnterAttackState();
