@@ -51,10 +51,21 @@ public class SpawnerComponent : MonoBehaviour
 
                 position.x = Random.Range(m_xMin, m_xMax);
 
-                if(Mathf.Abs(position.x) < m_minDist)
+                if(m_absoluteWorldPosition)
                 {
-                    m_timer = 0;
-                    return;
+                    if (Mathf.Abs(position.x - m_player.transform.position.x) < m_minDist)
+                    {
+                        m_timer = 0;
+                        return;
+                    }
+                }
+                else
+                {
+                    if(Mathf.Abs(position.x) < m_minDist)
+                    {
+                        m_timer = 0;
+                        return;
+                    }
                 }
 
                 position.x = m_absoluteWorldPosition? position.x :  position.x += m_player.transform.position.x;
