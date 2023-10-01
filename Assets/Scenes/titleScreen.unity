@@ -187,36 +187,6 @@ Camera:
   m_CorrespondingSourceObject: {fileID: 8282791670614696038, guid: db494c4e473dfcf4c96e443f320ccf2a, type: 3}
   m_PrefabInstance: {fileID: 197567564}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &942645019 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 8402401679926829253, guid: c5c467d35eea4a14c91ac5cfe48806dd, type: 3}
-  m_PrefabInstance: {fileID: 7340744998020363327}
-  m_PrefabAsset: {fileID: 0}
---- !u!1 &1201705805 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 8402401679162851856, guid: c5c467d35eea4a14c91ac5cfe48806dd, type: 3}
-  m_PrefabInstance: {fileID: 7340744998020363327}
-  m_PrefabAsset: {fileID: 0}
---- !u!1 &1582248061 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 8402401679510852109, guid: c5c467d35eea4a14c91ac5cfe48806dd, type: 3}
-  m_PrefabInstance: {fileID: 7340744998020363327}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &1582248070
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1582248061}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 397ed462686f9174898084393da8d341, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_path: options.txt
-  m_music: {fileID: 942645019}
-  m_sound: {fileID: 1201705805}
 --- !u!1001 &7340744998020363327
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -316,6 +286,5 @@ PrefabInstance:
       propertyPath: m_Camera
       value: 
       objectReference: {fileID: 822661990}
-    m_RemovedComponents:
-    - {fileID: 8369613804913338488, guid: c5c467d35eea4a14c91ac5cfe48806dd, type: 3}
+    m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c5c467d35eea4a14c91ac5cfe48806dd, type: 3}

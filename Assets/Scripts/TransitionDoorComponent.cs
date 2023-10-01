@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class TransitionDoorComponent : MonoBehaviour
+public class TransitionDoorComponent : TransitionComponent
 {
     const float c_cameraMoveSpeed = 3f;
 
@@ -21,10 +21,7 @@ public class TransitionDoorComponent : MonoBehaviour
         ExitTransition
     }
 
-    [SerializeField] string m_scene;
-
     [SerializeField] GameObject m_exitPoint;
-    [SerializeField] GameObject m_level;
 
     [SerializeField] Vector2 m_exitDoorPosition;
 
@@ -38,15 +35,14 @@ public class TransitionDoorComponent : MonoBehaviour
         }
     }
 
-    void Start()
+    new void Start()
     {
+        base.Start();
+
         m_currentObjects = new();
         m_animator = GetComponent<Animator>();
-        m_camera = Camera.main;
 
-        Debug.Assert(m_scene != null);
         Debug.Assert(m_exitPoint);
-        Debug.Assert(m_camera);
     }
 
     void FixedUpdate()
@@ -246,13 +242,7 @@ public class TransitionDoorComponent : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D other)
     {
-        // could accidentally double load areas
-        if(m_triggered)
-        {
-            return;
-        }
-
-        m_sceneLoader = SceneManager.LoadSceneAsync(m_scene, LoadSceneMode.Additive);
+        LoadLevel();
 
         m_state = TransitionState.LoadScene;
 
@@ -266,7 +256,6 @@ public class TransitionDoorComponent : MonoBehaviour
 
         SceneManager.GetActiveScene().GetRootGameObjects(m_currentObjects);
 
-        m_triggered = true;
         m_state = TransitionState.LoadScene;
     }
 
@@ -285,34 +274,11 @@ public class TransitionDoorComponent : MonoBehaviour
         m_camera.BroadcastMessage("EnableCameraBounds", true);
     }
 
-    void RebaseGameObjects()
-    {
-        Scene loadedScene = SceneManager.GetSceneAt(1);
-
-        SceneManager.MoveGameObjectToScene(m_player, loadedScene);
-        SceneManager.MoveGameObjectToScene(m_camera.gameObject, loadedScene);
-
-        GameObject obj = GameObject.Find("Core(Clone)");
-        SceneManager.MoveGameObjectToScene(obj, loadedScene);
-    }
-
-    void UnloadPreviousLevel()
-    {
-        SceneManager.UnloadSceneAsync(SceneManager.GetActiveScene());
-    }
-
     List<GameObject> m_currentObjects;
 
     GameObject[] m_nextSceneEnemies;
 
-
-    Camera m_camera;
-    GameObject m_player;
-    AsyncOperation m_sceneLoader;
-
     Animator m_animator;
-
-    bool m_triggered = false;
 
 #if UNITY_EDITOR
     [SerializeField]

@@ -14,4 +14,10 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Levels/tower.unity
     guid: 64d7c08798a7c144184c8dc9ee421c13
+  - enabled: 1
+    path: Assets/Scenes/Levels/rooftop.unity
+    guid: cdc198e321f0088478c8d717f220dcaa
+  - enabled: 1
+    path: Assets/Scenes/Levels/graveyard.unity
+    guid: b5f897958a8a1594e88368e0e2095deb
   m_configObjects: {}

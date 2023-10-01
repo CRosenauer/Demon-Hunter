@@ -394,6 +394,9 @@ public class PlayerMovement : MovementComponent
 		if (!m_stairComponent)
 		{
 			m_movementState = MovementState.idle;
+			OnExitWalkOnStair();
+			OnEnterIdleState();
+			return;
 		}
 
 		if(m_stairComponent.ShouldExitStair(transform.position, new(m_userXInput, m_userYInput)))
