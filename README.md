@@ -22,6 +22,9 @@ Background Graphics:
 UI Graphics:
 - https://andelrodis.itch.io/1-bit-game-ui-pack
 
+Font:
+- https://jamiecross.itch.io/c-64-font-free
+
 Music:
 - https://joelfrancisburford.itch.io/free-jrpg-8-bitchiptune-music-sfx-sample-pack
 
