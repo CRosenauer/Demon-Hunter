@@ -26,9 +26,6 @@ UI Graphics:
 Font:
 - https://jamiecross.itch.io/c-64-font-free
 
-Music:
-- https://joelfrancisburford.itch.io/free-jrpg-8-bitchiptune-music-sfx-sample-pack
-
-Sound Effects:
+Music and Sound Effects:
 - https://joelfrancisburford.itch.io/dark-dissimulation-an-8-bit-metroidvania-music-sfx-pack
 - https://joelfrancisburford.itch.io/free-jrpg-8-bitchiptune-music-sfx-sample-pack
