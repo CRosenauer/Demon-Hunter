@@ -1,5 +1,5 @@
 # Demon-Hunter
-A Castlevania inspired 2D action-platformer created in Unity
+A Castlevania inspired 2D action-platformer created in Unity.
 
 Gameplay Controls:
 - WASD to move
@@ -11,6 +11,7 @@ Menu Controls:
 - enter to open/close the pause menu
 - WASD to navigate menu options
 - space to select menu options
+- escaoe to return to the previous menu
 
 # Asset Credits:
 Character and Enemy Graphics:
