@@ -27,6 +27,11 @@ public class VolumeSlider : Slider
     {
         float value = m_mixerGain.x + m_sliderValue * (m_mixerGain.y - m_mixerGain.x);
 
+        if(Mathf.Approximately(m_sliderValue, 0f))
+        {
+            value = -80; // dB. functionally mute audio
+        }
+
         MenuPersistency.MenuField menuField = new();
         menuField.m_menuOption = m_menuOption;
         menuField.m_value = m_sliderValue;

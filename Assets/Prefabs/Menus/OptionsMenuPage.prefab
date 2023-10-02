@@ -331,11 +331,10 @@ MonoBehaviour:
   m_sliderPositionRange: {x: -100, y: 100}
   m_sliderValueRange: {x: 0, y: 1}
   m_sliderStep: 0.05
-  m_defaultSliderValue: 0.8
   m_menuPersistencyUpdator: {fileID: 123181175680969552}
   m_menuOption: 1
   m_mixer: {fileID: 24100000, guid: e0b8e59232dc9ff4ba2cf136c2cacac9, type: 2}
-  m_mixerGain: {x: -80, y: 0}
+  m_mixerGain: {x: -40, y: 0}
   m_audioSource: {fileID: 123181174324517277}
   m_audioMixerName: MusicVolume
 --- !u!82 &123181174324517277
@@ -685,11 +684,10 @@ MonoBehaviour:
   m_sliderPositionRange: {x: -100, y: 100}
   m_sliderValueRange: {x: 0, y: 1}
   m_sliderStep: 0.05
-  m_defaultSliderValue: 0.8
   m_menuPersistencyUpdator: {fileID: 123181175680969552}
   m_menuOption: 0
   m_mixer: {fileID: 24100000, guid: e0b8e59232dc9ff4ba2cf136c2cacac9, type: 2}
-  m_mixerGain: {x: -80, y: 0}
+  m_mixerGain: {x: -40, y: 0}
   m_audioSource: {fileID: 123181175088495441}
   m_audioMixerName: SoundVolume
 --- !u!82 &123181175088495441
