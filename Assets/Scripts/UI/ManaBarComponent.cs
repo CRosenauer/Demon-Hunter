@@ -13,7 +13,7 @@ public class ManaBarComponent : MonoBehaviour
         SecondaryWeaponManagerComponent secondaryWeapon = player.GetComponent<SecondaryWeaponManagerComponent>();
         Debug.Assert(secondaryWeapon);
 
-        secondaryWeapon.OnManaChanged += OnHManaChanged;
+        secondaryWeapon.OnManaChanged += OnManaChanged;
 
         m_manaBarTicks = new();
 
@@ -40,15 +40,15 @@ public class ManaBarComponent : MonoBehaviour
             return;
         }
 
-        lifeComponent.OnManaChanged -= OnHManaChanged;
+        lifeComponent.OnManaChanged -= OnManaChanged;
     }
 
-    void OnHManaChanged(int health)
+    void OnManaChanged(int mana)
     {
         for (int i = 0; i < m_manaBarTicks.Count; ++i)
         {
             // likely a better way to do this. could revise in the future
-            if (i < health)
+            if (i < mana)
             {
                 m_manaBarTicks[i].SetActive(true);
             }

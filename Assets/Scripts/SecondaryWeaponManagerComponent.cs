@@ -20,7 +20,7 @@ public class SecondaryWeaponManagerComponent : MonoBehaviour
         Debug.Assert(m_secondaryWeaponUsageSound);
 
         m_animator = GetComponent<Animator>();
-        RestoreMana();
+        ResetMana();
     }
 
     public bool IsInSecondaryWeaponAttack()
@@ -109,7 +109,7 @@ public class SecondaryWeaponManagerComponent : MonoBehaviour
         SecondaryWeaponUsageCleanup();
     }
 
-    void SignalHealthChanged()
+    void SignalManaChanged()
     {
         if (OnManaChanged != null)
         {
@@ -121,13 +121,19 @@ public class SecondaryWeaponManagerComponent : MonoBehaviour
     {
         m_currentMana += amount;
         m_currentMana = Mathf.Clamp(m_currentMana, 0, m_maxMana);
-        SignalHealthChanged();
+        SignalManaChanged();
     }
 
     void RestoreMana()
     {
         m_currentMana = m_maxMana;
-        SignalHealthChanged();
+        SignalManaChanged();
+    }
+
+    void ResetMana()
+    {
+        m_currentMana = 0;
+        SignalManaChanged();
     }
 
     public int GetMaxMana()
