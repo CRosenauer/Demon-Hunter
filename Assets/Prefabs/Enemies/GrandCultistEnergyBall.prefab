@@ -19,7 +19,7 @@ GameObject:
   - component: {fileID: 404212602268502097}
   - component: {fileID: 5712829511504530694}
   m_Layer: 17
-  m_Name: CultistEnergyBall
+  m_Name: GrandCultistEnergyBall
   m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -81,7 +81,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 5
-  m_Sprite: {fileID: 21300000, guid: 17bf8ec551030fa48a4e9d51397af6ba, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 27a8d49998af455448611b79c30b38da, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -127,7 +127,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_rbody: {fileID: 3199178923010900436}
   m_speed: 4
-  m_lockedToXAxis: 1
 --- !u!95 &3199178923010900434
 Animator:
   serializedVersion: 5

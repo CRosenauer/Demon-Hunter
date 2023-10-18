@@ -10,6 +10,7 @@ public class LifeComponent : MonoBehaviour
 
     [SerializeField] float m_damageInvulnerableTime;
     [SerializeField] int m_maxHealth;
+    // [SerializeField] int m_currentHealth;
 
     SpriteRenderer m_spriteRenderer;
     Material m_defaultSpriteMaterial;
@@ -44,10 +45,16 @@ public class LifeComponent : MonoBehaviour
         m_enable = true;
     }
 
+    public bool IsActive()
+    {
+        return m_enable;
+    }
+
     void FixedUpdate()
     {
         if (!m_enable)
         {
+            // should probably be done by a coroutine
             m_disableTimer -= Time.fixedDeltaTime;
             if (m_disableTimer <= 0f)
             {

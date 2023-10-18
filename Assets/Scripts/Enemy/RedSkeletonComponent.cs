@@ -22,10 +22,9 @@ public class RedSkeletonComponent : EnemyComponent
 	[SerializeField] float m_maxThrowTime;
 
 	// Start is called before the first frame update
-	void Start()
+	new void Start()
     {
-		m_player = GameObject.FindGameObjectWithTag("Player");
-		Debug.Assert(m_player);
+		base.Start();
 
 		m_movementState = MovementState.idle;
 
