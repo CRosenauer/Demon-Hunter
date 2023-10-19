@@ -150,17 +150,20 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
-  m_skeletonObject: {fileID: 7548005075730308620, guid: 9e4e940e15022554885e795b6429498a, type: 3}
+  m_skeletonObject: {fileID: 637912434870413600, guid: 7dae646f553ab674db88c385e90946bc, type: 3}
   m_skeletonSpawnLocationRange: 1.25
-  m_skeletonSpawnDelayRange: 1.5
+  m_skeletonSpawnDelayStep: 0.75
   m_projectileSpawnLocations:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
-  m_projectileObject: {fileID: 3199178923010900270, guid: 00d594b7af9eeb54ebc8896c748a991b, type: 3}
-  m_projectileSpawnLocationRange: 0
-  m_projectileSpawnDelayRange: 1.5
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  m_projectileObject: {fileID: 3199178923010900270, guid: da3680c6ddf4ee34f9986c9c543f9bd5, type: 3}
+  m_projectileSpawnDelay: 1
   m_hoverPoints:
   - {fileID: 0}
   m_moveSpeed: 2

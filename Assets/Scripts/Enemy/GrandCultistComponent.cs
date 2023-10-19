@@ -7,13 +7,12 @@ public class GrandCultistComponent : EnemyComponent
     [SerializeField] List<GameObject> m_skeletonSpawnLocations;
     [SerializeField] GameObject m_skeletonObject;
     [SerializeField] float m_skeletonSpawnLocationRange;
-    [SerializeField] float m_skeletonSpawnDelayRange;
+    [SerializeField] float m_skeletonSpawnDelayStep;
     [Space]
 
     [SerializeField] List<GameObject> m_projectileSpawnLocations;
     [SerializeField] GameObject m_projectileObject;
-    [SerializeField] float m_projectileSpawnLocationRange;
-    [SerializeField] float m_projectileSpawnDelayRange;
+    [SerializeField] float m_projectileSpawnDelay;
     [Space]
 
     [SerializeField] List<GameObject> m_hoverPoints;
@@ -93,40 +92,20 @@ public class GrandCultistComponent : EnemyComponent
 
     void OnEnterSpawnSkeletons()
     {
-        SpawnObjects(m_skeletonSpawnLocations, m_skeletonObject, m_skeletonSpawnLocationRange, m_skeletonSpawnDelayRange, false);
-    }
-
-    void SpawnObjects(List<GameObject> spawnLocations, GameObject objectToSpawn, float distanceRange, float delayRange, bool deferedDirection)
-    {
-        foreach (GameObject spawnPoint in spawnLocations)
+        int i = 0;
+        foreach (GameObject spawnPoint in m_skeletonSpawnLocations)
         {
             Vector3 position = spawnPoint.transform.position;
-            position.x = position.x + Random.Range(-distanceRange, distanceRange);
+            position.x = position.x + Random.Range(-m_skeletonSpawnLocationRange, m_skeletonSpawnLocationRange);
 
-            StartCoroutine(SpawnCoroutine(objectToSpawn, position, delayRange, deferedDirection));
+            StartCoroutine(SpawnCoroutine(m_skeletonObject, position, i++ * m_skeletonSpawnDelayStep));
         }
     }
 
-    IEnumerator SpawnCoroutine(GameObject go, Vector3 position, float delay, bool deferedDirection)
+    IEnumerator SpawnCoroutine(GameObject go, Vector3 position, float delay)
     {
-        if(deferedDirection)
-        {
-            GameObject entity = Instantiate(go, position, Quaternion.identity, transform.parent);
-            yield return new WaitForSeconds(Random.Range(0f, delay));
-            Vector2 directionToPlayer = m_player.transform.position - position;
-
-            // used only for energy ball. doesn't do anything on skeletons
-            entity.SendMessage("OnSetDirection", directionToPlayer.normalized);
-        }
-        else
-        {
-            yield return new WaitForSeconds(Random.Range(0f, delay));
-            Vector2 directionToPlayer = m_player.transform.position - position;
-            GameObject entity = Instantiate(go, position, Quaternion.identity, transform.parent);
-
-            // used only for energy ball. doesn't do anything on skeletons
-            entity.SendMessage("OnSetDirection", directionToPlayer.normalized);
-        }
+        yield return new WaitForSeconds(Random.Range(0f, delay));
+        Instantiate(go, position, Quaternion.identity, transform.parent);
     }
 
     void OnSpawnSkeletons()
@@ -143,7 +122,41 @@ public class GrandCultistComponent : EnemyComponent
 
     void OnEnterSpawnProjectiles()
     {
-        SpawnObjects(m_projectileSpawnLocations, m_projectileObject, m_projectileSpawnLocationRange, m_projectileSpawnDelayRange, true);
+        foreach (GameObject location in m_projectileSpawnLocations)
+        {
+            StartCoroutine(SpawnProjectilesCoroutine(location.transform.position));
+        }
+    }
+
+    IEnumerator SpawnProjectilesCoroutine(Vector2 waitPosition)
+    {
+        GameObject energyBall = Instantiate(m_projectileObject, transform.position, Quaternion.identity, transform.parent);
+        Vector2 direction = waitPosition - (Vector2) energyBall.transform.position;
+        direction.Normalize();
+
+        energyBall.SendMessage("OnSetDirection", direction);
+
+        while(true)
+        {
+            Vector2 ballPosition = energyBall.transform.position;
+            Vector2 distanceToPosition = waitPosition - ballPosition;
+
+            if(Vector2.Dot(direction, distanceToPosition) < 0f)
+            {
+                break;
+            }
+
+            yield return new WaitForFixedUpdate();
+        }
+
+        energyBall.SendMessage("OnSetDirection", Vector2.zero);
+        yield return new WaitForSeconds(m_projectileSpawnDelay);
+
+        Vector2 playerPosition = m_player.transform.position;
+        Vector2 directionToPlayer = playerPosition - (Vector2) energyBall.transform.position;
+        directionToPlayer.Normalize();
+
+        energyBall.SendMessage("OnSetDirection", directionToPlayer);
     }
 
     void OnSpawnProjectiles()
