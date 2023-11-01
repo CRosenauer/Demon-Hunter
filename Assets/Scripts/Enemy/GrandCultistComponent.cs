@@ -220,6 +220,11 @@ public class GrandCultistComponent : EnemyComponent
 
     void OnDeath()
     {
+        if(m_stateTimerCoroutine != null)
+        {
+            StopCoroutine(m_stateTimerCoroutine);
+        }
+        
         switch(m_state)
         {
             case GrandCultistState.spawnSkeletons:

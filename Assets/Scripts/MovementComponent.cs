@@ -163,6 +163,11 @@ public class MovementComponent : MonoBehaviour
         return m_movementState;
     }
 
+    public void SetCutscene(bool cutscene)
+    {
+        m_isInCutscene = cutscene;
+    }
+
     [SerializeField] protected MovementState m_movementState;
 
     protected Rigidbody2D m_rbody;
@@ -180,4 +185,6 @@ public class MovementComponent : MonoBehaviour
     protected bool m_userSecondaryAttackDownLastFrame = false;
 
     protected bool m_attackBuffered = false;
+
+    protected bool m_isInCutscene = false;
 }

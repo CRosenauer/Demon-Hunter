@@ -20814,6 +20814,7 @@ GameObject:
   - component: {fileID: 1290176759}
   - component: {fileID: 1290176758}
   - component: {fileID: 1290176760}
+  - component: {fileID: 1290176761}
   m_Layer: 11
   m_Name: BossEntryCallback
   m_TagString: Untagged
@@ -20874,6 +20875,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bb636a4773f92174fa446b37ebe1bbcc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_oneShot: 1
   m_callbackObjects:
   - {fileID: 5130411660232654768}
   m_callbackNames:
@@ -20890,6 +20892,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 31edd593952df434d9002d9012ec5463, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_oneShot: 0
   m_trackedObject: {fileID: 1824494706}
   m_trackingAxis: 0
   m_cameraPositionOffset: {x: 0, y: 0, z: 0}
@@ -20909,7 +20912,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 50ccbef70a966c545af2655eda3838da, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_oneShot: 1
   m_activatingObject: {fileID: 1183965267}
+--- !u!114 &1290176761
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1290176754}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c599e8bdc771b634f86605ad3bcce142, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_oneShot: 1
+  m_objectName: Systems
+  m_audioClip: {fileID: 8300000, guid: 261b9d8a578570844a3c4f12cbf77b9e, type: 3}
+  m_fadeOutScale: 1
 --- !u!1 &1309336261
 GameObject:
   m_ObjectHideFlags: 0

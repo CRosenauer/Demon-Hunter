@@ -75,35 +75,38 @@ public class PlayerMovement : MovementComponent
 	{
 		QueryOnGround();
 
-		switch (m_movementState)
-		{
-			case MovementState.init:
-				OnInitState();
-				break;
-			case MovementState.idle:
-				OnIdleState();
-				break;
-			case MovementState.jump:
-				OnJumpState();
-				break;
-			case MovementState.fall:
-				OnFallState();
-				break;
-			case MovementState.damageKnockback:
-				OnDamageKnockbackState();
-				break;
-			case MovementState.dead:
-				OnDeadState();
-				break;
-			case MovementState.deathFall:
-				OnDeathFallState();
-				break;
-			case MovementState.walkOnStair:
-				OnWalkOnStair();
-				break;
-			case MovementState.secondaryWeapon:
-				OnSecondaryWeapon();
-				break;
+		if(!m_isInCutscene)
+        {
+			switch (m_movementState)
+			{
+				case MovementState.init:
+					OnInitState();
+					break;
+				case MovementState.idle:
+					OnIdleState();
+					break;
+				case MovementState.jump:
+					OnJumpState();
+					break;
+				case MovementState.fall:
+					OnFallState();
+					break;
+				case MovementState.damageKnockback:
+					OnDamageKnockbackState();
+					break;
+				case MovementState.dead:
+					OnDeadState();
+					break;
+				case MovementState.deathFall:
+					OnDeathFallState();
+					break;
+				case MovementState.walkOnStair:
+					OnWalkOnStair();
+					break;
+				case MovementState.secondaryWeapon:
+					OnSecondaryWeapon();
+					break;
+			}
 		}
 
 		ClearUserInput();
