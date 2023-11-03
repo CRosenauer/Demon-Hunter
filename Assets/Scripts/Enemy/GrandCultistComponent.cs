@@ -92,6 +92,8 @@ public class GrandCultistComponent : EnemyComponent
 
     void OnEnterSpawnSkeletons()
     {
+        m_animator.SetTrigger("Summon");
+
         int i = 0;
         foreach (GameObject spawnPoint in m_skeletonSpawnLocations)
         {
@@ -104,6 +106,7 @@ public class GrandCultistComponent : EnemyComponent
 
     IEnumerator SpawnCoroutine(GameObject go, Vector3 position, float delay)
     {
+        yield return new WaitForSeconds(0.33f); // delay for animation
         yield return new WaitForSeconds(Random.Range(0f, delay));
         Instantiate(go, position, Quaternion.identity, transform.parent);
     }
@@ -117,11 +120,12 @@ public class GrandCultistComponent : EnemyComponent
 
     void OnExitSpawnSkeletons()
     {
-
+        m_animator.ResetTrigger("Summon");
     }
 
     void OnEnterSpawnProjectiles()
     {
+        m_animator.SetTrigger("Summon");
         foreach (GameObject location in m_projectileSpawnLocations)
         {
             StartCoroutine(SpawnProjectilesCoroutine(location.transform.position));
@@ -130,6 +134,7 @@ public class GrandCultistComponent : EnemyComponent
 
     IEnumerator SpawnProjectilesCoroutine(Vector2 waitPosition)
     {
+        yield return new WaitForSeconds(0.33f); // delay for animation
         GameObject energyBall = Instantiate(m_projectileObject, transform.position, Quaternion.identity, transform.parent);
         Vector2 direction = waitPosition - (Vector2) energyBall.transform.position;
         direction.Normalize();
@@ -168,7 +173,7 @@ public class GrandCultistComponent : EnemyComponent
 
     void OnExitSpawnProjectiles()
     {
-
+        m_animator.ResetTrigger("Summon");
     }
 
     void OnEnterVulnerable()

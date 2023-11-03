@@ -29,7 +29,7 @@ public class L1S4BossCutscene : Cutscene
         Animator cultistAnimator = m_bossCultist.GetComponent<Animator>();
         cultistAnimator.SetTrigger("Laugh");
         PlaySound(m_cultistLaugh);
-        yield return new WaitForSeconds(3f);
+        yield return new WaitForSeconds(2.67f);
 
         m_player.SendMessage("SetCutscene", false);
         m_bossCultist.SendMessage("SetCutscene", false);
