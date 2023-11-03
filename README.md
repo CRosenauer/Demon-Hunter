@@ -17,13 +17,13 @@ Menu Controls:
 Character and Enemy Graphics:
 - https://didigameboy.itch.io/double-sword-warrior
 - https://anokolisa.itch.io/legacy-vania-pack-vilage
-- https://didigameboy.itch.io/legacy-vania-blue-mage-staff
+- https://didigameboy.itch.io/legacy-vania-blue-mage-staff (Original and edited)
 
 Background Graphics:
-- https://anokolisa.itch.io/legacy-vania-pack-vilage
+- https://anokolisa.itch.io/legacy-vania-pack-vilage (Original and edited)
 
 UI Graphics:
-- https://andelrodis.itch.io/1-bit-game-ui-pack
+- https://andelrodis.itch.io/1-bit-game-ui-pack (Edited)
 
 Font:
 - https://jamiecross.itch.io/c-64-font-free
@@ -31,3 +31,4 @@ Font:
 Music and Sound Effects:
 - https://joelfrancisburford.itch.io/dark-dissimulation-an-8-bit-metroidvania-music-sfx-pack
 - https://joelfrancisburford.itch.io/free-jrpg-8-bitchiptune-music-sfx-sample-pack
+- https://dillonbecker.itch.io/sdap (Edited)
