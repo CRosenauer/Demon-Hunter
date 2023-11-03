@@ -4,7 +4,7 @@ using UnityEngine;
 
 public abstract class Cutscene : MonoBehaviour
 {
-    void PlayCutscene()
+    protected void PlayCutscene()
     {
         if(m_running)
         {

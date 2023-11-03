@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 [RequireComponent(typeof(Collider2D))]
 public class TransitionBoxComponent : TransitionComponent
@@ -16,14 +17,7 @@ public class TransitionBoxComponent : TransitionComponent
     {
         if (m_sceneLoader.isDone)
         {
-            RebaseGameObjects();
-            UnloadPreviousLevel();
-
-            // todo: add animation on entering level
-            GameObject spawnPoint = GameObject.FindGameObjectWithTag("Respawn");
-            GameObject player = GameObject.FindGameObjectWithTag("Player");
-            player.transform.position = spawnPoint.transform.position;
-            m_camera.transform.position = new(0f, 0f, -10f);
+            FinishLoading(true);
         }
     }
 

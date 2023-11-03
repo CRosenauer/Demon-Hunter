@@ -43,6 +43,38 @@ public class TransitionComponent : MonoBehaviour
         SceneManager.UnloadSceneAsync(SceneManager.GetActiveScene());
     }
 
+    protected void FinishLoading(bool moveToSpawnPoint)
+    {
+        RebaseGameObjects();
+        CameraBootstrap.LoadCameraParams();
+        UnloadPreviousLevel();
+
+        if(moveToSpawnPoint)
+        {
+            GameObject[] spawnPoints = GameObject.FindGameObjectsWithTag("Respawn");
+
+            GameObject spawnPoint = spawnPoints[0];
+
+            int buildIndex = SceneManager.GetActiveScene().buildIndex;
+
+            foreach (GameObject sp in spawnPoints)
+            {
+                if (sp.scene.buildIndex == buildIndex)
+                {
+                    spawnPoint = sp;
+                    break;
+                }
+            }
+
+            GameObject player = GameObject.FindGameObjectWithTag("Player");
+            player.transform.position = spawnPoint.transform.position;
+        }
+        
+        m_camera.transform.position = new(0f, 0f, -10f);
+
+        TransitionDoorComponent.SignalSceneLoadedActions();
+    }
+
     protected Camera m_camera;
     protected GameObject m_player;
     protected AsyncOperation m_sceneLoader;
