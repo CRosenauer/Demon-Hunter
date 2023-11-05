@@ -166,8 +166,11 @@ MonoBehaviour:
   m_projectileSpawnDelay: 1
   m_hoverPoints:
   - {fileID: 0}
+  m_vulnerablePoint: {fileID: 0}
   m_moveSpeed: 2
   m_timeBetweenStates: 5
+  m_exitCutscene: {fileID: 0}
+  m_landSFX: {fileID: 0}
   m_state: 0
 --- !u!114 &-8258804211244456660
 MonoBehaviour:

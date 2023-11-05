@@ -16,10 +16,16 @@ public class GrandCultistComponent : EnemyComponent
     [Space]
 
     [SerializeField] List<GameObject> m_hoverPoints;
+    [SerializeField] GameObject m_vulnerablePoint;
     [Space]
     
     [SerializeField] float m_moveSpeed;
     [SerializeField] float m_timeBetweenStates;
+    [Space]
+
+    [SerializeField] GameObject m_exitCutscene;
+    [Space]
+    [SerializeField] GameObject m_landSFX;
     
     enum GrandCultistState
     {
@@ -178,8 +184,9 @@ public class GrandCultistComponent : EnemyComponent
 
     void OnEnterVulnerable()
     {
+        m_animator.SetTrigger("Weak");
+        m_animator.ResetTrigger("Unweak");
         m_vulerableHitCount = 0;
-        Move(Vector2.down * m_moveSpeed);
         if(m_stateTimerCoroutine != null)
         {
             StopCoroutine(m_stateTimerCoroutine);
@@ -198,11 +205,14 @@ public class GrandCultistComponent : EnemyComponent
 
             ExitVulerableState();
         }
+
+        MoveToTarget(m_vulnerablePoint.transform.position);
     }
 
     void OnExitVulnerable()
     {
-
+        m_animator.SetTrigger("Unweak");
+        m_animator.ResetTrigger("Weak");
     }
 
     void ExitVulerableState()
@@ -256,12 +266,33 @@ public class GrandCultistComponent : EnemyComponent
 
     void OnEnterDead()
     {
-        Move(Vector2.down * m_moveSpeed);
+        PersistentHitboxComponent persistentHitboxComponent = GetComponent<PersistentHitboxComponent>();
+        persistentHitboxComponent.SetActive(false, true);
+
+        Rigidbody2D rbody = GetComponent<Rigidbody2D>();
+        rbody.gravityScale = 1f;
+        Move(9f * Vector2.up);
+
+        m_animator.SetTrigger("Death");
+
+        GameObject systems = GameObject.Find("Systems");
+        AudioSource musicSource = systems.GetComponent<AudioSource>();
+        musicSource.Stop();
     }
 
     void OnDead()
     {
+        if (IsOnGround())
+        {
+            m_animator.SetTrigger("DeathBounce");
 
+            if(m_landSFX)
+            {
+                AudioSource landSFXSource = m_landSFX.GetComponent<AudioSource>();
+                landSFXSource.Play();
+                m_landSFX = null;
+            }
+        }
     }
 
     void OnExitDead()
@@ -324,8 +355,13 @@ public class GrandCultistComponent : EnemyComponent
 
     void OnMoveToLocation()
     {
-        Vector2 thisPosition = transform.position;
         Vector2 targetPosition = m_hoverPoints[m_moveLocationIndex].transform.position;
+        MoveToTarget(targetPosition);
+    }
+
+    void MoveToTarget(Vector2 targetPosition)
+    {
+        Vector2 thisPosition = transform.position;
 
         Vector2 displacement = targetPosition - thisPosition;
         Vector2 direction = displacement.normalized;
@@ -335,7 +371,7 @@ public class GrandCultistComponent : EnemyComponent
         Vector2 postMoveDistplacement = targetPosition - (thisPosition + movement * Time.fixedDeltaTime);
 
         // moved past the target
-        if(Vector2.Dot(postMoveDistplacement, displacement) <= 0f)
+        if (Vector2.Dot(postMoveDistplacement, displacement) <= 0f)
         {
             transform.position = targetPosition;
             m_moveLocationIndex = (m_moveLocationIndex + 1) % m_hoverPoints.Count;
@@ -350,6 +386,11 @@ public class GrandCultistComponent : EnemyComponent
     void OnExitMoveToLocation()
     {
 
+    }
+
+    public void ExitCutscene()
+    {
+        m_exitCutscene.SendMessage("PlayCutscene");
     }
 
     Coroutine m_stateTimerCoroutine;

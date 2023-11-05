@@ -1121,6 +1121,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: OptionsMenuPage
       objectReference: {fileID: 0}
+    - target: {fileID: 123181175680969552, guid: 7ae0162bb1943c64aa68aa4bb9d96394, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 123181175680969558, guid: 7ae0162bb1943c64aa68aa4bb9d96394, type: 3}
       propertyPath: m_menuPages
       value: 
