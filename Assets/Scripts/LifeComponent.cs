@@ -112,12 +112,12 @@ public class LifeComponent : MonoBehaviour
         {
             if (m_spriteRenderer && m_hitMaterial)
             {
-                if (materialHitReactionCoroutine != null)
+                if (m_materialHitReactionCoroutine != null)
                 {
-                    StopCoroutine(materialHitReactionCoroutine);
+                    StopCoroutine(m_materialHitReactionCoroutine);
                 }
 
-                materialHitReactionCoroutine = StartCoroutine(ActivateHitMaterial(hitFlashTime));
+                m_materialHitReactionCoroutine = StartCoroutine(ActivateHitMaterial(hitFlashTime));
             }
 
             if(m_hitSoundSource != null)
@@ -156,15 +156,27 @@ public class LifeComponent : MonoBehaviour
         m_spriteRenderer.material = m_defaultSpriteMaterial;
         yield return new WaitForSecondsRealtime(1f / 30f);
 
-        StartCoroutine(ClearFlicker());
+        m_clearCoroutine = StartCoroutine(ClearFlicker());
     }
 
     void OnClear()
     {
-        StartCoroutine(ClearFlicker());
+        m_clearCoroutine = StartCoroutine(ClearFlicker());
     }
 
-    Coroutine materialHitReactionCoroutine;
+    void OnClearEnd()
+    {
+        if(m_clearCoroutine != null)
+        {
+            StopCoroutine(m_clearCoroutine);
+            m_spriteRenderer.material = m_defaultSpriteMaterial;
+            m_clearCoroutine = null;
+        }
+    }
+
+    Coroutine m_clearCoroutine;
+
+    Coroutine m_materialHitReactionCoroutine;
 
     float m_disableTimer;
 

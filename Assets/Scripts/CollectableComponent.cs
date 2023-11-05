@@ -137,8 +137,7 @@ public class CollectableComponent : MonoBehaviour
 
     void ScreenClear()
     {
-        GameObject[] enemies = GameObject.FindGameObjectsWithTag("Enemy");
-        StartCoroutine(BookComponent.ScreenClear(enemies, m_audioSource, gameObject));
+        StartCoroutine(BookComponent.ScreenClear(m_audioSource, gameObject, int.MaxValue));
     }
 
     void AlterLife()
