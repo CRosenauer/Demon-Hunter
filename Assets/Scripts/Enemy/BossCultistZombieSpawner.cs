@@ -18,4 +18,9 @@ public class BossCultistZombieSpawner : MonoBehaviour
         Instantiate(m_enemy, m_spawnPoint.transform.position, Quaternion.identity, transform.parent);
         Destroy(gameObject);
     }
+    
+    void OnDeath()
+    {
+        Destroy(gameObject);
+    }
 }

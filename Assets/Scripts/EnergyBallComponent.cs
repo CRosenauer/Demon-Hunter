@@ -19,4 +19,14 @@ public class EnergyBallComponent : MonoBehaviour
     {
         Destroy(gameObject);
     }
+
+    void OnDeath()
+    {
+        Destroy(gameObject);
+    }
+
+    void OnClear()
+    {
+        Destroy(gameObject);
+    }
 }

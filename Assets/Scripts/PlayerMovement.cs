@@ -40,6 +40,20 @@ public class PlayerMovement : MovementComponent
 			UpdateUserInput("Attack", ref m_userAttack, ref m_userAttackDownLastFrame);
 			UpdateUserInput("Special", ref m_userSecondaryAttack, ref m_userSecondaryAttackDownLastFrame);
 		}
+
+		if(m_isInCutscene)
+        {
+			m_userXInput = 0f;
+			m_userYInput = 0f;
+
+			m_userJump = false;
+			m_userAttack = false;
+			m_userSecondaryAttack = false;
+
+			m_userJumpDownLastFrame = false;
+			m_userAttackDownLastFrame = false;
+			m_userSecondaryAttackDownLastFrame = false;
+		}
 	}
 
 	void UpdateUserInput(string button, ref bool inputFlag, ref bool lastFrameInputFlag)
@@ -75,38 +89,35 @@ public class PlayerMovement : MovementComponent
 	{
 		QueryOnGround();
 
-		if(!m_isInCutscene)
-        {
-			switch (m_movementState)
-			{
-				case MovementState.init:
-					OnInitState();
-					break;
-				case MovementState.idle:
-					OnIdleState();
-					break;
-				case MovementState.jump:
-					OnJumpState();
-					break;
-				case MovementState.fall:
-					OnFallState();
-					break;
-				case MovementState.damageKnockback:
-					OnDamageKnockbackState();
-					break;
-				case MovementState.dead:
-					OnDeadState();
-					break;
-				case MovementState.deathFall:
-					OnDeathFallState();
-					break;
-				case MovementState.walkOnStair:
-					OnWalkOnStair();
-					break;
-				case MovementState.secondaryWeapon:
-					OnSecondaryWeapon();
-					break;
-			}
+		switch (m_movementState)
+		{
+			case MovementState.init:
+				OnInitState();
+				break;
+			case MovementState.idle:
+				OnIdleState();
+				break;
+			case MovementState.jump:
+				OnJumpState();
+				break;
+			case MovementState.fall:
+				OnFallState();
+				break;
+			case MovementState.damageKnockback:
+				OnDamageKnockbackState();
+				break;
+			case MovementState.dead:
+				OnDeadState();
+				break;
+			case MovementState.deathFall:
+				OnDeathFallState();
+				break;
+			case MovementState.walkOnStair:
+				OnWalkOnStair();
+				break;
+			case MovementState.secondaryWeapon:
+				OnSecondaryWeapon();
+				break;
 		}
 
 		ClearUserInput();

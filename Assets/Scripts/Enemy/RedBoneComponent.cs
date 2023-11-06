@@ -23,4 +23,14 @@ public class RedBoneComponent : EnemyComponent
     {
         Destroy(gameObject);
     }
+
+    void OnDeath()
+    {
+        Destroy(gameObject);
+    }
+
+    void OnClear()
+    {
+        Destroy(gameObject);
+    }
 }

@@ -42,8 +42,11 @@ public class BookComponent : SecondaryWeaponComponent
 
         foreach (GameObject enemy in onScreenEnemies)
         {
-            enemy.BroadcastMessage("OnClearEnd");
-            enemy.SendMessage("OnHit", damage);
+            if(enemy)
+            {
+                enemy.BroadcastMessage("OnClearEnd");
+                enemy.SendMessage("OnHit", damage);
+            }
         }
 
         if(objectToDestroy)

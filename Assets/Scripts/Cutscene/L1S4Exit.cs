@@ -24,6 +24,14 @@ public class L1S4Exit : Cutscene
             yield return new WaitForEndOfFrame();
         }
 
+        List<GameObject> enemies = new(GameObject.FindGameObjectsWithTag("Enemy"));
+        enemies.Remove(m_bossCultist);
+
+        foreach(GameObject enemy in enemies)
+        {
+            enemy.BroadcastMessage("OnDeath");
+        }
+
         m_player.SendMessage("SetCutscene", true);
         m_bossCultist.SendMessage("SetCutscene", true);
         m_player.SendMessage("Move", Vector2.zero);

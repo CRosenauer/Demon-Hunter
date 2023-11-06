@@ -44,6 +44,16 @@ public class GrandCultistComponent : EnemyComponent
         m_state = GrandCultistState.waitForActivation;
         m_nextState = GrandCultistState.spawnProjectiles;
         OnEnterWaitForActivation();
+
+        for(int i = 0; i < m_skeletonSpawnLocations.Count; ++i)
+        {
+            m_spawnSkeletonCoroutine.Add(null);
+        }
+
+        for (int i = 0; i < m_projectileSpawnLocations.Count; ++i)
+        {
+            m_spawnProjectileCoroutine.Add(null);
+        }
     }
 
     void FixedUpdate()
@@ -100,21 +110,24 @@ public class GrandCultistComponent : EnemyComponent
     {
         m_animator.SetTrigger("Summon");
 
-        int i = 0;
-        foreach (GameObject spawnPoint in m_skeletonSpawnLocations)
+        for(int i = 0; i < m_skeletonSpawnLocations.Count; ++i)
         {
+            GameObject spawnPoint = m_skeletonSpawnLocations[i];
+
             Vector3 position = spawnPoint.transform.position;
             position.x = position.x + Random.Range(-m_skeletonSpawnLocationRange, m_skeletonSpawnLocationRange);
 
-            StartCoroutine(SpawnCoroutine(m_skeletonObject, position, i++ * m_skeletonSpawnDelayStep));
+            m_spawnSkeletonCoroutine[i] = StartCoroutine(SpawnCoroutine(m_skeletonObject, position, i * m_skeletonSpawnDelayStep, i));
         }
     }
 
-    IEnumerator SpawnCoroutine(GameObject go, Vector3 position, float delay)
+    IEnumerator SpawnCoroutine(GameObject go, Vector3 position, float delay, int index)
     {
         yield return new WaitForSeconds(0.33f); // delay for animation
         yield return new WaitForSeconds(Random.Range(0f, delay));
         Instantiate(go, position, Quaternion.identity, transform.parent);
+
+        m_spawnSkeletonCoroutine[index] = null;
     }
 
     void OnSpawnSkeletons()
@@ -132,13 +145,15 @@ public class GrandCultistComponent : EnemyComponent
     void OnEnterSpawnProjectiles()
     {
         m_animator.SetTrigger("Summon");
-        foreach (GameObject location in m_projectileSpawnLocations)
+
+        for(int i = 0; i < m_projectileSpawnLocations.Count; ++i)
         {
-            StartCoroutine(SpawnProjectilesCoroutine(location.transform.position));
+            GameObject location = m_projectileSpawnLocations[i];
+            m_spawnProjectileCoroutine[i] = StartCoroutine(SpawnProjectilesCoroutine(location.transform.position, i));
         }
     }
 
-    IEnumerator SpawnProjectilesCoroutine(Vector2 waitPosition)
+    IEnumerator SpawnProjectilesCoroutine(Vector2 waitPosition, int index)
     {
         yield return new WaitForSeconds(0.33f); // delay for animation
         GameObject energyBall = Instantiate(m_projectileObject, transform.position, Quaternion.identity, transform.parent);
@@ -168,6 +183,8 @@ public class GrandCultistComponent : EnemyComponent
         directionToPlayer.Normalize();
 
         energyBall.SendMessage("OnSetDirection", directionToPlayer);
+
+        m_spawnProjectileCoroutine[index] = null;
     }
 
     void OnSpawnProjectiles()
@@ -266,6 +283,28 @@ public class GrandCultistComponent : EnemyComponent
 
     void OnEnterDead()
     {
+        for(int i = 0; i < m_spawnSkeletonCoroutine.Count; ++i)
+        {
+            if(m_spawnSkeletonCoroutine[i] == null)
+            {
+                continue;
+            }
+
+            StopCoroutine(m_spawnSkeletonCoroutine[i]);
+            m_spawnSkeletonCoroutine[i] = null;
+        }
+
+        for (int i = 0; i < m_spawnProjectileCoroutine.Count; ++i)
+        {
+            if (m_spawnProjectileCoroutine[i] == null)
+            {
+                continue;
+            }
+
+            StopCoroutine(m_spawnProjectileCoroutine[i]);
+            m_spawnProjectileCoroutine[i] = null;
+        }
+
         PersistentHitboxComponent persistentHitboxComponent = GetComponent<PersistentHitboxComponent>();
         persistentHitboxComponent.SetActive(false, true);
 
@@ -394,6 +433,9 @@ public class GrandCultistComponent : EnemyComponent
     {
         m_exitCutscene.SendMessage("PlayCutscene");
     }
+
+    List<Coroutine> m_spawnSkeletonCoroutine = new();
+    List<Coroutine> m_spawnProjectileCoroutine = new();
 
     Coroutine m_stateTimerCoroutine;
 
