@@ -127,6 +127,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_rbody: {fileID: 3199178923010900436}
   m_speed: 4
+  m_lockedToXAxis: 1
 --- !u!95 &3199178923010900434
 Animator:
   serializedVersion: 5

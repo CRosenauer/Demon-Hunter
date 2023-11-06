@@ -44,7 +44,7 @@ public class CultistComponent : EnemyComponent
         fall,
     }
 
-    void Start()
+    new void Start()
     {
         Debug.Assert(m_attackProjectile);
         Debug.Assert(m_projectileSpawnPoint);
@@ -60,16 +60,7 @@ public class CultistComponent : EnemyComponent
 
         m_playerDetectorCollider = m_playerDetector.GetComponent<Collider2D>();
 
-        GameObject player = GameObject.FindGameObjectWithTag("Player");
-
-        // failsafe. in some cases the player isnt cached immidately but the object needs it immediately
-        // player will be cached by the object after this point
-        if(player)
-        {
-            SetPlayer(player);
-        }
-
-        QueryDirectionToPlayer();
+        base.Start();
 
         m_attackCounter = 0;
 

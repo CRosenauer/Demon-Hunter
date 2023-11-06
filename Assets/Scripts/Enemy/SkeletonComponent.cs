@@ -16,10 +16,9 @@ public class SkeletonComponent : EnemyComponent
 	[SerializeField] protected LayerMask m_physicsLayerMask;
 
 	// Start is called before the first frame update
-	protected virtual void Start()
+	new protected void Start()
 	{
-		m_player = GameObject.FindGameObjectWithTag("Player");
-		Debug.Assert(m_player);
+		base.Start();
 
 		m_persistentHitboxComponent = GetComponent<PersistentHitboxComponent>();
 		m_lifeComponent = GetComponent<LifeComponent>();
@@ -28,13 +27,13 @@ public class SkeletonComponent : EnemyComponent
 		Debug.Assert(m_lifeComponent);
 
 		m_lifeComponent.SetActive(false);
-		m_persistentHitboxComponent.SetActive(false);
+		m_persistentHitboxComponent.SetActive(false, true);
 
 		m_movementState = MovementState.init;
 	}
 
 	// Update is called once per frame
-	protected virtual void FixedUpdate()
+	protected void FixedUpdate()
 	{
 		QueryOnGround();
 
@@ -119,7 +118,14 @@ public class SkeletonComponent : EnemyComponent
         {
 			OnEnterIdleState();
 			m_movementState = MovementState.idle;
-        }
+			OnExitSpawnState();
+		}
+	}
+
+	void OnExitSpawnState()
+    {
+		PersistentHitboxComponent hitbox = GetComponent<PersistentHitboxComponent>();
+		hitbox.enabled = true;
 	}
 
 	void OnDamageKnockbackState()

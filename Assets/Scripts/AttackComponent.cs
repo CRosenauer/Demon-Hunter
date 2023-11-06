@@ -218,6 +218,16 @@ public class AttackComponent : MonoBehaviour
 
     public static void Hit(Collider2D collider, int damage, AudioSource hitSoundSource = null)
     {
+        LifeComponent lifeComponent = collider.GetComponent<LifeComponent>();
+       
+        if(lifeComponent)
+        {
+            if(!lifeComponent.IsActive())
+            {
+                return;
+            }
+        }
+
         collider.BroadcastMessage("OnHit", damage);
 
         if(hitSoundSource != null)
@@ -226,7 +236,6 @@ public class AttackComponent : MonoBehaviour
             {
                 hitSoundSource.Play();
             }
-            
         }
     }
 

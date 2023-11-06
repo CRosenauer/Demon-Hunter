@@ -37,7 +37,7 @@ public class CameraComponent : MonoBehaviour
     CameraMovementMode m_movementMode;
 
 
-    const float m_scrollSpeed = 1; // units / second
+    const float m_scrollSpeed = 5; // units / second
 
     void Start()
     {
@@ -112,13 +112,19 @@ public class CameraComponent : MonoBehaviour
 
     float CalculateLinearTrackingCoordinate(float thisPosition, float trackedPosition)
     {
-        float trackedDistance = thisPosition - trackedPosition;
+        trackedPosition = trackedPosition + m_offsetBuffer;
+        float trackedDistance = trackedPosition - thisPosition;
 
-        if (trackedDistance > m_offsetBuffer)
+        if(Mathf.Abs(trackedDistance) < m_scrollSpeed * Time.fixedDeltaTime)
+        {
+            return trackedPosition;
+        }
+
+        if (trackedDistance < 0)
         {
             return thisPosition - m_scrollSpeed * Time.fixedDeltaTime;
         }
-        else if (trackedDistance < -m_offsetBuffer)
+        else if (trackedDistance > 0)
         {
             return thisPosition + m_scrollSpeed * Time.fixedDeltaTime;
         }

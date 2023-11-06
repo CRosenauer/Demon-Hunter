@@ -4,6 +4,19 @@ using UnityEngine;
 
 public class EnemyComponent : MovementComponent
 {
+    protected void Start()
+    {
+        GameObject player = GameObject.FindGameObjectWithTag("Player");
+
+        // failsafe. in some cases the player isnt cached immidately but the object needs it immediately
+        // player will be cached by the object after this point
+        if (player)
+        {
+            SetPlayer(player);
+            QueryDirectionToPlayer();
+        }
+    }
+
     protected bool QueryStartEndRaycast(Vector2 startObjectPosition, Vector2 endObjectPosition, LayerMask physicsLayerMask)
     {
         Vector2 delta = endObjectPosition - startObjectPosition;

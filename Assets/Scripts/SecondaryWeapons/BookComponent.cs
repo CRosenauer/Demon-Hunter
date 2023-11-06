@@ -5,16 +5,16 @@ using UnityEngine;
 [RequireComponent(typeof(AudioSource))]
 public class BookComponent : SecondaryWeaponComponent
 {
+    [SerializeField] int m_damage;
+
     public override void OnSpawn(float direction)
     {
         m_audioSource = GetComponent<AudioSource>();
 
-        GameObject[] enemies = GameObject.FindGameObjectsWithTag("Enemy");
-
-        StartCoroutine(ScreenClear(enemies, m_audioSource, gameObject));
+        StartCoroutine(ScreenClear( m_audioSource, gameObject, m_damage));
     }
 
-    public static IEnumerator ScreenClear(GameObject[] enemies, AudioSource audioSource, GameObject objectToDestroy)
+    public static IEnumerator ScreenClear(AudioSource audioSource, GameObject objectToDestroy, int damage)
     {
         Time.timeScale = 0f;
 
@@ -42,11 +42,15 @@ public class BookComponent : SecondaryWeaponComponent
 
         foreach (GameObject enemy in onScreenEnemies)
         {
-            Destroy(enemy);
+            if(enemy)
+            {
+                enemy.BroadcastMessage("OnClearEnd");
+                enemy.SendMessage("OnHit", damage);
+            }
         }
 
         if(objectToDestroy)
-        {
+        {;
             Destroy(objectToDestroy);
         }
 

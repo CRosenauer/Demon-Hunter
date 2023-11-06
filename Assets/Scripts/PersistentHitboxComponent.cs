@@ -30,8 +30,6 @@ public class PersistentHitboxComponent : MonoBehaviour
     void Start()
     {
         Debug.Assert(m_movementComponent);
-
-        m_enable = true;
     }
 
     // Update is called once per frame
@@ -44,6 +42,8 @@ public class PersistentHitboxComponent : MonoBehaviour
             {
                 SetActive(true);
             }
+
+            return;
         }
 
         int touchingLayers = 0;

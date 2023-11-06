@@ -42,7 +42,7 @@ TextureImporter:
   nPOTScale: 0
   lightmap: 0
   compressionQuality: 50
-  spriteMode: 1
+  spriteMode: 2
   spriteExtrude: 1
   spriteMeshType: 1
   alignment: 0
@@ -103,7 +103,238 @@ TextureImporter:
     forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
-    sprites: []
+    sprites:
+    - serializedVersion: 2
+      name: blue-mage-staff-fall_bounce_strip11_0
+      rect:
+        serializedVersion: 2
+        x: 31
+        y: 0
+        width: 128
+        height: 40
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 93d2fd0bdb3680949988cd901eb27046
+      internalID: 695016844
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: blue-mage-staff-fall_bounce_strip11_1
+      rect:
+        serializedVersion: 2
+        x: 155
+        y: 0
+        width: 128
+        height: 40
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c609ebcdd7240104a839e1085d5e9a21
+      internalID: 987222542
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: blue-mage-staff-fall_bounce_strip11_2
+      rect:
+        serializedVersion: 2
+        x: 274
+        y: 0
+        width: 128
+        height: 40
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: bed2ab7e754769a41a7f753580823f43
+      internalID: 380589997
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: blue-mage-staff-fall_bounce_strip11_3
+      rect:
+        serializedVersion: 2
+        x: 400
+        y: 0
+        width: 128
+        height: 40
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9c84bc5bfac97cd4492c1b50afdafbbf
+      internalID: 956543476
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: blue-mage-staff-fall_bounce_strip11_4
+      rect:
+        serializedVersion: 2
+        x: 529
+        y: 0
+        width: 128
+        height: 40
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 009c12975506f40478525e0e2e3dc3e1
+      internalID: 1792971196
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: blue-mage-staff-fall_bounce_strip11_5
+      rect:
+        serializedVersion: 2
+        x: 657
+        y: 0
+        width: 128
+        height: 40
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2ea9f9d2a5257f848be8c057090ad90b
+      internalID: -1288853848
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: blue-mage-staff-fall_bounce_strip11_6
+      rect:
+        serializedVersion: 2
+        x: 775
+        y: 0
+        width: 128
+        height: 40
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 302917fabfe0b394d97e3abf188ace4e
+      internalID: -738563972
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: blue-mage-staff-fall_bounce_strip11_7
+      rect:
+        serializedVersion: 2
+        x: 899
+        y: 0
+        width: 128
+        height: 40
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b5e454bb5eeab364a88b0f399b09a86a
+      internalID: 1266952801
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: blue-mage-staff-fall_bounce_strip11_8
+      rect:
+        serializedVersion: 2
+        x: 1026
+        y: 0
+        width: 128
+        height: 40
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d77608082e459d447840405e433ed236
+      internalID: -1619928916
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: blue-mage-staff-fall_bounce_strip11_9
+      rect:
+        serializedVersion: 2
+        x: 1152
+        y: 0
+        width: 128
+        height: 40
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c38a4dd86e1c3c2459d80807dcf7c083
+      internalID: 1278357574
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: blue-mage-staff-fall_bounce_strip11_10
+      rect:
+        serializedVersion: 2
+        x: 1280
+        y: 0
+        width: 128
+        height: 40
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3b902320d297ea14582c8297ef2dd447
+      internalID: 1253434101
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     outline: []
     physicsShape: []
     bones: []
@@ -114,7 +345,18 @@ TextureImporter:
     edges: []
     weights: []
     secondaryTextures: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      blue-mage-staff-fall_bounce_strip11_0: 695016844
+      blue-mage-staff-fall_bounce_strip11_1: 987222542
+      blue-mage-staff-fall_bounce_strip11_10: 1253434101
+      blue-mage-staff-fall_bounce_strip11_2: 380589997
+      blue-mage-staff-fall_bounce_strip11_3: 956543476
+      blue-mage-staff-fall_bounce_strip11_4: 1792971196
+      blue-mage-staff-fall_bounce_strip11_5: -1288853848
+      blue-mage-staff-fall_bounce_strip11_6: -738563972
+      blue-mage-staff-fall_bounce_strip11_7: 1266952801
+      blue-mage-staff-fall_bounce_strip11_8: -1619928916
+      blue-mage-staff-fall_bounce_strip11_9: 1278357574
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0

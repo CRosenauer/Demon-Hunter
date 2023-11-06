@@ -11,18 +11,25 @@ public class RedBoneComponent : EnemyComponent
     [SerializeField] float m_ySpeed;
 
     // Start is called before the first frame update
-    void Start()
+    new void Start()
     {
-        m_player = GameObject.FindGameObjectWithTag("Player");
-        Debug.Assert(m_player);
-
-        QueryDirectionToPlayer();
+        base.Start();
 
         Vector2 velocity = new(m_xSpeed * transform.localScale.x, m_ySpeed);
         m_rbody.velocity = velocity;
     }
 
     void OnHitOther(int layerMask)
+    {
+        Destroy(gameObject);
+    }
+
+    void OnDeath()
+    {
+        Destroy(gameObject);
+    }
+
+    void OnClear()
     {
         Destroy(gameObject);
     }

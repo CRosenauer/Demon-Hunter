@@ -40,6 +40,20 @@ public class PlayerMovement : MovementComponent
 			UpdateUserInput("Attack", ref m_userAttack, ref m_userAttackDownLastFrame);
 			UpdateUserInput("Special", ref m_userSecondaryAttack, ref m_userSecondaryAttackDownLastFrame);
 		}
+
+		if(m_isInCutscene)
+        {
+			m_userXInput = 0f;
+			m_userYInput = 0f;
+
+			m_userJump = false;
+			m_userAttack = false;
+			m_userSecondaryAttack = false;
+
+			m_userJumpDownLastFrame = false;
+			m_userAttackDownLastFrame = false;
+			m_userSecondaryAttackDownLastFrame = false;
+		}
 	}
 
 	void UpdateUserInput(string button, ref bool inputFlag, ref bool lastFrameInputFlag)
