@@ -39,9 +39,6 @@ public class L1S4Exit : Cutscene
         Animator playerAnimator = m_player.GetComponent<Animator>();
         playerAnimator.SetFloat("Speed", 0);
 
-        Rigidbody2D cultistRBody = m_bossCultist.GetComponent<Rigidbody2D>();
-        cultistRBody.simulated = false;
-
         Animator cultistAnimator = m_bossCultist.GetComponent<Animator>();
 
         yield return new WaitForSeconds(1f);
@@ -51,6 +48,9 @@ public class L1S4Exit : Cutscene
         cultistAnimator.SetTrigger("Transform");
 
         yield return new WaitForSeconds(2f);
+
+        Rigidbody2D cultistRBody = m_bossCultist.GetComponent<Rigidbody2D>();
+        cultistRBody.simulated = false;
 
         PlaySound(m_exitSFX);
         while (!MoveTick(m_bossCultist, m_bossExitPoint, 10, Time.fixedDeltaTime))
