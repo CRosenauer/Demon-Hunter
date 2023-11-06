@@ -23,7 +23,13 @@ public class StairEntryCutscene : LevelLoadCutscene
 
         m_player.SendMessage("SetCutscene", true);
         m_player.SendMessage("Move", Vector2.zero);
+
+        yield return new WaitForEndOfFrame();
+
         Animator animator = m_player.GetComponent<Animator>();
+        animator.SetTrigger("OnJumpEnd");
+        animator.SetBool("CutsceneForceNonJump", true);
+        animator.ResetTrigger("OnJump");
         animator.SetFloat("Speed", 3);
 
         Rigidbody2D rbody = m_player.GetComponent<Rigidbody2D>();
@@ -38,6 +44,8 @@ public class StairEntryCutscene : LevelLoadCutscene
 
         m_player.SendMessage("SetCutscene", false);
         rbody.simulated = true;
+        animator.ResetTrigger("OnJumpEnd");
+        animator.SetBool("CutsceneForceNonJump", false);
     }
 
     GameObject m_player;

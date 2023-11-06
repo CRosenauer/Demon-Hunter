@@ -36,6 +36,10 @@ public class RooftopTransition : Cutscene
     {
         m_player.SendMessage("SetCutscene", true);
         m_player.SendMessage("Move", Vector2.zero);
+
+        Animator playerAnimator = m_player.GetComponent<Animator>();
+        playerAnimator.SetFloat("Speed", 0);
+
         m_bossCultist.SendMessage("SetCutscene", true);
 
         m_camera.SendMessage("ChangeCameraMovementMode", CameraComponent.CameraMovementMode.Linear);

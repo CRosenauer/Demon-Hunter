@@ -92,7 +92,10 @@ public class MovementComponent : MonoBehaviour
     {
         m_rbody.velocity = velocity;
 
-        m_animator.SetFloat("Speed", Mathf.Abs(velocity.x));
+        if(!m_isInCutscene)
+        {
+            m_animator.SetFloat("Speed", Mathf.Abs(velocity.x));
+        }
     }
 
     void FreezeMovement()

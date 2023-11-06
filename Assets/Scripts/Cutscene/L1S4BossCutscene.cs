@@ -24,6 +24,9 @@ public class L1S4BossCutscene : Cutscene
         m_bossCultist.SendMessage("SetCutscene", true);
         m_player.SendMessage("Move", Vector2.zero);
 
+        Animator playerAnimator = m_player.GetComponent<Animator>();
+        playerAnimator.SetFloat("Speed", 0);
+
         yield return new WaitForSeconds(1f);
 
         Animator cultistAnimator = m_bossCultist.GetComponent<Animator>();

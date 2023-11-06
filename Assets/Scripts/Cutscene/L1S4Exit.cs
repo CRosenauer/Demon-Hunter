@@ -36,6 +36,9 @@ public class L1S4Exit : Cutscene
         m_bossCultist.SendMessage("SetCutscene", true);
         m_player.SendMessage("Move", Vector2.zero);
 
+        Animator playerAnimator = m_player.GetComponent<Animator>();
+        playerAnimator.SetFloat("Speed", 0);
+
         Rigidbody2D cultistRBody = m_bossCultist.GetComponent<Rigidbody2D>();
         cultistRBody.simulated = false;
 
