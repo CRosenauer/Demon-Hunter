@@ -292,6 +292,8 @@ public class GrandCultistComponent : EnemyComponent
                 landSFXSource.Play();
                 m_landSFX = null;
             }
+
+            m_state = GrandCultistState.waitForActivation;
         }
     }
 
