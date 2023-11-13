@@ -1,10 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 
 // this code should probably bre refactored soon.
 // its quickly starting to get unmanageable.
+[RequireComponent(typeof(PlayerInput))]
 [RequireComponent(typeof(Rigidbody2D))]
 [RequireComponent(typeof(Animator))]
 [RequireComponent(typeof(AttackComponent))]
@@ -23,9 +25,18 @@ public class PlayerMovement : MovementComponent
 	// Start is called before the first frame update
 	void Start()
 	{
+		m_playerInput = GetComponent<PlayerInput>();
 		m_movementState = MovementState.init;
 
 		_gravity = m_rbody.gravityScale;
+	}
+
+	public void OnMove(InputAction.CallbackContext context)
+    {
+		Vector2 moveInput = context.ReadValue<Vector2>();
+
+		m_userXInput = Mathf.Approximately(moveInput.x, 0f) ? 0f : Mathf.Sign(moveInput.x);
+		m_userYInput = Mathf.Approximately(moveInput.y, 0f) ? 0f : Mathf.Sign(moveInput.y);
 	}
 
 	// Update is called once per frame
@@ -33,9 +44,6 @@ public class PlayerMovement : MovementComponent
 	{
 		if(m_controlable)
         {
-			m_userXInput = Input.GetAxisRaw("Horizontal");
-			m_userYInput = Input.GetAxisRaw("Vertical");
-
 			UpdateUserInput("Jump", ref m_userJump, ref m_userJumpDownLastFrame);
 			UpdateUserInput("Attack", ref m_userAttack, ref m_userAttackDownLastFrame);
 			UpdateUserInput("Special", ref m_userSecondaryAttack, ref m_userSecondaryAttackDownLastFrame);
@@ -58,7 +66,7 @@ public class PlayerMovement : MovementComponent
 
 	void UpdateUserInput(string button, ref bool inputFlag, ref bool lastFrameInputFlag)
 	{
-		bool buttonDown = Input.GetButton(button);
+		bool buttonDown = m_playerInput.actions[button].WasPerformedThisFrame();
 
 		// only updates the input if it hasnt been consumed
 		// represents the button being first down on this frame (seen by the fixed update)
@@ -575,6 +583,8 @@ public class PlayerMovement : MovementComponent
 
 	GameObject m_stairObject;
 	StairComponent m_stairComponent;
+
+	PlayerInput m_playerInput;
 
 	float _gravity;
 
