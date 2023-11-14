@@ -166,7 +166,7 @@ public class MovementComponent : MonoBehaviour
         return m_movementState;
     }
 
-    public void SetCutscene(bool cutscene)
+    public virtual void SetCutscene(bool cutscene)
     {
         m_isInCutscene = cutscene;
     }
