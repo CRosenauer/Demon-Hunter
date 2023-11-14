@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public abstract class Multioption<T> : MonoBehaviour
+public abstract class MultiOption<T> : MonoBehaviour
 {
     [SerializeField] GameObject m_rightArrow;
     [SerializeField] GameObject m_leftArrow;
@@ -41,6 +41,15 @@ public abstract class Multioption<T> : MonoBehaviour
             m_rightArrow.SetActive(true);
         }
     }
+
+    void ForceOptionUpdate(int optionIndex)
+    {
+        m_optionIndex = optionIndex;
+        ClampOptionsIndex();
+        OnSliderMove();
+    }
+
+    protected abstract void UpdateText();
 
     public abstract void OnSliderMove(bool playSound = true);
 

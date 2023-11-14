@@ -1223,6 +1223,8 @@ MonoBehaviour:
   m_path: options.txt
   m_music: {fileID: 123181174324517275}
   m_sound: {fileID: 123181175088495438}
+  m_resolution: {fileID: 2389230128432799346}
+  m_fullscreen: {fileID: 7042925189097767434}
 --- !u!114 &6129363397611421775
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1494,6 +1496,8 @@ MonoBehaviour:
   - {x: 3840, y: 2160}
   m_activeText: {fileID: 6643799578112660819}
   m_resolutionSettings: {fileID: 11400000, guid: d28acec7f79af8b47b095a804b940e71, type: 2}
+  m_menuPersistencyUpdator: {fileID: 123181175680969552}
+  m_menuOption: 2
 --- !u!1 &3840809662603315263
 GameObject:
   m_ObjectHideFlags: 0
@@ -1825,6 +1829,8 @@ MonoBehaviour:
   - FULLSCREEN
   m_activeText: {fileID: 5343584223625154734}
   m_resolutionSettings: {fileID: 11400000, guid: d28acec7f79af8b47b095a804b940e71, type: 2}
+  m_menuPersistencyUpdator: {fileID: 123181175680969552}
+  m_menuOption: 3
 --- !u!1 &7471632542236474936
 GameObject:
   m_ObjectHideFlags: 0

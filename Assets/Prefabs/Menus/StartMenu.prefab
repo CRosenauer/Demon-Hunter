@@ -187,6 +187,8 @@ MonoBehaviour:
   m_path: options.txt
   m_music: {fileID: 8402401679926829253}
   m_sound: {fileID: 8402401679162851856}
+  m_resolution: {fileID: 0}
+  m_fullscreen: {fileID: 0}
 --- !u!1 &8519631902593514563
 GameObject:
   m_ObjectHideFlags: 0
@@ -699,9 +701,27 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6527855941521243081, guid: 7ae0162bb1943c64aa68aa4bb9d96394, type: 3}
+      propertyPath: m_menuPersistencyUpdator
+      value: 
+      objectReference: {fileID: 8402401678614417934}
+    - target: {fileID: 8866696990070818784, guid: 7ae0162bb1943c64aa68aa4bb9d96394, type: 3}
+      propertyPath: m_menuPersistencyUpdator
+      value: 
+      objectReference: {fileID: 8402401678614417934}
     m_RemovedComponents:
     - {fileID: 74349002838987046, guid: 7ae0162bb1943c64aa68aa4bb9d96394, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 7ae0162bb1943c64aa68aa4bb9d96394, type: 3}
+--- !u!1 &1482682958255831892 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7042925189097767434, guid: 7ae0162bb1943c64aa68aa4bb9d96394, type: 3}
+  m_PrefabInstance: {fileID: 8443954011489433950}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &6054723887397742380 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2389230128432799346, guid: 7ae0162bb1943c64aa68aa4bb9d96394, type: 3}
+  m_PrefabInstance: {fileID: 8443954011489433950}
+  m_PrefabAsset: {fileID: 0}
 --- !u!224 &8402401678614417929 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 123181175680969559, guid: 7ae0162bb1943c64aa68aa4bb9d96394, type: 3}
@@ -727,6 +747,8 @@ MonoBehaviour:
   m_path: options.txt
   m_music: {fileID: 8402401679926829253}
   m_sound: {fileID: 8402401679162851856}
+  m_resolution: {fileID: 6054723887397742380}
+  m_fullscreen: {fileID: 1482682958255831892}
 --- !u!1 &8402401679162851856 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 123181175088495438, guid: 7ae0162bb1943c64aa68aa4bb9d96394, type: 3}
