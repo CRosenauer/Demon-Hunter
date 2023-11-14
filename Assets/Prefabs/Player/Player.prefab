@@ -21,6 +21,7 @@ GameObject:
   - component: {fileID: 740146830}
   - component: {fileID: 740146831}
   - component: {fileID: 3039771955825950006}
+  - component: {fileID: -6079279347918384956}
   m_Layer: 6
   m_Name: Player
   m_TagString: Player
@@ -561,6 +562,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: -6079279347918384956}
+        m_TargetAssemblyTypeName: PlayerMenuInput, Assembly-CSharp
+        m_MethodName: OnNavigate
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_ActionId: 7e2aa19e-2c43-443f-872a-02cf3e0a52f4
     m_ActionName: Gameplay/Move[/Keyboard/w,/Keyboard/s,/Keyboard/a,/Keyboard/d]
   - m_PersistentCalls:
@@ -639,8 +652,59 @@ MonoBehaviour:
         m_CallState: 2
     m_ActionId: 82d7754b-8b11-4ea3-a150-5ebf742f61db
     m_ActionName: Gameplay/Pause[/Keyboard/enter,/DualShock4GamepadHID/start]
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: -6079279347918384956}
+        m_TargetAssemblyTypeName: PlayerMenuInput, Assembly-CSharp
+        m_MethodName: OnSelect
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: 1d716ba7-b8f0-4a88-9ddd-938f6715c127
+    m_ActionName: Gameplay/Select[/Keyboard/j,/DualShock4GamepadHID/buttonSouth]
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: -6079279347918384956}
+        m_TargetAssemblyTypeName: PlayerMenuInput, Assembly-CSharp
+        m_MethodName: OnCancel
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: 3631ef6a-1185-4d68-bf18-9b9455d65832
+    m_ActionName: Gameplay/Cancel[/Keyboard/k,/DualShock4GamepadHID/buttonEast]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 536f22b3-9652-48b9-b23b-9e0bfa0ea591
+    m_ActionName: UI/Pause[/Keyboard/enter,/DualShock4GamepadHID/start]
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: Gameplay
   m_SplitScreenIndex: -1
   m_Camera: {fileID: 0}
+--- !u!114 &-6079279347918384956
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5173901498255341368}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bdaf8c1be7eef5446bcc61c28d57ade8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_select: {fileID: 11400000, guid: 96cc377170503b149941f2c58703bda9, type: 2}
+  m_cancel: {fileID: 11400000, guid: ac6e34decfd8c334ca912af19c1951bc, type: 2}
+  m_navigation: {fileID: 11400000, guid: 552deea1f66d6e445a6009a40c45f5cd, type: 2}

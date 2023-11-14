@@ -48,22 +48,6 @@ public class PlayerMovement : MovementComponent
 		}
 	}
 
-	public void OnSelect(InputAction.CallbackContext context)
-	{
-
-	}
-
-	public void OnCancel(InputAction.CallbackContext context)
-	{
-
-	}
-
-	public void OnNavigate(InputAction.CallbackContext context)
-	{
-
-	}
-
-
 	// Update is called once per frame
 	void Update()
 	{

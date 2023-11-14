@@ -23,6 +23,11 @@ public class TransitionComponent : MonoBehaviour
             return;
         }
 
+        // camera is not guarenteed to be cached by this point.
+        // honestly a very hacky solution. FIX ME!
+
+        m_camera = Camera.main;
+
         m_triggered = true;
         m_sceneLoader = SceneManager.LoadSceneAsync(m_scene, LoadSceneMode.Additive);
     }

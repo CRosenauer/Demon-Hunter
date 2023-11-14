@@ -176,10 +176,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1244334220665175938}
     m_Modifications:
-    - target: {fileID: 1101639872435662609, guid: d839a5e3e6adef642aa251b024150bc8, type: 3}
-      propertyPath: m_targetObject
-      value: 
-      objectReference: {fileID: 0}
     - target: {fileID: 1101639873981562997, guid: d839a5e3e6adef642aa251b024150bc8, type: 3}
       propertyPath: m_targetObject
       value: 
@@ -276,10 +272,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 6373535183187705754, guid: d839a5e3e6adef642aa251b024150bc8, type: 3}
-      propertyPath: m_targetObject
-      value: 
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d839a5e3e6adef642aa251b024150bc8, type: 3}
 --- !u!1 &1244334221677603036 stripped
@@ -299,14 +291,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1244334220665175938}
     m_Modifications:
-    - target: {fileID: 123181174324517278, guid: 7ae0162bb1943c64aa68aa4bb9d96394, type: 3}
-      propertyPath: m_mixerGain.x
-      value: -40
-      objectReference: {fileID: 0}
-    - target: {fileID: 123181175088495442, guid: 7ae0162bb1943c64aa68aa4bb9d96394, type: 3}
-      propertyPath: m_mixerGain.x
-      value: -40
-      objectReference: {fileID: 0}
     - target: {fileID: 123181175118865287, guid: 7ae0162bb1943c64aa68aa4bb9d96394, type: 3}
       propertyPath: m_targetObject
       value: 
@@ -318,10 +302,6 @@ PrefabInstance:
     - target: {fileID: 123181175680969552, guid: 7ae0162bb1943c64aa68aa4bb9d96394, type: 3}
       propertyPath: m_Name
       value: OptionsMenuPage
-      objectReference: {fileID: 0}
-    - target: {fileID: 123181175680969552, guid: 7ae0162bb1943c64aa68aa4bb9d96394, type: 3}
-      propertyPath: m_IsActive
-      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 123181175680969558, guid: 7ae0162bb1943c64aa68aa4bb9d96394, type: 3}
       propertyPath: m_menuPages
@@ -415,8 +395,27 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6129363397611421775, guid: 7ae0162bb1943c64aa68aa4bb9d96394, type: 3}
+      propertyPath: m_response.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 5917412692834853496}
+    - target: {fileID: 6129363397611421775, guid: 7ae0162bb1943c64aa68aa4bb9d96394, type: 3}
+      propertyPath: m_response.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: SelectMenuItem
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7ae0162bb1943c64aa68aa4bb9d96394, type: 3}
+--- !u!114 &5917412692834853496 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 123181175680969558, guid: 7ae0162bb1943c64aa68aa4bb9d96394, type: 3}
+  m_PrefabInstance: {fileID: 6029053119281072430}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5917412692834853502}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e1a7f9f9280a1d94a93409f86ae5a191, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!224 &5917412692834853497 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 123181175680969559, guid: 7ae0162bb1943c64aa68aa4bb9d96394, type: 3}
