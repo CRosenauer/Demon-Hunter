@@ -35,8 +35,18 @@ public class PlayerMovement : MovementComponent
     {
 		Vector2 moveInput = context.ReadValue<Vector2>();
 
-		m_userXInput = Mathf.Approximately(moveInput.x, 0f) ? 0f : Mathf.Sign(moveInput.x);
-		m_userYInput = Mathf.Approximately(moveInput.y, 0f) ? 0f : Mathf.Sign(moveInput.y);
+		float inputX = Mathf.Approximately(moveInput.x, 0f) ? 0f : Mathf.Sign(moveInput.x);
+		float inputY = Mathf.Approximately(moveInput.y, 0f) ? 0f : Mathf.Sign(moveInput.y);
+
+		if (m_controlable)
+        {
+			m_userXInput = inputX;
+			m_userYInput = inputY;
+		}
+		else
+        {
+			m_cutsceneSavedMovement = new(inputX, inputY);
+		}
 
 		if(m_isInCutscene)
         {
@@ -586,7 +596,10 @@ public class PlayerMovement : MovementComponent
 		m_controlable = control;
 
 		if(!m_controlable)
-        {
+		{
+			m_cutsceneSavedMovement.x = m_userXInput;
+			m_cutsceneSavedMovement.y = m_userYInput;
+
 			m_userXInput = 0;
 			m_userYInput = 0;
 
@@ -595,6 +608,11 @@ public class PlayerMovement : MovementComponent
 
 			m_userAttack = false;
 			m_userAttackDownLastFrame = false;
+		}
+		else
+        {
+			m_userXInput = m_cutsceneSavedMovement.x;
+			m_userYInput = m_cutsceneSavedMovement.y;
 		}
 	}
 
