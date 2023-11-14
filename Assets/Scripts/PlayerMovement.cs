@@ -37,6 +37,11 @@ public class PlayerMovement : MovementComponent
 
 		m_userXInput = Mathf.Approximately(moveInput.x, 0f) ? 0f : Mathf.Sign(moveInput.x);
 		m_userYInput = Mathf.Approximately(moveInput.y, 0f) ? 0f : Mathf.Sign(moveInput.y);
+
+		if(m_isInCutscene)
+        {
+			m_cutsceneSavedMovement = new(m_userXInput, m_userYInput);
+		}
 	}
 
     public void OnTogglePause(InputAction.CallbackContext context)
@@ -70,6 +75,22 @@ public class PlayerMovement : MovementComponent
 			m_userJumpDownLastFrame = false;
 			m_userAttackDownLastFrame = false;
 			m_userSecondaryAttackDownLastFrame = false;
+		}
+	}
+
+	public override void SetCutscene(bool cutscene)
+	{
+		m_isInCutscene = cutscene;
+
+		if(m_isInCutscene)
+        {
+			m_cutsceneSavedMovement = new(m_userXInput, m_userYInput);
+		}
+		else
+        {
+			m_userXInput = m_cutsceneSavedMovement.x;
+			m_userYInput = m_cutsceneSavedMovement.y;
+
 		}
 	}
 
@@ -594,6 +615,8 @@ public class PlayerMovement : MovementComponent
 	StairComponent m_stairComponent;
 
 	PlayerInput m_playerInput;
+
+	Vector2 m_cutsceneSavedMovement;
 
 	float _gravity;
 
