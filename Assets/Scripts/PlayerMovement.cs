@@ -39,6 +39,31 @@ public class PlayerMovement : MovementComponent
 		m_userYInput = Mathf.Approximately(moveInput.y, 0f) ? 0f : Mathf.Sign(moveInput.y);
 	}
 
+    public void OnTogglePause(InputAction.CallbackContext context)
+    {
+		if(context.performed)
+        {
+			GameObject systems = GameObject.Find("Systems");
+			systems.SendMessage("TogglePause");
+		}
+	}
+
+	public void OnSelect(InputAction.CallbackContext context)
+	{
+
+	}
+
+	public void OnCancel(InputAction.CallbackContext context)
+	{
+
+	}
+
+	public void OnNavigate(InputAction.CallbackContext context)
+	{
+
+	}
+
+
 	// Update is called once per frame
 	void Update()
 	{

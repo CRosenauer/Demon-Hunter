@@ -17,19 +17,6 @@ public class PauseSystem : MonoBehaviour
         m_pauseDownLastUpdate = false;
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        bool pauseDown = Input.GetButton("Pause");
-
-        if(pauseDown && !m_pauseDownLastUpdate)
-        {
-            TogglePause();
-        }
-
-        m_pauseDownLastUpdate = pauseDown;
-    }
-
     void TogglePause()
     {
         SetPause(!m_frozen);
