@@ -9,11 +9,15 @@ public class MenuPersistency : MonoBehaviour
     [SerializeField] string m_path;
     [SerializeField] GameObject m_music;
     [SerializeField] GameObject m_sound;
+    [SerializeField] GameObject m_resolution;
+    // [SerializeField] GameObject m_fullscreen;
 
     public enum MenuOption
     {
         sound,
         music,
+        resolution,
+        fullscreen
     }
 
     public struct MenuField
@@ -28,16 +32,31 @@ public class MenuPersistency : MonoBehaviour
 
         m_menuOptions.Add(MenuOption.sound, 0f);
         m_menuOptions.Add(MenuOption.music, 0f);
+        m_menuOptions.Add(MenuOption.resolution, 0f);
+        m_menuOptions.Add(MenuOption.fullscreen, 0f);
 
         if (!RestoreMenuOptions())
         {
             CreateDefaultMenuOptions();
         }
 
+        ApplyOptions();
+    }
+
+    void ApplyOptions()
+    {
         VolumeSlider musicslider = m_music.GetComponent<VolumeSlider>();
         musicslider.ForceSetSliderValue(m_menuOptions[MenuOption.music]);
         VolumeSlider soundslider = m_sound.GetComponent<VolumeSlider>();
         soundslider.ForceSetSliderValue(m_menuOptions[MenuOption.sound]);
+
+        ResolutionMultiOption resolution = m_resolution.GetComponent<ResolutionMultiOption>();
+        resolution.ForceOptionUpdate(Mathf.RoundToInt(m_menuOptions[MenuOption.resolution]));
+        resolution.CullInvalidResolutions();
+
+        // fullscreen not supported currently
+        // MultiOption<int> fullscreen = m_fullscreen.GetComponent<MultiOption<int>>();
+        // fullscreen.ForceOptionUpdate(Mathf.RoundToInt(m_menuOptions[MenuOption.fullscreen]));
     }
 
     bool RestoreMenuOptions()
@@ -69,6 +88,14 @@ public class MenuPersistency : MonoBehaviour
             {
                 option = MenuOption.music;
             }
+            else if(optionStr == "resolution")
+            {
+                option = MenuOption.resolution;
+            }
+            else if (optionStr == "fullscreen")
+            {
+                option = MenuOption.fullscreen;
+            }
             else
             {
                 continue;
@@ -96,6 +123,12 @@ public class MenuPersistency : MonoBehaviour
                 case MenuOption.music:
                     m_music.SendMessage("ForceSetSliderValue", m_menuOptions[key]);
                     break;
+                case MenuOption.resolution:
+                    m_resolution.SendMessage("ForceOptionUpdate", m_menuOptions[key]);
+                    break;
+                case MenuOption.fullscreen:
+                    // m_fullscreen.SendMessage("ForceOptionUpdate", m_menuOptions[key]);
+                    break;
             }
         }
 
@@ -104,7 +137,7 @@ public class MenuPersistency : MonoBehaviour
 
     void CreateDefaultMenuOptions()
     {
-        string defaults = "music:0.8\nsound:0.8";
+        string defaults = "music:0.8\nsound:0.8\nresolution:0\nfullscreen:0";
 
         StreamWriter writer = new(m_path);
         writer.Write(defaults);
@@ -120,6 +153,12 @@ public class MenuPersistency : MonoBehaviour
         settings = settings + "\nsound:";
         string soundValue = Convert.ToString(m_menuOptions[MenuOption.sound]);
         settings = settings + soundValue;
+        settings = settings + "\nresolution:";
+        string resolutionIndex = Convert.ToString(m_menuOptions[MenuOption.resolution]);
+        settings = settings + resolutionIndex;
+        settings = settings + "\nfullscreen:";
+        string fullscreenIndex = Convert.ToString(m_menuOptions[MenuOption.fullscreen]);
+        settings = settings + fullscreenIndex;
 
         StreamWriter writer = new(m_path);
         writer.Write(settings);
