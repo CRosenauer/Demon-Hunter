@@ -123,6 +123,11 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1 &53894752 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6054723887397742380, guid: c5c467d35eea4a14c91ac5cfe48806dd, type: 3}
+  m_PrefabInstance: {fileID: 7340744998020363327}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &197567564
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -187,6 +192,11 @@ Camera:
   m_CorrespondingSourceObject: {fileID: 8282791670614696038, guid: db494c4e473dfcf4c96e443f320ccf2a, type: 3}
   m_PrefabInstance: {fileID: 197567564}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1801142202 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1482682958255831892, guid: c5c467d35eea4a14c91ac5cfe48806dd, type: 3}
+  m_PrefabInstance: {fileID: 7340744998020363327}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &7340744998020363327
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -194,6 +204,18 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1582248070, guid: c5c467d35eea4a14c91ac5cfe48806dd, type: 3}
+      propertyPath: m_fullscreen
+      value: 
+      objectReference: {fileID: 1801142202}
+    - target: {fileID: 1582248070, guid: c5c467d35eea4a14c91ac5cfe48806dd, type: 3}
+      propertyPath: m_resolution
+      value: 
+      objectReference: {fileID: 53894752}
+    - target: {fileID: 4407882299648869231, guid: c5c467d35eea4a14c91ac5cfe48806dd, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -32
+      objectReference: {fileID: 0}
     - target: {fileID: 8402401679510852105, guid: c5c467d35eea4a14c91ac5cfe48806dd, type: 3}
       propertyPath: m_Pivot.x
       value: 0

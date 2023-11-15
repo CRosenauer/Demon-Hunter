@@ -42,7 +42,7 @@ public abstract class MultiOption<T> : MonoBehaviour
         }
     }
 
-    void ForceOptionUpdate(int optionIndex)
+    public void ForceOptionUpdate(int optionIndex)
     {
         m_optionIndex = optionIndex;
         ClampOptionsIndex();

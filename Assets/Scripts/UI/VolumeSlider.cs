@@ -27,7 +27,9 @@ public class VolumeSlider : Slider
     {
         float value = m_mixerGain.x + m_sliderValue * (m_mixerGain.y - m_mixerGain.x);
 
-        if(Mathf.Approximately(m_sliderValue, 0f))
+        // Mathf.Approximately doesnt work amazing. seems floating point error makes it too far from 0
+        // instead we check if its decently below the next highest step
+        if(m_sliderValue < (m_sliderStep * 0.5f))
         {
             value = -80; // dB. functionally mute audio
         }

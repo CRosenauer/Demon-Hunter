@@ -19,7 +19,7 @@ public class ResolutionSettings : ScriptableObject
 
     void ApplyResolutionSettings()
     {
-        Screen.SetResolution(m_resolution.x, m_resolution.y, m_fullscreen);
+        Screen.SetResolution(m_resolution.x, m_resolution.y, FullScreenMode.Windowed);
     }
 
     Vector2Int m_resolution;

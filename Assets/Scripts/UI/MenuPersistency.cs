@@ -10,7 +10,7 @@ public class MenuPersistency : MonoBehaviour
     [SerializeField] GameObject m_music;
     [SerializeField] GameObject m_sound;
     [SerializeField] GameObject m_resolution;
-    [SerializeField] GameObject m_fullscreen;
+    // [SerializeField] GameObject m_fullscreen;
 
     public enum MenuOption
     {
@@ -40,10 +40,20 @@ public class MenuPersistency : MonoBehaviour
             CreateDefaultMenuOptions();
         }
 
+        ApplyOptions();
+    }
+
+    void ApplyOptions()
+    {
         VolumeSlider musicslider = m_music.GetComponent<VolumeSlider>();
         musicslider.ForceSetSliderValue(m_menuOptions[MenuOption.music]);
         VolumeSlider soundslider = m_sound.GetComponent<VolumeSlider>();
         soundslider.ForceSetSliderValue(m_menuOptions[MenuOption.sound]);
+
+        MultiOption<Vector2Int> resolution = m_resolution.GetComponent<MultiOption<Vector2Int>>();
+        resolution.ForceOptionUpdate(Mathf.RoundToInt(m_menuOptions[MenuOption.resolution]));
+        // MultiOption<int> fullscreen = m_fullscreen.GetComponent<MultiOption<int>>();
+        // fullscreen.ForceOptionUpdate(Mathf.RoundToInt(m_menuOptions[MenuOption.fullscreen]));
     }
 
     bool RestoreMenuOptions()
@@ -114,7 +124,7 @@ public class MenuPersistency : MonoBehaviour
                     m_resolution.SendMessage("ForceOptionUpdate", m_menuOptions[key]);
                     break;
                 case MenuOption.fullscreen:
-                    m_fullscreen.SendMessage("ForceOptionUpdate", m_menuOptions[key]);
+                    // m_fullscreen.SendMessage("ForceOptionUpdate", m_menuOptions[key]);
                     break;
             }
         }

@@ -10,7 +10,7 @@ public abstract class Slider : MonoBehaviour
 
     [SerializeField] Vector2 m_sliderPositionRange;
     [SerializeField] Vector2 m_sliderValueRange;
-    [SerializeField] float m_sliderStep;
+    [SerializeField] protected float m_sliderStep;
 
     protected void Awake()
     {
