@@ -9,6 +9,9 @@ public abstract class MultiOption<T> : MonoBehaviour
     [SerializeField] GameObject m_leftArrow;
     [SerializeField] protected List<T> m_options;
     [SerializeField] protected Text m_activeText;
+    [Space]
+
+    [SerializeField] protected AudioSource m_audioSource;
 
     protected void MoveSlider(float amount)
     {

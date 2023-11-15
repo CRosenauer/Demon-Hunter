@@ -50,8 +50,11 @@ public class MenuPersistency : MonoBehaviour
         VolumeSlider soundslider = m_sound.GetComponent<VolumeSlider>();
         soundslider.ForceSetSliderValue(m_menuOptions[MenuOption.sound]);
 
-        MultiOption<Vector2Int> resolution = m_resolution.GetComponent<MultiOption<Vector2Int>>();
+        ResolutionMultiOption resolution = m_resolution.GetComponent<ResolutionMultiOption>();
         resolution.ForceOptionUpdate(Mathf.RoundToInt(m_menuOptions[MenuOption.resolution]));
+        resolution.CullInvalidResolutions();
+
+        // fullscreen not supported currently
         // MultiOption<int> fullscreen = m_fullscreen.GetComponent<MultiOption<int>>();
         // fullscreen.ForceOptionUpdate(Mathf.RoundToInt(m_menuOptions[MenuOption.fullscreen]));
     }

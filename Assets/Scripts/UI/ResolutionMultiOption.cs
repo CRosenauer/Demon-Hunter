@@ -12,7 +12,31 @@ public class ResolutionMultiOption : MultiOption<Vector2Int>
 
     void Start()
     {
+        CullInvalidResolutions();
         InitOptionText();
+    }
+
+    public void CullInvalidResolutions()
+    {
+        Resolution monitorResolution = Screen.currentResolution;
+
+        List<Vector2Int> removeList = new();
+
+        foreach (Vector2Int resolution in m_options)
+        {
+            if(resolution.x > monitorResolution.width || resolution.y > monitorResolution.height)
+            {
+                removeList.Add(resolution);
+            }
+        }
+
+        foreach (Vector2Int resolution in removeList)
+        {
+            m_options.Remove(resolution);
+        }
+
+        // ensure we arent on an invalid resolution
+        ForceOptionUpdate(m_optionIndex);
     }
 
     void InitOptionText()
@@ -51,6 +75,11 @@ public class ResolutionMultiOption : MultiOption<Vector2Int>
 
         SetResolution();
         UpdateText();
+        
+        if (playSound && m_audioSource)
+        {
+            m_audioSource.Play();
+        }
     }
 
     List<string> m_optionText;
