@@ -5,6 +5,8 @@ using UnityEngine;
 public class ParallaxBackground : MonoBehaviour
 {
     [SerializeField] float m_parallaxScale;
+    [SerializeField] bool m_forceSetCameraStartPosition;
+    [SerializeField] Vector2 m_forcedStartPosition;
 
     // Start is called before the first frame update
     void Start()
@@ -31,7 +33,7 @@ public class ParallaxBackground : MonoBehaviour
         m_camera = Camera.main;
         if(m_camera)
         {
-            m_cameraStartPosition = m_camera.transform.position;
+            m_cameraStartPosition = m_forceSetCameraStartPosition ? m_forcedStartPosition : m_camera.transform.position;
         }
     }
 
