@@ -17,6 +17,7 @@ GameObject:
   - component: {fileID: 8402401679510852107}
   - component: {fileID: 529243805058387948}
   - component: {fileID: 1582248070}
+  - component: {fileID: 3932485577835298330}
   m_Layer: 5
   m_Name: StartMenu
   m_TagString: Core
@@ -188,6 +189,19 @@ MonoBehaviour:
   m_music: {fileID: 8402401679926829253}
   m_sound: {fileID: 8402401679162851856}
   m_resolution: {fileID: 6054723887397742380}
+--- !u!114 &3932485577835298330
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8402401679510852109}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c6d57eeeee4373440b912e5ea9386f35, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_scoreChangedEvent: {fileID: 11400000, guid: f5e9d3df6b41b1745aa53b66fdcf9e1f, type: 2}
 --- !u!1 &8519631902593514563
 GameObject:
   m_ObjectHideFlags: 0

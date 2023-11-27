@@ -318,6 +318,7 @@ public class CultistComponent : EnemyComponent
 
     void OnEnterDeathState()
     {
+        ApplyScore();
         PersistentHitboxComponent persistentHitboxComponent = GetComponent<PersistentHitboxComponent>();
         if(persistentHitboxComponent)
         {

@@ -64,6 +64,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_movementState: 0
+  m_scoreEvent: {fileID: 11400000, guid: f5e9d3df6b41b1745aa53b66fdcf9e1f, type: 2}
+  m_score: 500
   m_attackProjectile: {fileID: 3199178923010900270, guid: 00d594b7af9eeb54ebc8896c748a991b, type: 3}
   m_projectileSpawnPoint: {fileID: 3919935980931585168}
   m_wallCheckStart: {fileID: 2880402053121383404}

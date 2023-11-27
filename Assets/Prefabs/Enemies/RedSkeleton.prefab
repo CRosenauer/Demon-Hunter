@@ -229,6 +229,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_movementState: 0
+  m_scoreEvent: {fileID: 11400000, guid: f5e9d3df6b41b1745aa53b66fdcf9e1f, type: 2}
+  m_score: 300
   m_bone: {fileID: 908688970402592725, guid: 68d592fc766b2724e9955bf57f45a1e8, type: 3}
   m_activeDistance: 10
   m_moveSpeed: 2

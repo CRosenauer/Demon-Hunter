@@ -13,6 +13,7 @@ public class CollectableComponent : MonoBehaviour
         SerializedProperty m_quantity;
         SerializedProperty m_item;
         SerializedProperty m_audioSource;
+        SerializedProperty m_scoreScriptableObject;
 
         void OnEnable()
         {
@@ -20,6 +21,7 @@ public class CollectableComponent : MonoBehaviour
             m_callback = serializedObject.FindProperty("m_callback");
             m_quantity = serializedObject.FindProperty("m_quantity");
             m_item = serializedObject.FindProperty("m_item");
+            m_scoreScriptableObject = serializedObject.FindProperty("m_scoreScriptableObject");
         }
 
         public override void OnInspectorGUI()
@@ -34,11 +36,17 @@ public class CollectableComponent : MonoBehaviour
                 {
                     EditorGUILayout.PropertyField(m_quantity);
                 }
-                EditorGUILayout.PropertyField(m_audioSource);
             }
             else
             {
                 EditorGUILayout.PropertyField(m_item);
+            }
+
+            EditorGUILayout.PropertyField(m_audioSource);
+
+            if (collectableComponent.m_callback == CollectableFunction.AlterScore)
+            {
+                EditorGUILayout.PropertyField(m_scoreScriptableObject);
             }
 
             serializedObject.ApplyModifiedProperties();
@@ -61,6 +69,7 @@ public class CollectableComponent : MonoBehaviour
     [SerializeField] SecondaryWeapon m_item;
     [SerializeField] CollectableFunction m_callback;
     [SerializeField] int m_quantity;
+    [SerializeField] ScoreChangedEvent m_scoreScriptableObject;
 
     // Start is called before the first frame update
     void Start()
@@ -131,8 +140,9 @@ public class CollectableComponent : MonoBehaviour
 
         Debug.Assert(player);
 
+        m_audioSource.Play();
         player.BroadcastMessage("SetSecondaryWeapon", m_item);
-        Destroy(gameObject);
+        StartCoroutine(DestroyCallback());
     }
 
     void ScreenClear()
@@ -158,7 +168,7 @@ public class CollectableComponent : MonoBehaviour
 
     void AlterScore()
     {
-        // todo: implement score items alter score
+        m_scoreScriptableObject.Raise(m_quantity);
         m_audioSource.Play();
         StartCoroutine(DestroyCallback());
     }

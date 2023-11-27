@@ -145,6 +145,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_movementState: 0
+  m_scoreEvent: {fileID: 11400000, guid: f5e9d3df6b41b1745aa53b66fdcf9e1f, type: 2}
+  m_score: 10000
   m_skeletonSpawnLocations:
   - {fileID: 0}
   - {fileID: 0}

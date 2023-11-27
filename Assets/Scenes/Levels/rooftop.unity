@@ -654,7 +654,7 @@ PrefabInstance:
     - target: {fileID: 5243948953346827960, guid: d374b34f01003764e9db33357e208136, type: 3}
       propertyPath: m_dropObject
       value: 
-      objectReference: {fileID: 9214897883210778337, guid: cfbef34ce76f49b4ba51fa3323d888b6, type: 3}
+      objectReference: {fileID: 9214897883210778337, guid: aed9edc3be54dc44f8017e3a290ad029, type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d374b34f01003764e9db33357e208136, type: 3}
 --- !u!4 &337929647 stripped
@@ -3712,6 +3712,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_parallaxScale: 0.25
+  m_forceSetCameraStartPosition: 0
+  m_forcedStartPosition: {x: 0, y: 0}
 --- !u!1 &727647328
 GameObject:
   m_ObjectHideFlags: 0
@@ -14670,7 +14672,7 @@ PrefabInstance:
     - target: {fileID: 5243948953346827960, guid: d374b34f01003764e9db33357e208136, type: 3}
       propertyPath: m_dropObject
       value: 
-      objectReference: {fileID: 4248773288375439674, guid: 56ee690767c7f6b439ebee96e7d5a3c7, type: 3}
+      objectReference: {fileID: 9214897883210778337, guid: 5bfca6b2f4d6c5741b5f3fd52792c8e0, type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d374b34f01003764e9db33357e208136, type: 3}
 --- !u!4 &1172329375 stripped
@@ -15501,7 +15503,7 @@ PrefabInstance:
     - target: {fileID: 5243948953346827960, guid: d374b34f01003764e9db33357e208136, type: 3}
       propertyPath: m_dropObject
       value: 
-      objectReference: {fileID: 4248773288375439674, guid: 56ee690767c7f6b439ebee96e7d5a3c7, type: 3}
+      objectReference: {fileID: 9214897883210778337, guid: 5bfca6b2f4d6c5741b5f3fd52792c8e0, type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d374b34f01003764e9db33357e208136, type: 3}
 --- !u!4 &1523412892 stripped
@@ -15590,6 +15592,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_parallaxScale: 0.5
+  m_forceSetCameraStartPosition: 0
+  m_forcedStartPosition: {x: 0, y: 0}
 --- !u!483693784 &1620570025
 TilemapRenderer:
   m_ObjectHideFlags: 0
@@ -48129,7 +48133,7 @@ PrefabInstance:
     - target: {fileID: 3922256457201153580, guid: 23c474f7362983a419e4443311acc3b6, type: 3}
       propertyPath: m_dropObject
       value: 
-      objectReference: {fileID: 4248773288375439674, guid: 56ee690767c7f6b439ebee96e7d5a3c7, type: 3}
+      objectReference: {fileID: 9214897883210778337, guid: d65b3777ffe68e04793c7bd703e27174, type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 23c474f7362983a419e4443311acc3b6, type: 3}
 --- !u!4 &1991307259 stripped

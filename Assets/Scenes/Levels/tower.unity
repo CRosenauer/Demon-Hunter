@@ -17660,7 +17660,7 @@ PrefabInstance:
     - target: {fileID: 237255044978664019, guid: 46af028c770577a4b85d22a9340db2f7, type: 3}
       propertyPath: m_dropObject
       value: 
-      objectReference: {fileID: 4248773288375439674, guid: 56ee690767c7f6b439ebee96e7d5a3c7, type: 3}
+      objectReference: {fileID: 9214897883210778337, guid: 5bfca6b2f4d6c5741b5f3fd52792c8e0, type: 3}
     - target: {fileID: 237255044978664023, guid: 46af028c770577a4b85d22a9340db2f7, type: 3}
       propertyPath: m_Name
       value: Candle (4)
@@ -24646,7 +24646,7 @@ PrefabInstance:
     - target: {fileID: 237255044978664019, guid: 46af028c770577a4b85d22a9340db2f7, type: 3}
       propertyPath: m_dropObject
       value: 
-      objectReference: {fileID: 4248773288375439674, guid: 56ee690767c7f6b439ebee96e7d5a3c7, type: 3}
+      objectReference: {fileID: 9214897883210778337, guid: d65b3777ffe68e04793c7bd703e27174, type: 3}
     - target: {fileID: 237255044978664023, guid: 46af028c770577a4b85d22a9340db2f7, type: 3}
       propertyPath: m_Name
       value: Candle (2)
@@ -29289,7 +29289,7 @@ PrefabInstance:
     - target: {fileID: 237255044978664019, guid: 46af028c770577a4b85d22a9340db2f7, type: 3}
       propertyPath: m_dropObject
       value: 
-      objectReference: {fileID: 4248773288375439674, guid: 12539440eb677c4499a672e48fc27b96, type: 3}
+      objectReference: {fileID: 9214897883210778337, guid: d65b3777ffe68e04793c7bd703e27174, type: 3}
     - target: {fileID: 237255044978664023, guid: 46af028c770577a4b85d22a9340db2f7, type: 3}
       propertyPath: m_Name
       value: Candle (7)
@@ -29646,7 +29646,7 @@ PrefabInstance:
     - target: {fileID: 237255044978664019, guid: 46af028c770577a4b85d22a9340db2f7, type: 3}
       propertyPath: m_dropObject
       value: 
-      objectReference: {fileID: 4248773288375439674, guid: 56ee690767c7f6b439ebee96e7d5a3c7, type: 3}
+      objectReference: {fileID: 9214897883210778337, guid: aed9edc3be54dc44f8017e3a290ad029, type: 3}
     - target: {fileID: 237255044978664023, guid: 46af028c770577a4b85d22a9340db2f7, type: 3}
       propertyPath: m_Name
       value: Candle (9)

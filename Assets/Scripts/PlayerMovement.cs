@@ -14,6 +14,8 @@ using UnityEngine.InputSystem;
 [RequireComponent(typeof(SecondaryWeaponManagerComponent))]
 public class PlayerMovement : MovementComponent
 {
+	[SerializeField] ScoreChangedEvent m_scoreChangedEvent;
+
 	[SerializeField] Vector2 m_onHitKnockbackVelocity;
 
 	[SerializeField] float m_moveSpeed;
@@ -25,6 +27,8 @@ public class PlayerMovement : MovementComponent
 	// Start is called before the first frame update
 	void Start()
 	{
+		m_scoreChangedEvent.Reset();
+
 		m_playerInput = GetComponent<PlayerInput>();
 		m_movementState = MovementState.init;
 

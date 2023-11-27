@@ -4,6 +4,17 @@ using UnityEngine;
 
 public class EnemyComponent : MovementComponent
 {
+    [SerializeField] ScoreChangedEvent m_scoreEvent;
+    [SerializeField] int m_score;
+
+    protected void ApplyScore()
+    {
+        m_scoreEvent.Raise(m_score);
+
+        // hacky fix. function could be called multiple times when the object is dead.
+        m_score = 0;
+    }
+
     protected void Start()
     {
         GameObject player = GameObject.FindGameObjectWithTag("Player");
