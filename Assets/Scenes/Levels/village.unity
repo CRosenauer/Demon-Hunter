@@ -1132,6 +1132,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_parallaxScale: 0.5
+  m_forceSetCameraStartPosition: 0
+  m_forcedStartPosition: {x: 0, y: 0}
 --- !u!483693784 &493672699
 TilemapRenderer:
   m_ObjectHideFlags: 0
@@ -42580,6 +42582,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_parallaxScale: 0.25
+  m_forceSetCameraStartPosition: 0
+  m_forcedStartPosition: {x: 0, y: 0}
 --- !u!1001 &747776937
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -93126,6 +93130,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_parallaxScale: 0.125
+  m_forceSetCameraStartPosition: 0
+  m_forcedStartPosition: {x: 0, y: 0}
 --- !u!1001 &1362214822
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -93930,7 +93936,7 @@ PrefabInstance:
     - target: {fileID: 3922256457201153580, guid: 23c474f7362983a419e4443311acc3b6, type: 3}
       propertyPath: m_dropObject
       value: 
-      objectReference: {fileID: 4248773288375439674, guid: 56ee690767c7f6b439ebee96e7d5a3c7, type: 3}
+      objectReference: {fileID: 9214897883210778337, guid: aed9edc3be54dc44f8017e3a290ad029, type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 23c474f7362983a419e4443311acc3b6, type: 3}
 --- !u!4 &2026485361 stripped
@@ -94033,7 +94039,7 @@ PrefabInstance:
     - target: {fileID: 237255044978664019, guid: 46af028c770577a4b85d22a9340db2f7, type: 3}
       propertyPath: m_dropObject
       value: 
-      objectReference: {fileID: 4248773288375439674, guid: 56ee690767c7f6b439ebee96e7d5a3c7, type: 3}
+      objectReference: {fileID: 9214897883210778337, guid: 5bfca6b2f4d6c5741b5f3fd52792c8e0, type: 3}
     - target: {fileID: 237255044978664023, guid: 46af028c770577a4b85d22a9340db2f7, type: 3}
       propertyPath: m_Name
       value: Candle (3)

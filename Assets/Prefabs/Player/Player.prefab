@@ -177,6 +177,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_movementState: 0
+  m_scoreChangedEvent: {fileID: 11400000, guid: f5e9d3df6b41b1745aa53b66fdcf9e1f, type: 2}
   m_onHitKnockbackVelocity: {x: -5, y: 8}
   m_moveSpeed: 3
   m_jumpSpeed: 9.428572
@@ -592,54 +593,6 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 8568073928407871871}
         m_TargetAssemblyTypeName: PlayerMovement, Assembly-CSharp
-        m_MethodName: OnNavigate
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-    m_ActionId: d2a4686e-54f7-44c6-a54f-58455ed65bd9
-    m_ActionName: UI/Move[/Keyboard/w,/Keyboard/s,/Keyboard/a,/Keyboard/d,/DualShock4GamepadHID/leftStick,/DualShock4GamepadHID/dpad]
-  - m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 8568073928407871871}
-        m_TargetAssemblyTypeName: PlayerMovement, Assembly-CSharp
-        m_MethodName: OnCancel
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-    m_ActionId: 8ff5f866-8f09-4069-99c9-9a34c2ef8f9c
-    m_ActionName: UI/Cancel[/Keyboard/k,/DualShock4GamepadHID/buttonEast]
-  - m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 8568073928407871871}
-        m_TargetAssemblyTypeName: PlayerMovement, Assembly-CSharp
-        m_MethodName: OnSelect
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-    m_ActionId: e6820d54-1be0-49c0-a486-b0ca4c5eb437
-    m_ActionName: UI/Select[/Keyboard/j,/DualShock4GamepadHID/buttonSouth]
-  - m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 8568073928407871871}
-        m_TargetAssemblyTypeName: PlayerMovement, Assembly-CSharp
         m_MethodName: OnTogglePause
         m_Mode: 0
         m_Arguments:
@@ -684,10 +637,6 @@ MonoBehaviour:
         m_CallState: 2
     m_ActionId: 3631ef6a-1185-4d68-bf18-9b9455d65832
     m_ActionName: Gameplay/Cancel[/Keyboard/k,/DualShock4GamepadHID/buttonEast]
-  - m_PersistentCalls:
-      m_Calls: []
-    m_ActionId: 536f22b3-9652-48b9-b23b-9e0bfa0ea591
-    m_ActionName: UI/Pause[/Keyboard/enter,/DualShock4GamepadHID/start]
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: Gameplay

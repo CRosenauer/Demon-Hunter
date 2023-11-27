@@ -148,6 +148,7 @@ public class SkeletonComponent : EnemyComponent
 
 	protected virtual void OnDeath()
     {
+		ApplyScore();
 		m_lifeComponent.SetActive(false);
 		m_persistentHitboxComponent.SetActive(false);
 

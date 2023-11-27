@@ -252,7 +252,7 @@ public class GrandCultistComponent : EnemyComponent
 
     void OnDeath()
     {
-        if(m_stateTimerCoroutine != null)
+        if (m_stateTimerCoroutine != null)
         {
             StopCoroutine(m_stateTimerCoroutine);
         }
@@ -283,7 +283,9 @@ public class GrandCultistComponent : EnemyComponent
 
     void OnEnterDead()
     {
-        for(int i = 0; i < m_spawnSkeletonCoroutine.Count; ++i)
+        ApplyScore();
+
+        for (int i = 0; i < m_spawnSkeletonCoroutine.Count; ++i)
         {
             if(m_spawnSkeletonCoroutine[i] == null)
             {

@@ -459,10 +459,12 @@ SpriteAtlas:
   - {fileID: 1292049097, guid: 3b1cba2899daa1e4ba45be6ea813b5a6, type: 3}
   - {fileID: -62427805, guid: 3b1cba2899daa1e4ba45be6ea813b5a6, type: 3}
   - {fileID: 1167253007, guid: 3b1cba2899daa1e4ba45be6ea813b5a6, type: 3}
+  - {fileID: -941636782, guid: 3b1cba2899daa1e4ba45be6ea813b5a6, type: 3}
   - {fileID: -1511257205, guid: 3b1cba2899daa1e4ba45be6ea813b5a6, type: 3}
   - {fileID: 367546574, guid: 3b1cba2899daa1e4ba45be6ea813b5a6, type: 3}
   - {fileID: -1129160369, guid: 3b1cba2899daa1e4ba45be6ea813b5a6, type: 3}
   - {fileID: 1524563094, guid: 3b1cba2899daa1e4ba45be6ea813b5a6, type: 3}
+  - {fileID: -1957369069, guid: 3b1cba2899daa1e4ba45be6ea813b5a6, type: 3}
   - {fileID: 1753834035, guid: 3b1cba2899daa1e4ba45be6ea813b5a6, type: 3}
   - {fileID: -1199335421, guid: 3b1cba2899daa1e4ba45be6ea813b5a6, type: 3}
   - {fileID: -1277485132, guid: 3b1cba2899daa1e4ba45be6ea813b5a6, type: 3}
@@ -473,6 +475,7 @@ SpriteAtlas:
   - {fileID: -872368374, guid: 3b1cba2899daa1e4ba45be6ea813b5a6, type: 3}
   - {fileID: 746826541, guid: 3b1cba2899daa1e4ba45be6ea813b5a6, type: 3}
   - {fileID: -308702467, guid: 3b1cba2899daa1e4ba45be6ea813b5a6, type: 3}
+  - {fileID: -1056759149, guid: 3b1cba2899daa1e4ba45be6ea813b5a6, type: 3}
   - {fileID: 661423786, guid: 3b1cba2899daa1e4ba45be6ea813b5a6, type: 3}
   - {fileID: 320474098, guid: 3b1cba2899daa1e4ba45be6ea813b5a6, type: 3}
   - {fileID: -1863165042, guid: 3b1cba2899daa1e4ba45be6ea813b5a6, type: 3}
@@ -926,10 +929,12 @@ SpriteAtlas:
   - Village_393
   - Village_383
   - Village_406
+  - Village_466
   - Village_338
   - Village_322
   - Village_382
   - Village_407
+  - Village_467
   - Village_339
   - Village_381
   - Village_408
@@ -940,6 +945,7 @@ SpriteAtlas:
   - Village_398
   - Village_329
   - Village_399
+  - Village_468
   - Village_328
   - Village_220
   - Village_221

@@ -102,6 +102,7 @@ public class RedSkeletonComponent : EnemyComponent
 
 	void OnDeath()
 	{
+		ApplyScore();
 		m_animator.SetTrigger("OnDeath");
 		m_movementState = MovementState.dead;
 
