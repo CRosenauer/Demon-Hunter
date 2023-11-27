@@ -95,6 +95,13 @@ public class TransitionDoorComponent : TransitionComponent
 
             Vector3 deltaPosition = exitDoorPosition3D - entranceDoorPosition;
 
+            GameObject[] backgroundObjects = GameObject.FindGameObjectsWithTag("Background");
+
+            foreach(GameObject go in backgroundObjects)
+            {
+                go.SendMessage("UpdateCameraStartPosition", deltaPosition);
+            }
+
             foreach (GameObject obj in m_currentObjects)
             {
                 obj.transform.position = obj.transform.position + deltaPosition;

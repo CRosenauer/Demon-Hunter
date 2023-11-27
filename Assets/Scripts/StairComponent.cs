@@ -96,12 +96,16 @@ public class StairComponent : MonoBehaviour
 
     public bool ShouldExitStair(Vector3 playerPosition, Vector2 userInput)
     {
-        Vector3 playerToStairEnter = transform.position - playerPosition;
+        Vector2 playerToStairEnter = transform.position - playerPosition;
+        Vector2 otherStairToThisStair = transform.position - m_destinationStair.transform.position;
 
-        Vector3 otherStairToThisStair = transform.position - m_destinationStair.transform.position;
-        Vector2 otherStairToThisStair2D = new(otherStairToThisStair.x, otherStairToThisStair.y);
+        // player is beyond the stair and should exit
+        if(playerToStairEnter.sqrMagnitude > otherStairToThisStair.sqrMagnitude)
+        {
+            return true;
+        }
 
-        float userInputValue = Vector2.Dot(otherStairToThisStair2D, userInput);
+        float userInputValue = Vector2.Dot(otherStairToThisStair, userInput);
 
         return userInputValue > 0.01f && playerToStairEnter.sqrMagnitude <= m_stairMovementThreshold * m_stairMovementThreshold;
     }
@@ -179,6 +183,9 @@ public class StairComponent : MonoBehaviour
             Vector2 point = m_upperColliderBox.offset + (Vector2)m_upperColliderBox.transform.position;
             Gizmos.DrawCube(point, m_upperColliderBox.size);
         }
+
+        Gizmos.color = Color.cyan;
+        Gizmos.DrawSphere(transform.position, m_stairMovementThreshold);
     }
 
     GameObject m_player;
