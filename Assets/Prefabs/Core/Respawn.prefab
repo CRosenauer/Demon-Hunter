@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 6320553042277274925}
   - component: {fileID: 6320553042277274927}
   - component: {fileID: 6320553042277274924}
+  - component: {fileID: 8918584670764075176}
   m_Layer: 5
   m_Name: RespawnBackground
   m_TagString: Untagged
@@ -76,6 +77,27 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!95 &8918584670764075176
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6320553042277274930}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 867521463c83d1c45b8a9d84b49fdd06, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &6320553043151691576
 GameObject:
   m_ObjectHideFlags: 0
@@ -87,6 +109,7 @@ GameObject:
   - component: {fileID: 6320553043151691579}
   - component: {fileID: 6320553043151691573}
   - component: {fileID: 6320553043151691578}
+  - component: {fileID: 7386343606954684757}
   m_Layer: 5
   m_Name: Lives
   m_TagString: Untagged
@@ -156,6 +179,18 @@ MonoBehaviour:
     m_VerticalOverflow: 0
     m_LineSpacing: 1
   m_Text: x3
+--- !u!114 &7386343606954684757
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6320553043151691576}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9d905f8e732269942a3c35b462bb6d84, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &6320553043723132686
 GameObject:
   m_ObjectHideFlags: 0
@@ -171,6 +206,7 @@ GameObject:
   - component: {fileID: 6320553043723132677}
   - component: {fileID: 9087765740235447074}
   - component: {fileID: 733632766376693688}
+  - component: {fileID: 5594880363001313288}
   m_Layer: 5
   m_Name: Respawn
   m_TagString: Untagged
@@ -383,6 +419,48 @@ MonoBehaviour:
   m_system: {fileID: 0}
   m_deathSound: {fileID: 9087765740235447074}
   m_graphicsContainer: {fileID: 8800849517903424815}
+  m_respawnBackground: {fileID: 6320553042277274930}
+  m_lives: {fileID: 11400000, guid: bd887500548c74540b9b18fc92816831, type: 2}
+--- !u!114 &5594880363001313288
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6320553043723132686}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bfc1edd70875c3b499aa04e65566ad5d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_livesEvent: {fileID: 11400000, guid: bd887500548c74540b9b18fc92816831, type: 2}
+  m_response:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 733632766376693688}
+        m_TargetAssemblyTypeName: Respawn, Assembly-CSharp
+        m_MethodName: SignalLivesCount
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 7386343606954684757}
+        m_TargetAssemblyTypeName: LivesCounter, Assembly-CSharp
+        m_MethodName: OnLivesChanged
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &8800849517903424815
 GameObject:
   m_ObjectHideFlags: 0

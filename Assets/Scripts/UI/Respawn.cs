@@ -1,5 +1,6 @@
 using System.Collections;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class Respawn : MonoBehaviour
 {
@@ -7,6 +8,9 @@ public class Respawn : MonoBehaviour
     [SerializeField] AudioSource m_deathSound;
 
     [SerializeField] GameObject m_graphicsContainer;
+    [SerializeField] GameObject m_respawnBackground;
+
+    [SerializeField] LivesChangedEvent m_lives;
 
     void Start()
     {
@@ -16,6 +20,7 @@ public class Respawn : MonoBehaviour
         GameObject player = GameObject.FindGameObjectWithTag("Player");
         PlayerMovement playerMovment = player.GetComponent<PlayerMovement>();
         playerMovment.OnPlayerDeath += OnActive;
+        m_gameOver = false;
     }
 
     void OnActive()
@@ -29,6 +34,7 @@ public class Respawn : MonoBehaviour
     IEnumerator RespawnCoroutine()
     {
         m_system.SendMessage("ToggleMusic", false);
+        m_lives.Raise();
         if (m_deathSound)
         {
             m_deathSound.Play();
@@ -47,37 +53,34 @@ public class Respawn : MonoBehaviour
 
         m_graphicsContainer.SetActive(true);
 
-        DecrementLives();
-
-        if(IsOutOfLives())
-        {
-            GameOver();
-        }
-        else
-        {
-            yield return Restart();
-        }
-    }
-
-    void DecrementLives()
-    {
-
-    }
-
-    bool IsOutOfLives()
-    {
-        return false;
-    }
-
-    void GameOver()
-    {
-        
+        yield return Restart();
     }
 
     IEnumerator Restart()
     {
         yield return new WaitForSeconds(1f);
 
-        m_system.SendMessage("OnRestart");
+        if(!m_gameOver)
+        {
+            yield return new WaitForSeconds(1f);
+            m_system.SendMessage("OnRestart");
+        }
+        else
+        {
+            Animator animator = m_respawnBackground.GetComponent<Animator>();
+            animator.SetTrigger("gameover");
+            yield return new WaitForSeconds(1.5f);
+            SceneManager.LoadScene("Scenes/titleScreen", LoadSceneMode.Single);
+        }
     }
+
+    public void SignalLivesCount(int lives)
+    {
+        if(lives <= 0)
+        {
+            m_gameOver = true;
+        }
+    }
+
+    bool m_gameOver;
 }
