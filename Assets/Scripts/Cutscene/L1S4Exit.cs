@@ -18,6 +18,9 @@ public class L1S4Exit : Cutscene
 
     IEnumerator CutsceneCoroutine()
     {
+        GameObject HUD = GameObject.Find("HUD");
+        HUD.BroadcastMessage("StopTimer");
+
         while (!m_player)
         {
             m_player = GameObject.FindGameObjectWithTag("Player");
