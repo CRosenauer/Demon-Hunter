@@ -240,9 +240,7 @@ public class TransitionDoorComponent : TransitionComponent
         m_state = TransitionState.Idle;
         enabled = false;
 
-        RebaseGameObjects();
-        CameraBootstrap.LoadCameraParams();
-        UnloadPreviousLevel();
+        TransitionScene();
 
         SignalSceneLoadedActions();
     }

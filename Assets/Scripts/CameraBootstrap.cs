@@ -24,6 +24,8 @@ public class CameraBootstrap : MonoBehaviour
         camera.SendMessage("EnableCameraBounds", m_boundLimitEnabled);
         camera.SendMessage("SetOffsetBuffer", m_offsetBuffer);
         camera.SendMessage("ChangeCameraMovementMode", m_movementMode);
+
+        camera.SendMessage("FixedUpdate");
     }
 
     public static void LoadCameraParams()
