@@ -223,7 +223,7 @@ public class PlayerMovement : MovementComponent
 			return;
 		}
 
-		TryBufferAttack(m_attackComponent.IsInAttack(), m_userXInput);
+		TryBufferAttack(true, m_userXInput);
 
 		if (!isAttacking)
 		{
@@ -328,7 +328,7 @@ public class PlayerMovement : MovementComponent
 		if (m_rbody.velocity.y < 0f)
 		{
 			m_movementState = MovementState.fall;
-			TryBufferAttack(m_userAttack, m_userXInput);
+			TryBufferAttack(true, m_userXInput);
 			return;
 		}
 		else if (IsOnGround())
@@ -338,7 +338,7 @@ public class PlayerMovement : MovementComponent
 			return;
 		}
 
-		TryBufferAttack(m_userAttack, m_userXInput);
+		TryBufferAttack(true, m_userXInput);
 
 		AirMove();
 	}
@@ -557,7 +557,7 @@ public class PlayerMovement : MovementComponent
 			m_animator.ResetTrigger("OnJump");
 		}
 
-		TryBufferAttack(m_userAttack, m_userXInput);
+		TryBufferAttack(true, m_userXInput);
 		AirMove();
 	}
 
