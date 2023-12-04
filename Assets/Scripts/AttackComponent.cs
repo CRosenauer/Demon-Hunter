@@ -175,6 +175,7 @@ public class AttackComponent : MonoBehaviour
         // for the case where the player gets it during an attack, or any other event where the player may end an attack early.
 
         m_currentAttack = null;
+        m_animator.ResetTrigger(oldAnimationTrigger);
     }
 
     public bool TryCarryOverAttack(MovementComponent.MovementState playerMovementState)

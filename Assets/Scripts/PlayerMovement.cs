@@ -351,6 +351,8 @@ public class PlayerMovement : MovementComponent
 
 		Move(knockbackVelocity);
 
+		m_attackComponent.OnAttackInterrupt();
+
 		m_animator.SetTrigger("OnDamage");
 	}
 
