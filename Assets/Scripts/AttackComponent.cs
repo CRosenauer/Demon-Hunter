@@ -188,6 +188,7 @@ public class AttackComponent : MonoBehaviour
         // interrupt attack and replace with incoming attack
 
         // replace attack data
+        m_animator.ResetTrigger(m_currentAttack.m_animationTrigger);
         m_currentAttack = interruptingAttack;
         float duration = m_currentAttack.m_startUpFrames + m_currentAttack.m_activeFrames + m_currentAttack.m_recoveryFrames;
         float timeInAnimation = m_frameCount / duration;
