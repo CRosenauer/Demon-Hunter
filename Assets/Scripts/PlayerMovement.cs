@@ -271,7 +271,10 @@ public class PlayerMovement : MovementComponent
 			m_animator.SetTrigger("OnJumpEnd");
 		}
 
-		if(m_attackComponent.IsInAttack())
+
+		bool isInAttack = m_attackComponent.IsInAttack();
+
+		if (isInAttack)
         {
 			if(!m_attackComponent.TryCarryOverAttack(m_movementState))
             {
@@ -552,6 +555,8 @@ public class PlayerMovement : MovementComponent
 
 	void OnFallState()
 	{
+		TryBufferAttack(true, m_userXInput);
+
 		if (IsOnGround())
 		{
 			m_movementState = MovementState.idle;
@@ -559,7 +564,6 @@ public class PlayerMovement : MovementComponent
 			m_animator.ResetTrigger("OnJump");
 		}
 
-		TryBufferAttack(true, m_userXInput);
 		AirMove();
 	}
 
