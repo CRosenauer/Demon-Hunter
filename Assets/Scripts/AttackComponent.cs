@@ -31,14 +31,6 @@ public class AttackComponent : MonoBehaviour
 
     void FixedUpdate()
     {
-        // a terrible fix
-        // for some reason if we reset frame count in another method called from another component's fixed update m_frameCount doesnt get set properly
-        if (m_resetFrameCount)
-        {
-            m_frameCount = 0;
-            m_resetFrameCount = false;
-        }
-
         if (IsInActiveWindow())
         {
             Vector2 playerBasePos = new(transform.position.x, transform.position.y);
@@ -126,7 +118,7 @@ public class AttackComponent : MonoBehaviour
         }
 
         // attack actually goes through
-        m_resetFrameCount = true;
+        m_frameCount = 0;
 
         m_animator.ResetTrigger(oldAnimationTrigger);
         m_animator.SetTrigger(m_currentAttack.m_animationTrigger);
@@ -175,6 +167,7 @@ public class AttackComponent : MonoBehaviour
         // for the case where the player gets it during an attack, or any other event where the player may end an attack early.
 
         m_currentAttack = null;
+        m_animator.ResetTrigger(oldAnimationTrigger);
     }
 
     public bool TryCarryOverAttack(MovementComponent.MovementState playerMovementState)
@@ -195,6 +188,7 @@ public class AttackComponent : MonoBehaviour
         // interrupt attack and replace with incoming attack
 
         // replace attack data
+        m_animator.ResetTrigger(m_currentAttack.m_animationTrigger);
         m_currentAttack = interruptingAttack;
         float duration = m_currentAttack.m_startUpFrames + m_currentAttack.m_activeFrames + m_currentAttack.m_recoveryFrames;
         float timeInAnimation = m_frameCount / duration;
@@ -259,6 +253,4 @@ public class AttackComponent : MonoBehaviour
     string oldAnimationTrigger;
 
     int m_frameCount = 0;
-
-    bool m_resetFrameCount = false;
 }

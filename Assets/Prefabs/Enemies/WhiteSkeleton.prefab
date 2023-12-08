@@ -279,7 +279,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_hitSoundSource: {fileID: 0}
   m_hitMaterial: {fileID: 2100000, guid: 8febd93ed8d50304b96984b3c2f0d148, type: 2}
-  m_damageInvulnerableTime: 0.33333334
+  m_damageInvulnerableTime: 0.1666667
   m_maxHealth: 1
 --- !u!114 &-935979807192983368
 MonoBehaviour:
@@ -320,7 +320,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_componentsToExclude:
   - {fileID: 7548005075730308612}
-  m_freezeDuration: 0.033333335
+  m_freezeDuration: 0.03333334
 --- !u!114 &5600122593914734609
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -45,16 +45,26 @@ public class TransitionComponent : MonoBehaviour
 
     protected void UnloadPreviousLevel()
     {
+        // hides all objects from previous scene to prevent visual artifacts of previous scene on first frame after load
+        int buildIndex = SceneManager.GetActiveScene().buildIndex;
+        GameObject[] gameObjects = Resources.FindObjectsOfTypeAll(typeof(GameObject)) as GameObject[];
+
+        foreach(GameObject go in gameObjects)
+        {
+            if(go.scene.buildIndex == buildIndex)
+            {
+                go.SetActive(false);
+            }
+        }
+
         SceneManager.UnloadSceneAsync(SceneManager.GetActiveScene());
     }
 
     protected void FinishLoading(bool moveToSpawnPoint)
     {
-        RebaseGameObjects();
-        CameraBootstrap.LoadCameraParams();
-        UnloadPreviousLevel();
+        TransitionScene();
 
-        if(moveToSpawnPoint)
+        if (moveToSpawnPoint)
         {
             GameObject[] spawnPoints = GameObject.FindGameObjectsWithTag("Respawn");
 
@@ -78,6 +88,13 @@ public class TransitionComponent : MonoBehaviour
         m_camera.transform.position = new(0f, 0f, -10f);
 
         TransitionDoorComponent.SignalSceneLoadedActions();
+    }
+
+    protected void TransitionScene()
+    {
+        RebaseGameObjects();
+        CameraBootstrap.LoadCameraParams();
+        UnloadPreviousLevel();
     }
 
     protected Camera m_camera;

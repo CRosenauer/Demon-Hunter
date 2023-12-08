@@ -223,7 +223,7 @@ public class PlayerMovement : MovementComponent
 			return;
 		}
 
-		TryBufferAttack(m_attackComponent.IsInAttack(), m_userXInput);
+		TryBufferAttack(true, m_userXInput);
 
 		if (!isAttacking)
 		{
@@ -271,7 +271,10 @@ public class PlayerMovement : MovementComponent
 			m_animator.SetTrigger("OnJumpEnd");
 		}
 
-		if(m_attackComponent.IsInAttack())
+
+		bool isInAttack = m_attackComponent.IsInAttack();
+
+		if (isInAttack)
         {
 			if(!m_attackComponent.TryCarryOverAttack(m_movementState))
             {
@@ -328,7 +331,7 @@ public class PlayerMovement : MovementComponent
 		if (m_rbody.velocity.y < 0f)
 		{
 			m_movementState = MovementState.fall;
-			TryBufferAttack(m_userAttack, m_userXInput);
+			TryBufferAttack(true, m_userXInput);
 			return;
 		}
 		else if (IsOnGround())
@@ -338,7 +341,7 @@ public class PlayerMovement : MovementComponent
 			return;
 		}
 
-		TryBufferAttack(m_userAttack, m_userXInput);
+		TryBufferAttack(true, m_userXInput);
 
 		AirMove();
 	}
@@ -350,6 +353,8 @@ public class PlayerMovement : MovementComponent
 		knockbackVelocity.x = knockbackVelocity.x * transform.localScale.x;
 
 		Move(knockbackVelocity);
+
+		m_attackComponent.OnAttackInterrupt();
 
 		m_animator.SetTrigger("OnDamage");
 	}
@@ -550,6 +555,8 @@ public class PlayerMovement : MovementComponent
 
 	void OnFallState()
 	{
+		TryBufferAttack(true, m_userXInput);
+
 		if (IsOnGround())
 		{
 			m_movementState = MovementState.idle;
@@ -557,7 +564,6 @@ public class PlayerMovement : MovementComponent
 			m_animator.ResetTrigger("OnJump");
 		}
 
-		TryBufferAttack(m_userAttack, m_userXInput);
 		AirMove();
 	}
 

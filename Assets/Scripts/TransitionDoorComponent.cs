@@ -89,6 +89,10 @@ public class TransitionDoorComponent : TransitionComponent
         {
             m_camera.BroadcastMessage("EnableCameraBounds", false);
 
+            Vector3 cameraPosition = m_camera.transform.position;
+            cameraPosition.y = m_cameraYPos;
+            m_camera.transform.position = cameraPosition;
+
             // move all entities to the proper position
             Vector3 entranceDoorPosition = transform.position;
             Vector3 exitDoorPosition3D = new(m_exitDoorPosition.x, m_exitDoorPosition.y, 0f);
@@ -240,9 +244,7 @@ public class TransitionDoorComponent : TransitionComponent
         m_state = TransitionState.Idle;
         enabled = false;
 
-        RebaseGameObjects();
-        CameraBootstrap.LoadCameraParams();
-        UnloadPreviousLevel();
+        TransitionScene();
 
         SignalSceneLoadedActions();
     }
@@ -258,6 +260,7 @@ public class TransitionDoorComponent : TransitionComponent
 
         CameraComponent cameraComponent = m_camera.GetComponent<CameraComponent>();
         cameraComponent.enabled = false;
+        m_cameraYPos = m_camera.transform.position.y;
 
         m_level.SetActive(false);
 
@@ -291,4 +294,6 @@ public class TransitionDoorComponent : TransitionComponent
     [SerializeField]
 # endif
     TransitionState m_state = TransitionState.Idle;
+
+    float m_cameraYPos;
 }
