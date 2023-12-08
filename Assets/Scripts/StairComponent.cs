@@ -3,7 +3,7 @@ using UnityEngine;
 public class StairComponent : MonoBehaviour
 {
     [SerializeField] GameObject m_destinationStair;
-    [SerializeField] GameObject m_upperCollider;
+    [SerializeField] PlatformEffector2D m_groundPlatformEffector;
     [Space]
 
     [SerializeField] float m_stairMovementThreshold;
@@ -13,7 +13,6 @@ public class StairComponent : MonoBehaviour
         m_dirToOtherStair = m_destinationStair.transform.position - transform.position;
         m_dirToOtherStair.Normalize();
         m_checkEnableUpperCollider = false;
-        m_upperColliderBox = m_upperCollider.GetComponent<BoxCollider2D>();
     }
 
     void FixedUpdate()
@@ -25,7 +24,7 @@ public class StairComponent : MonoBehaviour
             if (!IsPlayerInUpperCollider())
             {
                 m_checkEnableUpperCollider = false;
-                m_upperCollider.SetActive(true);
+                m_groundPlatformEffector.colliderMask = m_groundPlatformEffector.colliderMask | LayerMask.GetMask("Player");
             }
         }
     }
@@ -125,25 +124,17 @@ public class StairComponent : MonoBehaviour
 
     void OnEnterStair()
     {
-        m_upperCollider.SetActive(false);
+        m_groundPlatformEffector.colliderMask = m_groundPlatformEffector.colliderMask & ~LayerMask.GetMask("Player");
     }
 
     void OnExitStair()
     {
-         m_upperCollider.SetActive(true);
+        m_groundPlatformEffector.colliderMask = m_groundPlatformEffector.colliderMask | LayerMask.GetMask("Player");
     }
 
     void OnExitStairJump()
     {
-
-        if (IsPlayerInUpperCollider())
-        {
-            m_checkEnableUpperCollider = true;
-        }
-        else
-        {
-            m_upperCollider.SetActive(true);
-        }
+         m_groundPlatformEffector.colliderMask = m_groundPlatformEffector.colliderMask | LayerMask.GetMask("Player");
     }
 
     bool IsPlayerInUpperCollider()

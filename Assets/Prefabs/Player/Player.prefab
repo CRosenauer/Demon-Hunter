@@ -177,6 +177,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_movementState: 0
+  m_isOnGround: 1
   m_scoreChangedEvent: {fileID: 11400000, guid: f5e9d3df6b41b1745aa53b66fdcf9e1f, type: 2}
   m_onHitKnockbackVelocity: {x: -5, y: 8}
   m_moveSpeed: 3
