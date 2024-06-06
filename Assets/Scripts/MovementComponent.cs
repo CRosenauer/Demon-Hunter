@@ -24,11 +24,7 @@ public class MovementComponent : MonoBehaviour
 
     void Awake()
     {
-        ComponentInit();
-    }
-
-    protected virtual void ComponentInit()
-    {
+        // are all of these really needed on this class?
         m_rbody = GetComponent<Rigidbody2D>();
         m_spriteRenderer = GetComponent<SpriteRenderer>();
         m_animator = GetComponent<Animator>();
@@ -97,7 +93,7 @@ public class MovementComponent : MonoBehaviour
         }
     }
 
-    void FreezeMovement()
+    public void FreezeMovement()
     {
         if(!m_rbody)
         {
@@ -107,52 +103,9 @@ public class MovementComponent : MonoBehaviour
         m_rbody.constraints = RigidbodyConstraints2D.FreezeAll;
     }
 
-    void UnfreezeMovement()
+    public void UnfreezeMovement()
     {
         m_rbody.constraints = RigidbodyConstraints2D.FreezeRotation;
-    }
-
-    protected void TryBufferAttack(bool updateDirection = false, float direction = 1)
-    {
-        bool attacked = TryAttack();
-
-        if (!attacked)
-        {
-            m_attackBuffered = m_attackBuffered || m_userAttack;
-        }
-        else
-        {
-            m_attackBuffered = false;
-
-            if (updateDirection)
-            {
-                UpdateDirection(direction);
-            }
-
-        }
-    }
-
-    protected bool TryAttack()
-    {
-        if(m_attackComponent)
-        {
-            if ((m_attackBuffered || m_userAttack) && m_attackComponent.CanAttack())
-            {
-                m_attackComponent.OnAttack(m_movementState);
-                return true;
-            }
-        }
-
-        if(m_secondaryWeapon)
-        {
-            if (m_userSecondaryAttack && m_secondaryWeapon.CanSecondaryAttack())
-            {
-                m_secondaryWeapon.OnUseSecondaryWeapon();
-                return true;
-            }
-        }
-
-        return false;
     }
 
     protected void ClearAttackBuffer()

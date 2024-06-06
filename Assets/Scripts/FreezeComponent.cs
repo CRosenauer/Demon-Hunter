@@ -15,7 +15,7 @@ public class FreezeComponent : MonoBehaviour
         MovementComponent movementComponent = GetComponent<MovementComponent>();
         if (movementComponent)
         {
-            movementComponent.SendMessage("FreezeMovement");
+            movementComponent.FreezeMovement();
         }
 
         List<Behaviour> components = new(gameObject.GetComponents<Behaviour>());
@@ -35,7 +35,7 @@ public class FreezeComponent : MonoBehaviour
         MovementComponent movementComponent = GetComponent<MovementComponent>();
         if (movementComponent)
         {
-            movementComponent.SendMessage("UnfreezeMovement");
+            movementComponent.UnfreezeMovement();
         }
 
         List<Behaviour> components = new(gameObject.GetComponents<Behaviour>());

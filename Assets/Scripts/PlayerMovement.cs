@@ -637,6 +637,49 @@ public class PlayerMovement : MovementComponent
 		OnEnterDeadState();
     }
 
+	protected void TryBufferAttack(bool updateDirection = false, float direction = 1)
+	{
+		bool attacked = TryAttack();
+
+		if (!attacked)
+		{
+			m_attackBuffered = m_attackBuffered || m_userAttack;
+		}
+		else
+		{
+			m_attackBuffered = false;
+
+			if (updateDirection)
+			{
+				UpdateDirection(direction);
+			}
+
+		}
+	}
+
+	private bool TryAttack()
+	{
+		if (m_attackComponent)
+		{
+			if ((m_attackBuffered || m_userAttack) && m_attackComponent.CanAttack())
+			{
+				m_attackComponent.OnAttack(m_movementState);
+				return true;
+			}
+		}
+
+		if (m_secondaryWeapon)
+		{
+			if (m_userSecondaryAttack && m_secondaryWeapon.CanSecondaryAttack())
+			{
+				m_secondaryWeapon.OnUseSecondaryWeapon();
+				return true;
+			}
+		}
+
+		return false;
+	}
+
 	GameObject m_stairObject;
 	StairComponent m_stairComponent;
 
