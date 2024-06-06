@@ -39,7 +39,7 @@ public class TransitionDoorComponent : TransitionComponent
         base.Start();
 
         m_currentObjects = new();
-        m_animator = GetComponent<Animator>();
+        Animator = GetComponent<Animator>();
 
         Debug.Assert(m_exitPoint);
     }
@@ -161,13 +161,13 @@ public class TransitionDoorComponent : TransitionComponent
 
     void DoorOpen()
     {
-        m_animator.SetTrigger("OnOpen");
+        Animator.SetTrigger("OnOpen");
         m_state = TransitionState.DoorOpenEnd;
     }
 
     void DoorOpenEnd()
     {
-        AnimatorStateInfo animInfo = m_animator.GetCurrentAnimatorStateInfo(0);
+        AnimatorStateInfo animInfo = Animator.GetCurrentAnimatorStateInfo(0);
 
         if(animInfo.IsName("doorStayOpen"))
         {
@@ -199,13 +199,13 @@ public class TransitionDoorComponent : TransitionComponent
 
     void DoorClose()
     {
-        m_animator.SetTrigger("OnClose");
+        Animator.SetTrigger("OnClose");
         m_state = TransitionState.DoorCloseEnd;
     }
 
     void DoorCloseEnd()
     {
-        AnimatorStateInfo animInfo = m_animator.GetCurrentAnimatorStateInfo(0);
+        AnimatorStateInfo animInfo = Animator.GetCurrentAnimatorStateInfo(0);
 
         if (animInfo.IsName("doorStayClosed"))
         {
@@ -287,7 +287,7 @@ public class TransitionDoorComponent : TransitionComponent
 
     GameObject[] m_nextSceneEnemies;
 
-    Animator m_animator;
+    Animator Animator;
 
 #if UNITY_EDITOR
     [SerializeField]

@@ -108,7 +108,7 @@ public class GrandCultistComponent : EnemyComponent
 
     void OnEnterSpawnSkeletons()
     {
-        m_animator.SetTrigger("Summon");
+        Animator.SetTrigger("Summon");
 
         for(int i = 0; i < m_skeletonSpawnLocations.Count; ++i)
         {
@@ -139,12 +139,12 @@ public class GrandCultistComponent : EnemyComponent
 
     void OnExitSpawnSkeletons()
     {
-        m_animator.ResetTrigger("Summon");
+        Animator.ResetTrigger("Summon");
     }
 
     void OnEnterSpawnProjectiles()
     {
-        m_animator.SetTrigger("Summon");
+        Animator.SetTrigger("Summon");
 
         for(int i = 0; i < m_projectileSpawnLocations.Count; ++i)
         {
@@ -196,13 +196,13 @@ public class GrandCultistComponent : EnemyComponent
 
     void OnExitSpawnProjectiles()
     {
-        m_animator.ResetTrigger("Summon");
+        Animator.ResetTrigger("Summon");
     }
 
     void OnEnterVulnerable()
     {
-        m_animator.SetTrigger("Weak");
-        m_animator.ResetTrigger("Unweak");
+        Animator.SetTrigger("Weak");
+        Animator.ResetTrigger("Unweak");
         m_vulerableHitCount = 0;
         if(m_stateTimerCoroutine != null)
         {
@@ -228,8 +228,8 @@ public class GrandCultistComponent : EnemyComponent
 
     void OnExitVulnerable()
     {
-        m_animator.SetTrigger("Unweak");
-        m_animator.ResetTrigger("Weak");
+        Animator.SetTrigger("Unweak");
+        Animator.ResetTrigger("Weak");
     }
 
     void ExitVulerableState()
@@ -314,7 +314,7 @@ public class GrandCultistComponent : EnemyComponent
         rbody.gravityScale = 1f;
         Move(9f * Vector2.up);
 
-        m_animator.SetTrigger("Death");
+        Animator.SetTrigger("Death");
 
         GameObject systems = GameObject.Find("Systems");
         AudioSource musicSource = systems.GetComponent<AudioSource>();
@@ -325,7 +325,7 @@ public class GrandCultistComponent : EnemyComponent
     {
         if (IsOnGround())
         {
-            m_animator.SetTrigger("DeathBounce");
+            Animator.SetTrigger("DeathBounce");
 
             if(m_landSFX)
             {

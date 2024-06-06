@@ -103,7 +103,7 @@ public class SkeletonComponent : EnemyComponent
 	protected void OnEnterSpawnState()
     {
 		m_stateTimer = 0.5f;
-		m_animator.SetTrigger("OnSpawn");
+		Animator.SetTrigger("OnSpawn");
 	}
 
 	void OnSpawnState()
@@ -156,7 +156,7 @@ public class SkeletonComponent : EnemyComponent
 		Destroy(m_persistentHitboxComponent);
 
 		Destroy(gameObject, 1f);
-		m_animator.SetTrigger("OnDeath");
+		Animator.SetTrigger("OnDeath");
     }
 
 	protected PersistentHitboxComponent m_persistentHitboxComponent;

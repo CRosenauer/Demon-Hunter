@@ -14,7 +14,7 @@ public class AttackComponent : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        m_animator = GetComponent<Animator>();
+        Animator = GetComponent<Animator>();
         m_playerMovementComponent = GetComponent<MovementComponent>();
 
         Debug.Assert(m_movementStates.Count == m_attackComponents.Count);
@@ -119,8 +119,8 @@ public class AttackComponent : MonoBehaviour
         // attack actually goes through
         m_frameCount = 0;
 
-        m_animator.ResetTrigger(oldAnimationTrigger);
-        m_animator.SetTrigger(m_currentAttack.m_animationTrigger);
+        Animator.ResetTrigger(oldAnimationTrigger);
+        Animator.SetTrigger(m_currentAttack.m_animationTrigger);
         oldAnimationTrigger = m_currentAttack.m_animationTrigger;
 
         if (m_weaponSoundEffectSource != null && m_currentAttack.m_weaponSoundEffect != null)
@@ -166,7 +166,7 @@ public class AttackComponent : MonoBehaviour
         // for the case where the player gets it during an attack, or any other event where the player may end an attack early.
 
         m_currentAttack = null;
-        m_animator.ResetTrigger(oldAnimationTrigger);
+        Animator.ResetTrigger(oldAnimationTrigger);
     }
 
     public bool TryCarryOverAttack(MovementComponent.MovementState playerMovementState)
@@ -187,14 +187,14 @@ public class AttackComponent : MonoBehaviour
         // interrupt attack and replace with incoming attack
 
         // replace attack data
-        m_animator.ResetTrigger(m_currentAttack.m_animationTrigger);
+        Animator.ResetTrigger(m_currentAttack.m_animationTrigger);
         m_currentAttack = interruptingAttack;
         float duration = m_currentAttack.m_startUpFrames + m_currentAttack.m_activeFrames + m_currentAttack.m_recoveryFrames;
         float timeInAnimation = m_frameCount / duration;
         timeInAnimation = Mathf.Clamp01(timeInAnimation);
 
         // replace animation
-        m_animator.Play("playerAttack", -1, timeInAnimation);
+        Animator.Play("playerAttack", -1, timeInAnimation);
 
         return true;
     }
@@ -243,7 +243,7 @@ public class AttackComponent : MonoBehaviour
     }
 
     MovementComponent m_playerMovementComponent;
-    Animator m_animator;
+    Animator Animator;
 
     [SerializeField] AttackData m_currentAttack;
 

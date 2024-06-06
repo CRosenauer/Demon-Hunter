@@ -22,8 +22,16 @@ public class PlayerMovement : MovementComponent
 	public delegate void PlayerDeath();
 	public event PlayerDeath OnPlayerDeath;
 
-	// Start is called before the first frame update
-	void Start()
+    private new void Awake()
+    {
+		m_attackComponent = GetComponent<AttackComponent>();
+		m_secondaryWeapon = GetComponent<SecondaryWeaponManagerComponent>();
+
+		base.Awake();
+	}
+
+    // Start is called before the first frame update
+    void Start()
 	{
 		m_scoreChangedEvent.Reset();
 
@@ -266,7 +274,7 @@ public class PlayerMovement : MovementComponent
 
 		if (IsOnGround())
 		{
-			m_animator.SetTrigger("OnJumpEnd");
+			Animator.SetTrigger("OnJumpEnd");
 		}
 
 
@@ -294,8 +302,8 @@ public class PlayerMovement : MovementComponent
 	{
 		Move(m_rbody.velocity);
 
-		m_animator.ResetTrigger("OnJumpEnd");
-		m_animator.SetTrigger("OnJump");
+		Animator.ResetTrigger("OnJumpEnd");
+		Animator.SetTrigger("OnJump");
 	}
 
 	void OnEnterFallStateFromIdle()
@@ -306,8 +314,8 @@ public class PlayerMovement : MovementComponent
 
 	void OnEnterJumpState()
 	{
-		m_animator.ResetTrigger("OnJumpEnd");
-		m_animator.SetTrigger("OnJump");
+		Animator.ResetTrigger("OnJumpEnd");
+		Animator.SetTrigger("OnJump");
 		m_rbody.gravityScale = _gravity;
 		m_airTargetVelocity = m_userXInput * m_moveSpeed;
 		Vector2 inputMovement = new(m_airTargetVelocity, m_jumpSpeed);
@@ -354,14 +362,14 @@ public class PlayerMovement : MovementComponent
 
 		m_attackComponent.OnAttackInterrupt();
 
-		m_animator.SetTrigger("OnDamage");
+		Animator.SetTrigger("OnDamage");
 	}
 
 	void OnDamageKnockbackState()
 	{
 		if (IsOnGround())
 		{
-			m_animator.ResetTrigger("OnDamage");
+			Animator.ResetTrigger("OnDamage");
 
 			if (m_shouldDie)
 			{
@@ -370,7 +378,7 @@ public class PlayerMovement : MovementComponent
 			else
 			{
 				BroadcastMessage("OnStartDisableHurtbox");
-				m_animator.SetTrigger("OnDamageEnd");
+				Animator.SetTrigger("OnDamageEnd");
 				m_movementState = MovementState.idle;
 				OnEnterIdleState();
 			}
@@ -381,7 +389,7 @@ public class PlayerMovement : MovementComponent
 	void OnEnterDeadState()
 	{
 		Move(Vector2.zero);
-		m_animator.SetTrigger("OnDeath");
+		Animator.SetTrigger("OnDeath");
 		BroadcastMessage("OnDisableHurtbox");
 
 		if (OnPlayerDeath != null)
@@ -401,7 +409,7 @@ public class PlayerMovement : MovementComponent
 		{
 			m_movementState = MovementState.jumpLand;
 			OnEnterJumpLand();
-			m_animator.ResetTrigger("OnJump");
+			Animator.ResetTrigger("OnJump");
 		}
 
 		AirMove();
@@ -559,7 +567,7 @@ public class PlayerMovement : MovementComponent
 		{
 			m_movementState = MovementState.idle;
 			OnEnterJumpLand();
-			m_animator.ResetTrigger("OnJump");
+			Animator.ResetTrigger("OnJump");
 		}
 
 		AirMove();
@@ -684,6 +692,9 @@ public class PlayerMovement : MovementComponent
 	StairComponent m_stairComponent;
 
 	PlayerInput m_playerInput;
+
+	protected AttackComponent m_attackComponent;
+	protected SecondaryWeaponManagerComponent m_secondaryWeapon;
 
 	Vector2 m_cutsceneSavedMovement;
 

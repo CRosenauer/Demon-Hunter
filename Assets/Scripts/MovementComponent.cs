@@ -2,10 +2,11 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody2D))]
-[RequireComponent(typeof(SpriteRenderer))]
 [RequireComponent(typeof(Animator))]
 public class MovementComponent : MonoBehaviour
 {
+    public Animator Animator => m_animator;
+
     // prob net best ot have all entities draw from this same state pool
     public enum MovementState
     {
@@ -22,21 +23,10 @@ public class MovementComponent : MonoBehaviour
         secondaryWeapon,
     }
 
-    void Awake()
+    protected void Awake()
     {
-        // are all of these really needed on this class?
         m_rbody = GetComponent<Rigidbody2D>();
-        m_spriteRenderer = GetComponent<SpriteRenderer>();
         m_animator = GetComponent<Animator>();
-        m_attackComponent = GetComponent<AttackComponent>();
-
-        // doesnt need to exist on the entity
-        m_secondaryWeapon = GetComponent<SecondaryWeaponManagerComponent>();
-
-        Debug.Assert(m_rbody);
-        Debug.Assert(m_spriteRenderer);
-        Debug.Assert(m_animator);
-        Debug.Assert(m_attackComponent);
     }
 
     protected void UpdateDirection(float direction)
@@ -89,7 +79,7 @@ public class MovementComponent : MonoBehaviour
 
         if(!m_isInCutscene)
         {
-            m_animator.SetFloat("Speed", Mathf.Abs(velocity.x));
+            Animator.SetFloat("Speed", Mathf.Abs(velocity.x));
         }
     }
 
@@ -126,10 +116,7 @@ public class MovementComponent : MonoBehaviour
     [SerializeField] protected MovementState m_movementState;
 
     protected Rigidbody2D m_rbody;
-    SpriteRenderer m_spriteRenderer;
-    protected Animator m_animator;
-    protected AttackComponent m_attackComponent;
-    protected SecondaryWeaponManagerComponent m_secondaryWeapon;
+    private Animator m_animator;
 
     protected bool m_isOnGround = true;
 

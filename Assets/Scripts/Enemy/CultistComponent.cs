@@ -121,7 +121,7 @@ public class CultistComponent : EnemyComponent
     {
         Move(Vector2.zero);
         QueryDirectionToPlayer();
-        m_animator.SetTrigger("OnIdle");
+        Animator.SetTrigger("OnIdle");
         
         if(m_attackTimerCoroutine == null)
         {
@@ -175,12 +175,12 @@ public class CultistComponent : EnemyComponent
             return;
         }
 
-        m_animator.SetFloat("Speed", m_rbody.velocity.x);
+        Animator.SetFloat("Speed", m_rbody.velocity.x);
     }
 
     void OnExitIdleState()
     {
-        m_animator.ResetTrigger("OnIdle");
+        Animator.ResetTrigger("OnIdle");
     }
 
     void OnEnterRetreatState()
@@ -238,7 +238,7 @@ public class CultistComponent : EnemyComponent
     void OnEnterJumpState()
     {
         JumpAwayFromPlayer();
-        m_animator.SetTrigger("OnJump");
+        Animator.SetTrigger("OnJump");
     }
 
     void OnJumpState()
@@ -253,12 +253,12 @@ public class CultistComponent : EnemyComponent
 
     void OnExitJumpState()
     {
-        m_animator.ResetTrigger("OnJump");
+        Animator.ResetTrigger("OnJump");
     }
 
     void OnEnterAttackState()
     {
-        m_animator.SetTrigger("OnSpecial");
+        Animator.SetTrigger("OnSpecial");
         StartCoroutine(ExitAttackCoroutine());
     }
 
@@ -269,12 +269,12 @@ public class CultistComponent : EnemyComponent
 
     void OnExitAttackState()
     {
-        m_animator.ResetTrigger("OnSpecial");
+        Animator.ResetTrigger("OnSpecial");
     }
 
     void OnEnterFallState()
     {
-        m_animator.SetTrigger("OnFall");
+        Animator.SetTrigger("OnFall");
         Move(Vector2.zero);
     }
 
@@ -290,7 +290,7 @@ public class CultistComponent : EnemyComponent
 
     void OnExitFallState()
     {
-        m_animator.ResetTrigger("OnFall");
+        Animator.ResetTrigger("OnFall");
     }
 
     void ANIMATION_LaunchAttack()
@@ -335,7 +335,7 @@ public class CultistComponent : EnemyComponent
         Move(Vector2.zero);
 
         Destroy(gameObject, 2f);
-        m_animator.SetTrigger("OnDeath");
+        Animator.SetTrigger("OnDeath");
     }
 
     void OnDeathState()

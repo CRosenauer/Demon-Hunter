@@ -59,9 +59,9 @@ public class RedSkeletonComponent : EnemyComponent
         {
 			QueryDirectionToPlayer();
 
-            m_animator.ResetTrigger("OnThrow");
-			m_animator.ResetTrigger("OnTallJump");
-			m_animator.ResetTrigger("OnShortJump");
+            Animator.ResetTrigger("OnThrow");
+			Animator.ResetTrigger("OnTallJump");
+			Animator.ResetTrigger("OnShortJump");
 
 			float directionRand = Random.Range(0f, 1f);
 			float jumpRand = Random.Range(0f, 1f);
@@ -78,17 +78,17 @@ public class RedSkeletonComponent : EnemyComponent
 				m_stateTimer = Random.Range(m_minThrowTime, m_maxThrowTime);
 
 				m_boneThrowTimer = 35f / 60f;
-				m_animator.SetTrigger("OnThrow");
+				Animator.SetTrigger("OnThrow");
 				return;
 			}
 
 			if(tallJump)
             {
-				m_animator.SetTrigger("OnTallJump");
+				Animator.SetTrigger("OnTallJump");
 			}
 			else
             {
-				m_animator.SetTrigger("OnShortJump");
+				Animator.SetTrigger("OnShortJump");
 			}
 		}
 	}
@@ -101,7 +101,7 @@ public class RedSkeletonComponent : EnemyComponent
 	void OnDeath()
 	{
 		ApplyScore();
-		m_animator.SetTrigger("OnDeath");
+		Animator.SetTrigger("OnDeath");
 		m_movementState = MovementState.dead;
 
 		Destroy(GetComponent<PersistentHitboxComponent>());
