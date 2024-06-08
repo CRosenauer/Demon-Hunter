@@ -73,7 +73,7 @@ public class MovementComponent : MonoBehaviour
         return m_isOnGround;
     }
 
-    protected void Move(Vector2 velocity)
+    public void Move(Vector2 velocity)
     {
         m_rbody.velocity = velocity;
 

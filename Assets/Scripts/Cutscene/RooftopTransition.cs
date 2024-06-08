@@ -25,7 +25,15 @@ public class RooftopTransition : Cutscene
 
     protected override void CutsceneFn()
     {
-        m_player = GameObject.FindGameObjectWithTag("Player");
+        GameObject player = GameObject.FindGameObjectWithTag("Player");
+        m_playerMovementComponent = player.GetComponent<MovementComponent>();
+        Debug.Assert(m_playerMovementComponent, "RooftopTransition.CutsceneFn. MovementComponent doesn't exist on the player!");
+
+        m_playerAnimator = player.GetComponent<Animator>();
+
+        m_bossCultistMovementComponent = m_bossCultist.GetComponent<MovementComponent>();
+        Debug.Assert(m_bossCultistMovementComponent, "RooftopTransition.CutsceneFn. MovementComponent doesn't exist on the boss cultist!");
+
         m_camera = Camera.main;
 
         StartCoroutine(CutsceneCoroutine());
@@ -33,13 +41,12 @@ public class RooftopTransition : Cutscene
 
     IEnumerator CutsceneCoroutine()
     {
-        m_player.SendMessage("SetCutscene", true);
-        m_player.SendMessage("Move", Vector2.zero);
+        m_playerMovementComponent.SetCutscene(true);
+        m_playerMovementComponent.Move(Vector2.zero);
 
-        Animator playerAnimator = m_player.GetComponent<Animator>();
-        playerAnimator.SetFloat("Speed", 0);
+        m_playerAnimator.SetFloat("Speed", 0);
 
-        m_bossCultist.SendMessage("SetCutscene", true);
+        m_bossCultistMovementComponent.SetCutscene(true);
 
         m_camera.SendMessage("ChangeCameraMovementMode", CameraComponent.CameraMovementMode.Linear);
         m_camera.SendMessage("NewTrackingObject", m_cameraTrackingTarget);
@@ -74,7 +81,7 @@ public class RooftopTransition : Cutscene
 
         // terrain break and player falls
         m_ledgeObject.SendMessage("Fall");
-        m_player.SendMessage("SetCutscene", false);
+        m_playerMovementComponent.SetCutscene(false);
     }
 
     IEnumerator CultistAttackCoroutine(float delay, bool trackRunning = false, bool startRumble = false)
@@ -106,5 +113,7 @@ public class RooftopTransition : Cutscene
     bool m_attacksDone = false;
 
     Camera m_camera;
-    GameObject m_player;
+    Animator m_playerAnimator;
+    MovementComponent m_playerMovementComponent;
+    MovementComponent m_bossCultistMovementComponent;
 }

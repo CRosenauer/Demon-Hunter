@@ -27,6 +27,12 @@ public class L1S4Exit : Cutscene
             yield return new WaitForEndOfFrame();
         }
 
+        m_playerMovementComponent = m_player.GetComponent<MovementComponent>();
+        Debug.Assert(m_playerMovementComponent, "L1S4Exit.CutsceneCoroutine. MovementComponent doesn't exist on the player!");
+
+        m_bossCultistMovementComponent = m_bossCultist.GetComponent<MovementComponent>();
+        Debug.Assert(m_bossCultistMovementComponent, "L1S4Exit.CutsceneCoroutine. MovementComponent doesn't exist on the boss cultist!");
+
         List<GameObject> enemies = new(GameObject.FindGameObjectsWithTag("Enemy"));
         enemies.Remove(m_bossCultist);
 
@@ -35,20 +41,17 @@ public class L1S4Exit : Cutscene
             enemy.BroadcastMessage("OnDeath");
         }
 
-        m_player.SendMessage("SetCutscene", true);
-        m_bossCultist.SendMessage("SetCutscene", true);
-        m_player.SendMessage("Move", Vector2.zero);
+        m_playerMovementComponent.SetCutscene(true);
+        m_bossCultistMovementComponent.SetCutscene(true);
+        m_playerMovementComponent.Move(Vector2.zero);
 
-        Animator playerAnimator = m_player.GetComponent<Animator>();
-        playerAnimator.SetFloat("Speed", 0);
-
-        Animator cultistAnimator = m_bossCultist.GetComponent<Animator>();
+        m_playerMovementComponent.Animator.SetFloat("Speed", 0);
 
         yield return new WaitForSeconds(1f);
-        cultistAnimator.SetTrigger("GetUp");
+        m_bossCultistMovementComponent.Animator.SetTrigger("GetUp");
 
         yield return new WaitForSeconds(1f);
-        cultistAnimator.SetTrigger("Transform");
+        m_bossCultistMovementComponent.Animator.SetTrigger("Transform");
 
         yield return new WaitForSeconds(2f);
 
@@ -71,4 +74,6 @@ public class L1S4Exit : Cutscene
     }
 
     GameObject m_player;
+    MovementComponent m_playerMovementComponent;
+    MovementComponent m_bossCultistMovementComponent;
 }
