@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -9,13 +8,13 @@ public class AttackComponent : MonoBehaviour
 
     [SerializeField] LayerMask m_hitBoxQueryLayer;
 
-    [SerializeField] List<MovementComponent.MovementState> m_movementStates;
+    [SerializeField] List<PlayerMovement.PlayerState> m_movementStates;
     [SerializeField] List<AttackData> m_attackComponents;
 
     // Start is called before the first frame update
     void Start()
     {
-        m_animator = GetComponent<Animator>();
+        Animator = GetComponent<Animator>();
         m_playerMovementComponent = GetComponent<MovementComponent>();
 
         Debug.Assert(m_movementStates.Count == m_attackComponents.Count);
@@ -82,7 +81,7 @@ public class AttackComponent : MonoBehaviour
         return true;
     }
 
-    public void OnAttack(MovementComponent.MovementState playerMovementState)
+    public void OnAttack(PlayerMovement.PlayerState playerMovementState)
     {
         bool consecutiveAttack = false;
 
@@ -120,8 +119,8 @@ public class AttackComponent : MonoBehaviour
         // attack actually goes through
         m_frameCount = 0;
 
-        m_animator.ResetTrigger(oldAnimationTrigger);
-        m_animator.SetTrigger(m_currentAttack.m_animationTrigger);
+        Animator.ResetTrigger(oldAnimationTrigger);
+        Animator.SetTrigger(m_currentAttack.m_animationTrigger);
         oldAnimationTrigger = m_currentAttack.m_animationTrigger;
 
         if (m_weaponSoundEffectSource != null && m_currentAttack.m_weaponSoundEffect != null)
@@ -167,10 +166,10 @@ public class AttackComponent : MonoBehaviour
         // for the case where the player gets it during an attack, or any other event where the player may end an attack early.
 
         m_currentAttack = null;
-        m_animator.ResetTrigger(oldAnimationTrigger);
+        Animator.ResetTrigger(oldAnimationTrigger);
     }
 
-    public bool TryCarryOverAttack(MovementComponent.MovementState playerMovementState)
+    public bool TryCarryOverAttack(PlayerMovement.PlayerState playerMovementState)
     {
         AttackData interruptingAttack;
         if (!m_attackDictionary.TryGetValue(playerMovementState, out interruptingAttack))
@@ -188,14 +187,14 @@ public class AttackComponent : MonoBehaviour
         // interrupt attack and replace with incoming attack
 
         // replace attack data
-        m_animator.ResetTrigger(m_currentAttack.m_animationTrigger);
+        Animator.ResetTrigger(m_currentAttack.m_animationTrigger);
         m_currentAttack = interruptingAttack;
         float duration = m_currentAttack.m_startUpFrames + m_currentAttack.m_activeFrames + m_currentAttack.m_recoveryFrames;
         float timeInAnimation = m_frameCount / duration;
         timeInAnimation = Mathf.Clamp01(timeInAnimation);
 
         // replace animation
-        m_animator.Play("playerAttack", -1, timeInAnimation);
+        Animator.Play("playerAttack", -1, timeInAnimation);
 
         return true;
     }
@@ -244,11 +243,11 @@ public class AttackComponent : MonoBehaviour
     }
 
     MovementComponent m_playerMovementComponent;
-    Animator m_animator;
+    Animator Animator;
 
     [SerializeField] AttackData m_currentAttack;
 
-    Dictionary<MovementComponent.MovementState, AttackData> m_attackDictionary;
+    Dictionary<PlayerMovement.PlayerState, AttackData> m_attackDictionary;
 
     string oldAnimationTrigger;
 

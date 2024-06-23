@@ -1,5 +1,4 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 [RequireComponent(typeof(Animator))]
@@ -19,7 +18,7 @@ public class SecondaryWeaponManagerComponent : MonoBehaviour
     {
         Debug.Assert(m_secondaryWeaponUsageSound);
 
-        m_animator = GetComponent<Animator>();
+        Animator = GetComponent<Animator>();
         ResetMana();
     }
 
@@ -85,8 +84,8 @@ public class SecondaryWeaponManagerComponent : MonoBehaviour
 
     public void CarryOverAttack()
     {
-        float timeInAnim = m_animator.GetCurrentAnimatorStateInfo(0).normalizedTime;
-        m_animator.Play("playerThrow", -1, timeInAnim);
+        float timeInAnim = Animator.GetCurrentAnimatorStateInfo(0).normalizedTime;
+        Animator.Play("playerThrow", -1, timeInAnim);
     }
 
     void OnSpawnWeapon()
@@ -145,7 +144,7 @@ public class SecondaryWeaponManagerComponent : MonoBehaviour
     {
         m_secondaryWeaponUsageSound.Play();
 
-        m_animator.SetTrigger(m_inuseSecondaryWeapon.m_animationTrigger);
+        Animator.SetTrigger(m_inuseSecondaryWeapon.m_animationTrigger);
         yield return new WaitForSeconds(m_inuseSecondaryWeapon.m_startUpDuration);
 
         // spawn item
@@ -157,11 +156,11 @@ public class SecondaryWeaponManagerComponent : MonoBehaviour
 
     void SecondaryWeaponUsageCleanup()
     {
-        m_animator.ResetTrigger(m_inuseSecondaryWeapon.m_animationTrigger);
+        Animator.ResetTrigger(m_inuseSecondaryWeapon.m_animationTrigger);
         m_weaponSpawnCoroutine = null;
     }
 
-    Animator m_animator;
+    Animator Animator;
     SecondaryWeapon m_secondaryWeapon;
 
     // could have the case where item usage gets interrupted part way through coroutine, but the secondary weapon has changed

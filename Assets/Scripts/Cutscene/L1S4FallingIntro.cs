@@ -1,5 +1,4 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class L1S4FallingIntro : LevelLoadCutscene
@@ -24,8 +23,11 @@ public class L1S4FallingIntro : LevelLoadCutscene
             yield return new WaitForEndOfFrame();
         }
 
-        m_player.SendMessage("SetCutscene", true);
-        m_player.SendMessage("Move", Vector2.zero);
+        m_playerMovementComponent = m_player.GetComponent<MovementComponent>();
+        Debug.Assert(m_playerMovementComponent, "L1S4FallingIntro.CutsceneCoroutine. MovementComponent doesn't exist on the player!");
+
+        m_playerMovementComponent.SetCutscene(true);
+        m_playerMovementComponent.Move(Vector2.zero);
         Rigidbody2D rbody = m_player.GetComponent<Rigidbody2D>();
         rbody.simulated = false;
 
@@ -55,8 +57,9 @@ public class L1S4FallingIntro : LevelLoadCutscene
         yield return new WaitForSeconds(0.2f);
         bushRenderer.sortingOrder = 5;
 
-        m_player.SendMessage("SetCutscene", false);
+        m_playerMovementComponent.SetCutscene(false);
     }
 
     GameObject m_player;
+    MovementComponent m_playerMovementComponent;
 }

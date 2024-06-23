@@ -1,47 +1,16 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody2D))]
-[RequireComponent(typeof(SpriteRenderer))]
 [RequireComponent(typeof(Animator))]
 public class MovementComponent : MonoBehaviour
 {
-    // prob net best ot have all entities draw from this same state pool
-    public enum MovementState
-    {
-        init,
-        idle,
-        jump,
-        fall,
-        jumpLand,
-        damageKnockback,
-        dead,
-        deathFall,
-        spawn,
-        walkOnStair,
-        secondaryWeapon,
-    }
+    public Animator Animator => m_animator;
 
-    void Awake()
-    {
-        ComponentInit();
-    }
-
-    protected virtual void ComponentInit()
+    protected void Awake()
     {
         m_rbody = GetComponent<Rigidbody2D>();
-        m_spriteRenderer = GetComponent<SpriteRenderer>();
         m_animator = GetComponent<Animator>();
-        m_attackComponent = GetComponent<AttackComponent>();
-
-        // doesnt need to exist on the entity
-        m_secondaryWeapon = GetComponent<SecondaryWeaponManagerComponent>();
-
-        Debug.Assert(m_rbody);
-        Debug.Assert(m_spriteRenderer);
-        Debug.Assert(m_animator);
-        Debug.Assert(m_attackComponent);
     }
 
     protected void UpdateDirection(float direction)
@@ -88,17 +57,17 @@ public class MovementComponent : MonoBehaviour
         return m_isOnGround;
     }
 
-    protected void Move(Vector2 velocity)
+    public void Move(Vector2 velocity)
     {
         m_rbody.velocity = velocity;
 
         if(!m_isInCutscene)
         {
-            m_animator.SetFloat("Speed", Mathf.Abs(velocity.x));
+            Animator.SetFloat("Speed", Mathf.Abs(velocity.x));
         }
     }
 
-    void FreezeMovement()
+    public void FreezeMovement()
     {
         if(!m_rbody)
         {
@@ -108,52 +77,9 @@ public class MovementComponent : MonoBehaviour
         m_rbody.constraints = RigidbodyConstraints2D.FreezeAll;
     }
 
-    void UnfreezeMovement()
+    public void UnfreezeMovement()
     {
         m_rbody.constraints = RigidbodyConstraints2D.FreezeRotation;
-    }
-
-    protected void TryBufferAttack(bool updateDirection = false, float direction = 1)
-    {
-        bool attacked = TryAttack();
-
-        if (!attacked)
-        {
-            m_attackBuffered = m_attackBuffered || m_userAttack;
-        }
-        else
-        {
-            m_attackBuffered = false;
-
-            if (updateDirection)
-            {
-                UpdateDirection(direction);
-            }
-
-        }
-    }
-
-    protected bool TryAttack()
-    {
-        if(m_attackComponent)
-        {
-            if ((m_attackBuffered || m_userAttack) && m_attackComponent.CanAttack())
-            {
-                m_attackComponent.OnAttack(m_movementState);
-                return true;
-            }
-        }
-
-        if(m_secondaryWeapon)
-        {
-            if (m_userSecondaryAttack && m_secondaryWeapon.CanSecondaryAttack())
-            {
-                m_secondaryWeapon.OnUseSecondaryWeapon();
-                return true;
-            }
-        }
-
-        return false;
     }
 
     protected void ClearAttackBuffer()
@@ -161,23 +87,13 @@ public class MovementComponent : MonoBehaviour
         m_attackBuffered = false;
     }
 
-    public MovementState GetMovmentState()
-    {
-        return m_movementState;
-    }
-
     public virtual void SetCutscene(bool cutscene)
     {
         m_isInCutscene = cutscene;
     }
 
-    [SerializeField] protected MovementState m_movementState;
-
     protected Rigidbody2D m_rbody;
-    SpriteRenderer m_spriteRenderer;
-    protected Animator m_animator;
-    protected AttackComponent m_attackComponent;
-    protected SecondaryWeaponManagerComponent m_secondaryWeapon;
+    private Animator m_animator;
 
     protected bool m_isOnGround = true;
 

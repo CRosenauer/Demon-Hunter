@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class RedSkeletonComponent : EnemyComponent
@@ -21,12 +19,21 @@ public class RedSkeletonComponent : EnemyComponent
 	[SerializeField] float m_minThrowTime;
 	[SerializeField] float m_maxThrowTime;
 
+	public enum RedSkeletonState
+    {
+		idle,
+		dead,
+    }
+
 	// Start is called before the first frame update
 	new void Start()
     {
 		base.Start();
 
-		m_movementState = MovementState.idle;
+		m_stateMachine.AddState(RedSkeletonState.idle, null, OnIdleState, null);
+		m_stateMachine.AddState(RedSkeletonState.dead, null, OnDeadState, null);
+
+		m_stateMachine.Start(RedSkeletonState.idle);
 
 		m_stateTimer = Random.Range(m_minThrowTime, m_maxThrowTime);
 	}
@@ -35,15 +42,7 @@ public class RedSkeletonComponent : EnemyComponent
 	{
 		QueryOnGround();
 
-		switch (m_movementState)
-		{
-			case MovementState.idle:
-				OnIdleState();
-				break;
-			case MovementState.dead:
-				OnDeadState();
-				break;
-		}
+		m_stateMachine.Update();
 	}
 
 	void OnIdleState()
@@ -61,9 +60,9 @@ public class RedSkeletonComponent : EnemyComponent
         {
 			QueryDirectionToPlayer();
 
-            m_animator.ResetTrigger("OnThrow");
-			m_animator.ResetTrigger("OnTallJump");
-			m_animator.ResetTrigger("OnShortJump");
+            Animator.ResetTrigger("OnThrow");
+			Animator.ResetTrigger("OnTallJump");
+			Animator.ResetTrigger("OnShortJump");
 
 			float directionRand = Random.Range(0f, 1f);
 			float jumpRand = Random.Range(0f, 1f);
@@ -80,17 +79,17 @@ public class RedSkeletonComponent : EnemyComponent
 				m_stateTimer = Random.Range(m_minThrowTime, m_maxThrowTime);
 
 				m_boneThrowTimer = 35f / 60f;
-				m_animator.SetTrigger("OnThrow");
+				Animator.SetTrigger("OnThrow");
 				return;
 			}
 
 			if(tallJump)
             {
-				m_animator.SetTrigger("OnTallJump");
+				Animator.SetTrigger("OnTallJump");
 			}
 			else
             {
-				m_animator.SetTrigger("OnShortJump");
+				Animator.SetTrigger("OnShortJump");
 			}
 		}
 	}
@@ -103,8 +102,8 @@ public class RedSkeletonComponent : EnemyComponent
 	void OnDeath()
 	{
 		ApplyScore();
-		m_animator.SetTrigger("OnDeath");
-		m_movementState = MovementState.dead;
+		Animator.SetTrigger("OnDeath");
+		m_stateMachine.SetState(RedSkeletonState.dead);
 
 		Destroy(GetComponent<PersistentHitboxComponent>());
 
@@ -122,4 +121,6 @@ public class RedSkeletonComponent : EnemyComponent
 
 	float m_stateTimer;
 	float m_boneThrowTimer;
+
+	FiniteStateMachine<RedSkeletonState> m_stateMachine = new();
 }

@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class DestructibleComponent : MonoBehaviour
@@ -10,7 +8,7 @@ public class DestructibleComponent : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        m_animator = GetComponent<Animator>();
+        Animator = GetComponent<Animator>();
 
         m_isHit = false;
     }
@@ -25,9 +23,9 @@ public class DestructibleComponent : MonoBehaviour
         Collider2D collider = GetComponent<BoxCollider2D>();
         collider.enabled = false;
 
-        if(m_animator)
+        if(Animator)
         {
-            m_animator.SetTrigger("OnHit");
+            Animator.SetTrigger("OnHit");
         }
 
         if(m_dropObject)
@@ -43,6 +41,6 @@ public class DestructibleComponent : MonoBehaviour
         }
     }
 
-    Animator m_animator;
+    Animator Animator;
     bool m_isHit;
 }

@@ -1,5 +1,4 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class CultistComponent : EnemyComponent
@@ -44,6 +43,19 @@ public class CultistComponent : EnemyComponent
         fall,
     }
 
+    new void Awake()
+    {
+        base.Awake();
+
+        m_stateMachine.AddState(CultistState.init, null, OnInitState, null);
+        m_stateMachine.AddState(CultistState.idle, OnEnterIdleState, OnIdleState, OnExitIdleState);
+        m_stateMachine.AddState(CultistState.retreat, null, OnRetreatState, null);
+        m_stateMachine.AddState(CultistState.jump, OnEnterJumpState, OnJumpState, OnExitJumpState);
+        m_stateMachine.AddState(CultistState.attack, OnEnterAttackState, null, OnExitAttackState);
+        m_stateMachine.AddState(CultistState.fall, OnEnterFallState, OnFallState, OnExitFallState);
+        m_stateMachine.AddState(CultistState.death, OnEnterDeathState, null, null);
+    }
+
     new void Start()
     {
         Debug.Assert(m_attackProjectile);
@@ -64,8 +76,7 @@ public class CultistComponent : EnemyComponent
 
         m_attackCounter = 0;
 
-        m_state = CultistState.init;
-        OnEnterInitState();
+        m_stateMachine.Start(CultistState.init);
     }
 
     protected override void SetPlayer(GameObject player)
@@ -78,51 +89,20 @@ public class CultistComponent : EnemyComponent
     {
         QueryOnGround();
 
-        switch (m_state)
-        {
-            case CultistState.init:
-                OnInitState();
-                break;
-            case CultistState.idle:
-                OnIdleState();
-                break;
-            case CultistState.retreat:
-                OnRetreatState();
-                break;
-            case CultistState.jump:
-                OnJumpState();
-                break;
-            case CultistState.attack:
-                OnAttackState();
-                break;
-            case CultistState.fall:
-                OnFallState();
-                break;
-        }
-    }
-
-    void OnEnterInitState()
-    {
-        
+        m_stateMachine.Update();
     }
 
     void OnInitState()
     {
-        OnExitInitState();
-        OnEnterIdleState();
-        m_state = CultistState.idle;
+        m_stateMachine.SetState(CultistState.idle);
     }
 
-    void OnExitInitState()
-    {
-
-    }
 
     void OnEnterIdleState()
     {
         Move(Vector2.zero);
         QueryDirectionToPlayer();
-        m_animator.SetTrigger("OnIdle");
+        Animator.SetTrigger("OnIdle");
         
         if(m_attackTimerCoroutine == null)
         {
@@ -134,9 +114,7 @@ public class CultistComponent : EnemyComponent
     {
         if (!IsOnGround())
         {
-            OnExitIdleState();
-            OnEnterFallState();
-            m_state = CultistState.fall;
+            m_stateMachine.SetState(CultistState.fall);
             return;
         }
 
@@ -154,9 +132,7 @@ public class CultistComponent : EnemyComponent
             && !isBehindWall
             && !isBehindLedge)
         {
-            m_state = CultistState.retreat;
-            OnExitIdleState();
-            OnEnterRetreatState();
+            m_stateMachine.SetState(CultistState.retreat);
             return;
         }
 
@@ -170,32 +146,23 @@ public class CultistComponent : EnemyComponent
             }
             m_attackTimerCoroutine = StartCoroutine(AttackTimerCoroutine());
 
-            m_state = CultistState.attack;
-            OnExitIdleState();
-            OnEnterAttackState();
+            m_stateMachine.SetState(CultistState.attack);
             return;
         }
 
-        m_animator.SetFloat("Speed", m_rbody.velocity.x);
+        Animator.SetFloat("Speed", m_rbody.velocity.x);
     }
 
     void OnExitIdleState()
     {
-        m_animator.ResetTrigger("OnIdle");
-    }
-
-    void OnEnterRetreatState()
-    {
-
+        Animator.ResetTrigger("OnIdle");
     }
 
     void OnRetreatState()
     {
         if (!IsOnGround())
         {
-            OnExitRetreatState();
-            OnEnterFallState();
-            m_state = CultistState.fall;
+            m_stateMachine.SetState(CultistState.fall);
             return;
         }
 
@@ -208,9 +175,7 @@ public class CultistComponent : EnemyComponent
 
         if (!ShouldRetreat() || isApproachingWall)
         {
-            OnExitRetreatState();
-            OnEnterIdleState();
-            m_state = CultistState.idle;
+            m_stateMachine.SetState(CultistState.idle);
             return;
         }
 
@@ -219,63 +184,48 @@ public class CultistComponent : EnemyComponent
         {
             if(IsEscapePlatform())
             {
-                OnExitRetreatState();
-                OnEnterJumpState();
-                m_state = CultistState.jump;
+                m_stateMachine.SetState(CultistState.jump);
                 return;
             }
-
-            OnExitRetreatState();
-            OnEnterIdleState();
-            m_state = CultistState.idle;
+            
+            m_stateMachine.SetState(CultistState.idle);
         }
     }
 
-    void OnExitRetreatState()
-    {
-
-    }
 
     void OnEnterJumpState()
     {
         JumpAwayFromPlayer();
-        m_animator.SetTrigger("OnJump");
+        Animator.SetTrigger("OnJump");
     }
 
     void OnJumpState()
     {
         if(IsOnGround())
-        {
-            OnExitJumpState();
-            OnEnterIdleState();
-            m_state = CultistState.idle;
+        { 
+            m_stateMachine.SetState(CultistState.idle);
         }
     }
 
     void OnExitJumpState()
     {
-        m_animator.ResetTrigger("OnJump");
+        Animator.ResetTrigger("OnJump");
     }
 
     void OnEnterAttackState()
     {
-        m_animator.SetTrigger("OnSpecial");
+        Animator.SetTrigger("OnSpecial");
         StartCoroutine(ExitAttackCoroutine());
-    }
-
-    void OnAttackState()
-    {
-        
     }
 
     void OnExitAttackState()
     {
-        m_animator.ResetTrigger("OnSpecial");
+        Animator.ResetTrigger("OnSpecial");
     }
 
     void OnEnterFallState()
     {
-        m_animator.SetTrigger("OnFall");
+        Animator.SetTrigger("OnFall");
         Move(Vector2.zero);
     }
 
@@ -283,15 +233,13 @@ public class CultistComponent : EnemyComponent
     {
         if(IsOnGround())
         {
-            OnExitFallState();
-            OnEnterIdleState();
-            m_state = CultistState.idle;
+            m_stateMachine.SetState(CultistState.idle);
         }
     }
 
     void OnExitFallState()
     {
-        m_animator.ResetTrigger("OnFall");
+        Animator.ResetTrigger("OnFall");
     }
 
     void ANIMATION_LaunchAttack()
@@ -308,11 +256,9 @@ public class CultistComponent : EnemyComponent
     {
         yield return new WaitForSeconds(1.0f);
 
-        if(m_state == CultistState.attack)
+        if(m_stateMachine.State == CultistState.attack)
         {
-            OnExitAttackState();
-            OnEnterIdleState();
-            m_state = CultistState.idle;
+            m_stateMachine.SetState(CultistState.idle);
         }
     }
 
@@ -336,17 +282,7 @@ public class CultistComponent : EnemyComponent
         Move(Vector2.zero);
 
         Destroy(gameObject, 2f);
-        m_animator.SetTrigger("OnDeath");
-    }
-
-    void OnDeathState()
-    {
-
-    }
-
-    void OnExitDeathState()
-    {
-
+        Animator.SetTrigger("OnDeath");
     }
 
     bool IsEscapePlatform()
@@ -400,29 +336,12 @@ public class CultistComponent : EnemyComponent
     // used by life component to signal this has died
     void OnDeath()
     {
-        if(m_state == CultistState.death)
+        if(m_stateMachine.State == CultistState.death)
         {
             return;
         }
 
-        switch(m_state)
-        {
-            case CultistState.init:
-                OnExitInitState();
-                break;
-            case CultistState.idle:
-                OnExitIdleState();
-                break;
-            case CultistState.retreat:
-                OnExitRetreatState();
-                break;
-            case CultistState.jump:
-                OnExitJumpState();
-                break;
-        }
-
-        m_state = CultistState.death;
-        OnEnterDeathState();
+        m_stateMachine.SetState(CultistState.death);
     }
 
     IEnumerator AttackTimerCoroutine()
@@ -448,9 +367,9 @@ public class CultistComponent : EnemyComponent
     Collider2D m_playerDetectorCollider;
     Collider2D m_playerCollider;
 
-    Coroutine m_attackTimerCoroutine;
+    private FiniteStateMachine<CultistState> m_stateMachine = new();
 
-    CultistState m_state;
+    Coroutine m_attackTimerCoroutine;
 
     int m_attackCounter;
 

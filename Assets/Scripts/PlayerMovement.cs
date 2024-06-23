@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -21,18 +19,56 @@ public class PlayerMovement : MovementComponent
 	[SerializeField] float m_moveSpeed;
 	[SerializeField] float m_jumpSpeed;
 
+	public enum PlayerState
+	{
+		init,
+		idle,
+		jump,
+		fall,
+		jumpLand,
+		damageKnockback,
+		dead,
+		deathFall,
+		walkOnStair,
+		secondaryWeapon,
+	}
+
 	public delegate void PlayerDeath();
 	public event PlayerDeath OnPlayerDeath;
 
-	// Start is called before the first frame update
-	void Start()
+    private new void Awake()
+    {
+		m_attackComponent = GetComponent<AttackComponent>();
+		m_secondaryWeapon = GetComponent<SecondaryWeaponManagerComponent>();
+
+		InitializeStateMachine();
+
+		base.Awake();
+	}
+
+    // Start is called before the first frame update
+    void Start()
 	{
 		m_scoreChangedEvent.Reset();
 
 		m_playerInput = GetComponent<PlayerInput>();
-		m_movementState = MovementState.init;
 
 		_gravity = m_rbody.gravityScale;
+	}
+
+	private void InitializeStateMachine()
+    {
+		m_playerStateMachine.AddState(PlayerState.init, null, OnInitState, null);
+		m_playerStateMachine.AddState(PlayerState.idle, null, OnIdleState, null);
+		m_playerStateMachine.AddState(PlayerState.jump, OnEnterJumpState, OnJumpState, null);
+		m_playerStateMachine.AddState(PlayerState.fall, OnEnterFallState, OnFallState, null);
+		m_playerStateMachine.AddState(PlayerState.damageKnockback, OnEnterDamageKnockbackState, OnDamageKnockbackState, null);
+		m_playerStateMachine.AddState(PlayerState.dead, OnEnterDeadState, null, null);
+		m_playerStateMachine.AddState(PlayerState.deathFall, null, OnDeathFallState, null);
+		m_playerStateMachine.AddState(PlayerState.walkOnStair, OnEnterWalkOnStair, OnWalkOnStairState, OnExitWalkOnStair);
+		m_playerStateMachine.AddState(PlayerState.secondaryWeapon, null, OnSecondaryWeaponState, null);
+
+		m_playerStateMachine.Start(PlayerState.init);
 	}
 
 	public void OnMove(InputAction.CallbackContext context)
@@ -108,6 +144,11 @@ public class PlayerMovement : MovementComponent
 		}
 	}
 
+	public PlayerState GetPlayerState()
+	{
+		return m_playerStateMachine.State;
+	}
+
 	void UpdateUserInput(string button, ref bool inputFlag, ref bool lastFrameInputFlag)
 	{
 		bool buttonDown = m_playerInput.actions[button].WasPerformedThisFrame();
@@ -141,36 +182,7 @@ public class PlayerMovement : MovementComponent
 	{
 		QueryOnGround();
 
-		switch (m_movementState)
-		{
-			case MovementState.init:
-				OnInitState();
-				break;
-			case MovementState.idle:
-				OnIdleState();
-				break;
-			case MovementState.jump:
-				OnJumpState();
-				break;
-			case MovementState.fall:
-				OnFallState();
-				break;
-			case MovementState.damageKnockback:
-				OnDamageKnockbackState();
-				break;
-			case MovementState.dead:
-				OnDeadState();
-				break;
-			case MovementState.deathFall:
-				OnDeathFallState();
-				break;
-			case MovementState.walkOnStair:
-				OnWalkOnStair();
-				break;
-			case MovementState.secondaryWeapon:
-				OnSecondaryWeapon();
-				break;
-		}
+		m_playerStateMachine.Update();
 
 		ClearUserInput();
 	}
@@ -178,24 +190,20 @@ public class PlayerMovement : MovementComponent
 	void OnInitState()
     {
 		Move(Vector2.zero);
-		m_movementState = MovementState.idle;
-		OnEnterIdleState();
+		m_playerStateMachine.SetState(PlayerState.idle);
 	}
 
-	// FSM def wont scale well. may need to refactor later.
 	void OnIdleState()
 	{
 		if (m_shouldDie)
 		{
-			OnEnterDeadState();
-			m_movementState = MovementState.dead;
+			m_playerStateMachine.SetState(PlayerState.dead);
 			return;
 		}
 
 		if(m_userSecondaryAttack && CanSecondaryWeapon())
         {
-			m_movementState = MovementState.secondaryWeapon;
-			OnEnterSecondaryWeapon();
+			m_playerStateMachine.SetState(PlayerState.secondaryWeapon);
         }
 
 		bool isInAttack = m_attackComponent.IsInAttack();
@@ -212,14 +220,15 @@ public class PlayerMovement : MovementComponent
 
 		if (!isOnGround)
 		{
-			m_movementState = MovementState.fall;
-			OnEnterFallStateFromIdle();
+			m_playerStateMachine.SetState(PlayerState.fall);
+			Animator.SetTrigger("OnJump");
+
+			m_airTargetVelocity = 0f;
 			return;
 		}
 		else if (m_userJump && isOnGround && !isAttacking)
 		{
-			m_movementState = MovementState.jump;
-			OnEnterJumpState();
+			m_playerStateMachine.SetState(PlayerState.jump);
 			return;
 		}
 
@@ -236,8 +245,7 @@ public class PlayerMovement : MovementComponent
 
 					if (m_stairComponent.CanEnterStair(transform.position) && m_stairComponent.IsInputToEnterStair(inputVector))
                     {
-						m_movementState = MovementState.walkOnStair;
-						OnEnterWalkOnStair();
+						m_playerStateMachine.SetState(PlayerState.walkOnStair);
 						return;
                     }
 
@@ -257,18 +265,13 @@ public class PlayerMovement : MovementComponent
 		}
 	}
 
-	void OnEnterIdleState()
+	void OnJumpLand()
 	{
-		
-	}
-
-	void OnEnterJumpLand()
-	{
-		m_movementState = MovementState.idle;
+		m_playerStateMachine.SetState(PlayerState.idle);
 
 		if (IsOnGround())
 		{
-			m_animator.SetTrigger("OnJumpEnd");
+			Animator.SetTrigger("OnJumpEnd");
 		}
 
 
@@ -276,7 +279,7 @@ public class PlayerMovement : MovementComponent
 
 		if (isInAttack)
         {
-			if(!m_attackComponent.TryCarryOverAttack(m_movementState))
+			if(!m_attackComponent.TryCarryOverAttack(m_playerStateMachine.State))
             {
 				m_attackComponent.OnAttackInterrupt();
 			}
@@ -296,20 +299,13 @@ public class PlayerMovement : MovementComponent
 	{
 		Move(m_rbody.velocity);
 
-		m_animator.ResetTrigger("OnJumpEnd");
-		m_animator.SetTrigger("OnJump");
-	}
-
-	void OnEnterFallStateFromIdle()
-	{
-		m_airTargetVelocity = 0f;
-		OnEnterFallState();
+		Animator.ResetTrigger("OnJumpEnd");
 	}
 
 	void OnEnterJumpState()
 	{
-		m_animator.ResetTrigger("OnJumpEnd");
-		m_animator.SetTrigger("OnJump");
+		Animator.ResetTrigger("OnJumpEnd");
+		Animator.SetTrigger("OnJump");
 		m_rbody.gravityScale = _gravity;
 		m_airTargetVelocity = m_userXInput * m_moveSpeed;
 		Vector2 inputMovement = new(m_airTargetVelocity, m_jumpSpeed);
@@ -330,14 +326,14 @@ public class PlayerMovement : MovementComponent
 
 		if (m_rbody.velocity.y < 0f)
 		{
-			m_movementState = MovementState.fall;
+			m_playerStateMachine.SetState(PlayerState.fall);
 			TryBufferAttack(true, m_userXInput);
 			return;
 		}
 		else if (IsOnGround())
 		{
-			m_movementState = MovementState.idle;
-			OnEnterJumpLand();
+			m_playerStateMachine.SetState(PlayerState.idle);
+			OnJumpLand();
 			return;
 		}
 
@@ -356,25 +352,24 @@ public class PlayerMovement : MovementComponent
 
 		m_attackComponent.OnAttackInterrupt();
 
-		m_animator.SetTrigger("OnDamage");
+		Animator.SetTrigger("OnDamage");
 	}
 
 	void OnDamageKnockbackState()
 	{
 		if (IsOnGround())
 		{
-			m_animator.ResetTrigger("OnDamage");
+			Animator.ResetTrigger("OnDamage");
 
 			if (m_shouldDie)
 			{
-				m_movementState = MovementState.deathFall;
+				m_playerStateMachine.SetState(PlayerState.deathFall);
 			}
 			else
 			{
 				BroadcastMessage("OnStartDisableHurtbox");
-				m_animator.SetTrigger("OnDamageEnd");
-				m_movementState = MovementState.idle;
-				OnEnterIdleState();
+				Animator.SetTrigger("OnDamageEnd");
+				m_playerStateMachine.SetState(PlayerState.idle);
 			}
 				
 		}
@@ -383,7 +378,7 @@ public class PlayerMovement : MovementComponent
 	void OnEnterDeadState()
 	{
 		Move(Vector2.zero);
-		m_animator.SetTrigger("OnDeath");
+		Animator.SetTrigger("OnDeath");
 		BroadcastMessage("OnDisableHurtbox");
 
 		if (OnPlayerDeath != null)
@@ -392,18 +387,13 @@ public class PlayerMovement : MovementComponent
 		}
 	}
 
-	void OnDeadState()
-	{
-		// placeholder. could need it later
-	}
-
 	void OnDeathFallState()
     {
 		if (IsOnGround())
 		{
-			m_movementState = MovementState.jumpLand;
-			OnEnterJumpLand();
-			m_animator.ResetTrigger("OnJump");
+			m_playerStateMachine.SetState(PlayerState.jumpLand);
+			OnJumpLand();
+			Animator.ResetTrigger("OnJump");
 		}
 
 		AirMove();
@@ -416,7 +406,7 @@ public class PlayerMovement : MovementComponent
 		m_stairComponent = m_stairObject.GetComponent<StairComponent>();
 		if(!m_stairComponent)
         {
-			m_movementState = MovementState.idle;
+			m_playerStateMachine.SetState(PlayerState.idle);
 			return;
         }
 
@@ -425,56 +415,34 @@ public class PlayerMovement : MovementComponent
 
 	void OnExitWalkOnStair()
     {
-		m_rbody.gravityScale = _gravity;
-
-		if(m_stairObject)
-        {
-			m_stairObject.BroadcastMessage("OnExitStair");
-		}
-		
 		m_isOnGround = true;
 		Move(Vector2.zero);
 	}
 
-	void OnExitWalkOnStairDamage()
-	{
-		m_rbody.gravityScale = _gravity;
-
-		if (m_stairObject)
-		{
-			m_stairObject.BroadcastMessage("OnExitStairJump");
-		}
-
-		m_isOnGround = true;
-		Move(Vector2.zero);
-	}
-
-	void OnExitWalkOnStairToPreJump()
-	{
-		if (m_stairObject)
-		{
-			m_stairObject.BroadcastMessage("OnExitStairJump");
-		}
-
-		m_isOnGround = true;
-		Move(Vector2.zero);
-	}
-
-	void OnWalkOnStair()
+	void OnWalkOnStairState()
     {
 		if (!m_stairComponent)
 		{
-			m_movementState = MovementState.idle;
-			OnExitWalkOnStair();
-			OnEnterIdleState();
+			m_playerStateMachine.SetState(PlayerState.idle);
+
+			m_rbody.gravityScale = _gravity;
+			if (m_stairObject)
+			{
+				m_stairObject.BroadcastMessage("OnExitStair");
+			}
 			return;
 		}
 
 		if(m_stairComponent.ShouldExitStair(transform.position, new(m_userXInput, m_userYInput)))
         {
 			m_rbody.position = m_stairComponent.transform.position;
-			OnExitWalkOnStair();
-			m_movementState = MovementState.idle;
+
+			m_rbody.gravityScale = _gravity;
+			if (m_stairObject)
+			{
+				m_stairObject.BroadcastMessage("OnExitStair");
+			}
+			m_playerStateMachine.SetState(PlayerState.idle);
 			return;
 		}
 
@@ -489,10 +457,13 @@ public class PlayerMovement : MovementComponent
 
 		if (m_userJump && !isAttacking)
 		{
-			m_movementState = MovementState.jump;
+			m_playerStateMachine.SetState(PlayerState.jump);
 			UpdateDirection(movement.x);
-			OnExitWalkOnStairToPreJump();
-			OnEnterJumpState();
+
+			if (m_stairObject)
+			{
+				m_stairObject.BroadcastMessage("OnExitStairJump");
+			}
 			return;
 		}
 
@@ -509,12 +480,7 @@ public class PlayerMovement : MovementComponent
 		}
 	}
 
-	void OnEnterSecondaryWeapon()
-    {
-		return;
-    }
-
-	void OnSecondaryWeapon()
+	void OnSecondaryWeaponState()
     {
 		if(ShouldExitSecondaryWeapon())
         {
@@ -531,14 +497,13 @@ public class PlayerMovement : MovementComponent
     {
 		if(IsOnGround())
         {
-			m_movementState = MovementState.idle;
-			OnEnterIdleState();
-        }
+			m_playerStateMachine.SetState(PlayerState.idle);
+		}
 		else
         {
-			m_movementState = MovementState.fall;
-			OnEnterFallState();
-        }
+			m_playerStateMachine.SetState(PlayerState.fall);
+			Animator.SetTrigger("OnJump");
+		}
     }
 
 	void CancelSecondaryWeapon()
@@ -559,9 +524,9 @@ public class PlayerMovement : MovementComponent
 
 		if (IsOnGround())
 		{
-			m_movementState = MovementState.idle;
-			OnEnterJumpLand();
-			m_animator.ResetTrigger("OnJump");
+			m_playerStateMachine.SetState(PlayerState.idle);
+			OnJumpLand();
+			Animator.ResetTrigger("OnJump");
 		}
 
 		AirMove();
@@ -569,18 +534,21 @@ public class PlayerMovement : MovementComponent
 
 	void OnDamage(float damageInvulnerableTime)
 	{
-		if(m_movementState == MovementState.walkOnStair)
+		if(m_playerStateMachine.State == PlayerState.walkOnStair)
         {
-			OnExitWalkOnStairDamage();
+			m_rbody.gravityScale = _gravity;
+			if (m_stairObject)
+			{
+				m_stairObject.BroadcastMessage("OnExitStairJump");
+			}
         }
 
-		if(m_movementState == MovementState.secondaryWeapon)
+		if (m_playerStateMachine.State == PlayerState.secondaryWeapon)
         {
 			CancelSecondaryWeapon();
         }
 
-		OnEnterDamageKnockbackState();
-		m_movementState = MovementState.damageKnockback;
+		m_playerStateMachine.SetState(PlayerState.damageKnockback);
 
 		BroadcastMessage("OnDisableHurtbox");
 	}
@@ -634,15 +602,61 @@ public class PlayerMovement : MovementComponent
 
 	void ForceDeath()
     {
-		// don't need to worry about proper state exits. object will be reloaded on respawn
-		m_movementState = MovementState.dead;
-		OnEnterDeadState();
+		m_playerStateMachine.SetState(PlayerState.dead);
     }
+
+	protected void TryBufferAttack(bool updateDirection = false, float direction = 1)
+	{
+		bool attacked = TryAttack();
+
+		if (!attacked)
+		{
+			m_attackBuffered = m_attackBuffered || m_userAttack;
+		}
+		else
+		{
+			m_attackBuffered = false;
+
+			if (updateDirection)
+			{
+				UpdateDirection(direction);
+			}
+
+		}
+	}
+
+	private bool TryAttack()
+	{
+		if (m_attackComponent)
+		{
+			if ((m_attackBuffered || m_userAttack) && m_attackComponent.CanAttack())
+			{
+				m_attackComponent.OnAttack(m_playerStateMachine.State);
+				return true;
+			}
+		}
+
+		if (m_secondaryWeapon)
+		{
+			if (m_userSecondaryAttack && m_secondaryWeapon.CanSecondaryAttack())
+			{
+				m_secondaryWeapon.OnUseSecondaryWeapon();
+				return true;
+			}
+		}
+
+		return false;
+	}
 
 	GameObject m_stairObject;
 	StairComponent m_stairComponent;
 
 	PlayerInput m_playerInput;
+
+	protected AttackComponent m_attackComponent;
+	protected SecondaryWeaponManagerComponent m_secondaryWeapon;
+
+	private FiniteStateMachine<PlayerState> m_playerStateMachine = new();
 
 	Vector2 m_cutsceneSavedMovement;
 

@@ -1,5 +1,4 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class StairEntryCutscene : LevelLoadCutscene
@@ -21,8 +20,9 @@ public class StairEntryCutscene : LevelLoadCutscene
             yield return new WaitForEndOfFrame();
         }
 
-        m_player.SendMessage("SetCutscene", true);
-        m_player.SendMessage("Move", Vector2.zero);
+        MovementComponent playerMovementComponent = m_player.GetComponent<MovementComponent>();
+        playerMovementComponent.SetCutscene(true);
+        playerMovementComponent.Move(Vector2.zero);
 
         yield return new WaitForEndOfFrame();
 
@@ -42,7 +42,7 @@ public class StairEntryCutscene : LevelLoadCutscene
             yield return new WaitForFixedUpdate();
         }
 
-        m_player.SendMessage("SetCutscene", false);
+        playerMovementComponent.SetCutscene(false);
         rbody.simulated = true;
         animator.ResetTrigger("OnJumpEnd");
         animator.SetBool("CutsceneForceNonJump", false);

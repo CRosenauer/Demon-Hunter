@@ -1,5 +1,4 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class L1S4BossCutscene : Cutscene
@@ -20,25 +19,31 @@ public class L1S4BossCutscene : Cutscene
             yield return new WaitForEndOfFrame();
         }
 
-        m_player.SendMessage("SetCutscene", true);
-        m_bossCultist.SendMessage("SetCutscene", true);
-        m_player.SendMessage("Move", Vector2.zero);
+        m_playerMovementComponent = m_player.GetComponent<MovementComponent>();
+        Debug.Assert(m_playerMovementComponent, "L1S4BossCutscene.CutsceneCoroutine. MovementComponent doesn't exist on the player!");
 
-        Animator playerAnimator = m_player.GetComponent<Animator>();
-        playerAnimator.SetFloat("Speed", 0);
+        m_bossCultistMovementComponent = m_bossCultist.GetComponent<MovementComponent>();
+        Debug.Assert(m_bossCultistMovementComponent, "L1S4BossCutscene.CutsceneCoroutine. MovementComponent doesn't exist on the boss cultist!");
+
+        m_playerMovementComponent.SetCutscene(true);
+        m_bossCultistMovementComponent.SetCutscene(true);
+        m_playerMovementComponent.Move(Vector2.zero);
+
+        m_playerMovementComponent.Animator.SetFloat("Speed", 0);
 
         yield return new WaitForSeconds(1f);
 
-        Animator cultistAnimator = m_bossCultist.GetComponent<Animator>();
-        cultistAnimator.SetTrigger("Laugh");
+        m_bossCultistMovementComponent.Animator.SetTrigger("Laugh");
         PlaySound(m_cultistLaugh);
         yield return new WaitForSeconds(2.67f);
 
-        m_player.SendMessage("SetCutscene", false);
-        m_bossCultist.SendMessage("SetCutscene", false);
+        m_playerMovementComponent.SetCutscene(false);
+        m_bossCultistMovementComponent.SetCutscene(false);
 
         m_bossCultist.SendMessage("Activate");
     }
 
     GameObject m_player;
+    MovementComponent m_playerMovementComponent;
+    MovementComponent m_bossCultistMovementComponent;
 }
