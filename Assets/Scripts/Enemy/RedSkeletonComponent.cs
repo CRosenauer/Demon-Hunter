@@ -19,12 +19,21 @@ public class RedSkeletonComponent : EnemyComponent
 	[SerializeField] float m_minThrowTime;
 	[SerializeField] float m_maxThrowTime;
 
+	public enum RedSkeletonState
+    {
+		idle,
+		dead,
+    }
+
 	// Start is called before the first frame update
 	new void Start()
     {
 		base.Start();
 
-		m_movementState = MovementState.idle;
+		m_stateMachine.AddState(RedSkeletonState.idle, null, OnIdleState, null);
+		m_stateMachine.AddState(RedSkeletonState.dead, null, OnDeadState, null);
+
+		m_stateMachine.Start(RedSkeletonState.idle);
 
 		m_stateTimer = Random.Range(m_minThrowTime, m_maxThrowTime);
 	}
@@ -33,15 +42,7 @@ public class RedSkeletonComponent : EnemyComponent
 	{
 		QueryOnGround();
 
-		switch (m_movementState)
-		{
-			case MovementState.idle:
-				OnIdleState();
-				break;
-			case MovementState.dead:
-				OnDeadState();
-				break;
-		}
+		m_stateMachine.Update();
 	}
 
 	void OnIdleState()
@@ -102,7 +103,7 @@ public class RedSkeletonComponent : EnemyComponent
 	{
 		ApplyScore();
 		Animator.SetTrigger("OnDeath");
-		m_movementState = MovementState.dead;
+		m_stateMachine.SetState(RedSkeletonState.dead);
 
 		Destroy(GetComponent<PersistentHitboxComponent>());
 
@@ -120,4 +121,6 @@ public class RedSkeletonComponent : EnemyComponent
 
 	float m_stateTimer;
 	float m_boneThrowTimer;
+
+	FiniteStateMachine<RedSkeletonState> m_stateMachine = new();
 }

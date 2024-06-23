@@ -8,7 +8,7 @@ public class AttackComponent : MonoBehaviour
 
     [SerializeField] LayerMask m_hitBoxQueryLayer;
 
-    [SerializeField] List<MovementComponent.MovementState> m_movementStates;
+    [SerializeField] List<PlayerMovement.PlayerState> m_movementStates;
     [SerializeField] List<AttackData> m_attackComponents;
 
     // Start is called before the first frame update
@@ -81,7 +81,7 @@ public class AttackComponent : MonoBehaviour
         return true;
     }
 
-    public void OnAttack(MovementComponent.MovementState playerMovementState)
+    public void OnAttack(PlayerMovement.PlayerState playerMovementState)
     {
         bool consecutiveAttack = false;
 
@@ -169,7 +169,7 @@ public class AttackComponent : MonoBehaviour
         Animator.ResetTrigger(oldAnimationTrigger);
     }
 
-    public bool TryCarryOverAttack(MovementComponent.MovementState playerMovementState)
+    public bool TryCarryOverAttack(PlayerMovement.PlayerState playerMovementState)
     {
         AttackData interruptingAttack;
         if (!m_attackDictionary.TryGetValue(playerMovementState, out interruptingAttack))
@@ -247,7 +247,7 @@ public class AttackComponent : MonoBehaviour
 
     [SerializeField] AttackData m_currentAttack;
 
-    Dictionary<MovementComponent.MovementState, AttackData> m_attackDictionary;
+    Dictionary<PlayerMovement.PlayerState, AttackData> m_attackDictionary;
 
     string oldAnimationTrigger;
 

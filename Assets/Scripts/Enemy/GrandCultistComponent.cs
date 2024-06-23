@@ -37,13 +37,25 @@ public class GrandCultistComponent : EnemyComponent
         dead
     }
 
+    new void Awake()
+    {
+        base.Awake();
+
+        m_stateMachine.AddState(GrandCultistState.waitForActivation, null, null, null);
+        m_stateMachine.AddState(GrandCultistState.spawnSkeletons, OnEnterSpawnSkeletons, OnSpawnSkeletons, OnExitSpawnSkeletons);
+        m_stateMachine.AddState(GrandCultistState.spawnProjectiles, OnEnterSpawnProjectiles, OnSpawnProjectiles, OnExitSpawnProjectiles);
+        m_stateMachine.AddState(GrandCultistState.vulnerable, OnEnterVulnerable, OnVulnerable, OnExitVulnerable);
+        m_stateMachine.AddState(GrandCultistState.moveToLocation, OnEnterMoveToLocation, OnMoveToLocation, null);
+        m_stateMachine.AddState(GrandCultistState.dead, OnEnterDead, OnDead, null);
+
+        m_stateMachine.Start(GrandCultistState.waitForActivation);
+    }
+
     new void Start()
     {
         base.Start();
 
-        m_state = GrandCultistState.waitForActivation;
         m_nextState = GrandCultistState.spawnProjectiles;
-        OnEnterWaitForActivation();
 
         for(int i = 0; i < m_skeletonSpawnLocations.Count; ++i)
         {
@@ -61,49 +73,12 @@ public class GrandCultistComponent : EnemyComponent
         QueryOnGround();
         QueryDirectionToPlayer();
 
-        switch (m_state)
-        {
-            case GrandCultistState.waitForActivation:
-                OnWaitForActivation();
-                break;
-            case GrandCultistState.spawnSkeletons:
-                OnSpawnSkeletons();
-                break;
-            case GrandCultistState.spawnProjectiles:
-                OnSpawnProjectiles();
-                break;
-            case GrandCultistState.vulnerable:
-                OnVulnerable();
-                break;
-            case GrandCultistState.dead:
-                OnDead();
-                break;
-            case GrandCultistState.moveToLocation:
-                OnMoveToLocation();
-                break;
-        }
+        m_stateMachine.Update();
     }
 
     void Activate()
     {
-        OnExitWaitForActivation();
-        m_state = GrandCultistState.moveToLocation;
-        OnEnterMoveToLocation();
-    }
-
-    void OnEnterWaitForActivation()
-    {
-
-    }
-
-    void OnWaitForActivation()
-    {
-
-    }
-
-    void OnExitWaitForActivation()
-    {
-
+        m_stateMachine.SetState(GrandCultistState.moveToLocation);
     }
 
     void OnEnterSpawnSkeletons()
@@ -132,9 +107,7 @@ public class GrandCultistComponent : EnemyComponent
 
     void OnSpawnSkeletons()
     {
-        OnExitSpawnSkeletons();
-        OnEnterMoveToLocation();
-        m_state = GrandCultistState.moveToLocation;
+        m_stateMachine.SetState(GrandCultistState.moveToLocation);
     }
 
     void OnExitSpawnSkeletons()
@@ -189,9 +162,7 @@ public class GrandCultistComponent : EnemyComponent
 
     void OnSpawnProjectiles()
     {
-        OnExitSpawnProjectiles();
-        OnEnterMoveToLocation();
-        m_state = GrandCultistState.moveToLocation;
+        m_stateMachine.SetState(GrandCultistState.moveToLocation);
     }
 
     void OnExitSpawnProjectiles()
@@ -234,9 +205,7 @@ public class GrandCultistComponent : EnemyComponent
 
     void ExitVulerableState()
     {
-        OnExitVulnerable();
-        m_state = GrandCultistState.moveToLocation;
-        OnEnterMoveToLocation();
+        m_stateMachine.SetState(GrandCultistState.moveToLocation);
     }
 
     void OnHit(int damage)
@@ -256,29 +225,8 @@ public class GrandCultistComponent : EnemyComponent
         {
             StopCoroutine(m_stateTimerCoroutine);
         }
-        
-        switch(m_state)
-        {
-            case GrandCultistState.spawnSkeletons:
-                OnExitSpawnSkeletons();
-                break;
-            case GrandCultistState.spawnProjectiles:
-                OnExitSpawnProjectiles();
-                break;
-            case GrandCultistState.vulnerable:
-                OnExitVulnerable();
-                break;
-            default:
-                break;
-        }
 
-        OnEnterDead();
-        m_state = GrandCultistState.dead;
-    }
-
-    void OnDeathAnimationEnd()
-    {
-
+        m_stateMachine.SetState(GrandCultistState.dead);
     }
 
     void OnEnterDead()
@@ -333,52 +281,31 @@ public class GrandCultistComponent : EnemyComponent
                 landSFXSource.Play();
                 m_landSFX = null;
             }
-
-            m_state = GrandCultistState.waitForActivation;
+            
+            m_stateMachine.SetState(GrandCultistState.waitForActivation);
         }
-    }
-
-    void OnExitDead()
-    {
-
     }
 
     IEnumerator ExitMoveTimerCoroutine()
     {
         yield return new WaitForSeconds(m_timeBetweenStates);
-        
-        switch(m_state)
+
+        if(m_stateMachine.State == GrandCultistState.dead)
         {
-            case GrandCultistState.spawnSkeletons:
-                OnExitSpawnSkeletons();
-                break;
-            case GrandCultistState.spawnProjectiles:
-                OnExitSpawnProjectiles();
-                break;
-            case GrandCultistState.vulnerable:
-                OnExitVulnerable();
-                break;
-            case GrandCultistState.dead:
-                m_nextState = GrandCultistState.dead;
-                break;
-            default:
-                break;
+            m_nextState = GrandCultistState.dead;
         }
 
-        m_state = m_nextState;
+        m_stateMachine.SetState(m_nextState);
 
-        switch (m_nextState)
+        switch (m_stateMachine.State)
         {
             case GrandCultistState.spawnSkeletons:
-                OnEnterSpawnSkeletons();
                 m_nextState = GrandCultistState.vulnerable;
                 break;
             case GrandCultistState.spawnProjectiles:
-                OnEnterSpawnProjectiles();
                 m_nextState = GrandCultistState.spawnSkeletons;
                 break;
             case GrandCultistState.vulnerable:
-                OnEnterVulnerable();
                 m_nextState = GrandCultistState.spawnProjectiles;
                 break;
             default:
@@ -426,11 +353,6 @@ public class GrandCultistComponent : EnemyComponent
         }
     }
 
-    void OnExitMoveToLocation()
-    {
-
-    }
-
     public void ExitCutscene()
     {
         m_exitCutscene.SendMessage("PlayCutscene");
@@ -439,12 +361,12 @@ public class GrandCultistComponent : EnemyComponent
     List<Coroutine> m_spawnSkeletonCoroutine = new();
     List<Coroutine> m_spawnProjectileCoroutine = new();
 
+    private FiniteStateMachine<GrandCultistState> m_stateMachine = new();
+
     Coroutine m_stateTimerCoroutine;
 
     GrandCultistState m_nextState;
 
     int m_vulerableHitCount;
     int m_moveLocationIndex;
-
-    [SerializeField] GrandCultistState m_state;
 }

@@ -13,8 +13,29 @@ public class SkeletonComponent : EnemyComponent
 
 	[SerializeField] protected LayerMask m_physicsLayerMask;
 
-	// Start is called before the first frame update
-	new protected void Start()
+	public enum SkeletonState
+    {
+		init,
+		idle,
+		damageKnockback,
+		dead,
+		spawn,
+    }
+
+    private new void Awake()
+    {
+		base.Awake();
+
+		m_stateMachine.AddState(SkeletonState.init, null, OnInitState, null);
+		m_stateMachine.AddState(SkeletonState.idle, OnEnterIdleState, OnIdleState, null);
+		m_stateMachine.AddState(SkeletonState.damageKnockback, null, OnDamageKnockbackState, null);
+		m_stateMachine.AddState(SkeletonState.dead, null, OnDeadState, null);
+		m_stateMachine.AddState(SkeletonState.spawn, OnEnterSpawnState, OnSpawnState, OnExitSpawnState);
+
+	}
+
+    // Start is called before the first frame update
+    new protected void Start()
 	{
 		base.Start();
 
@@ -27,7 +48,7 @@ public class SkeletonComponent : EnemyComponent
 		m_lifeComponent.SetActive(false);
 		m_persistentHitboxComponent.SetActive(false, true);
 
-		m_movementState = MovementState.init;
+		m_stateMachine.Start(SkeletonState.init);
 	}
 
 	// Update is called once per frame
@@ -35,24 +56,7 @@ public class SkeletonComponent : EnemyComponent
 	{
 		QueryOnGround();
 
-		switch (m_movementState)
-		{
-			case MovementState.init:
-				OnInitState();
-				break;
-			case MovementState.idle:
-				OnIdleState();
-				break;
-			case MovementState.damageKnockback:
-				OnDamageKnockbackState();
-				break;
-			case MovementState.dead:
-				OnDeadState();
-				break;
-			case MovementState.spawn:
-				OnSpawnState();
-				break;
-		}
+		m_stateMachine.Update();
 	}
 
 	void OnInitState()
@@ -61,8 +65,7 @@ public class SkeletonComponent : EnemyComponent
 
 		QueryDirectionToPlayer();
 
-		OnEnterSpawnState();
-		m_movementState = MovementState.spawn;
+		m_stateMachine.SetState(SkeletonState.spawn);
 	}
 
 	void OnEnterIdleState()
@@ -114,9 +117,7 @@ public class SkeletonComponent : EnemyComponent
 
 		if (m_stateTimer <= 0f)
         {
-			OnEnterIdleState();
-			m_movementState = MovementState.idle;
-			OnExitSpawnState();
+			m_stateMachine.SetState(SkeletonState.idle);
 		}
 	}
 
@@ -134,14 +135,14 @@ public class SkeletonComponent : EnemyComponent
 
 		if(m_stateTimer <= 0f)
         {
-			m_movementState = MovementState.idle;
+			m_stateMachine.SetState(SkeletonState.idle);
         }
 	}
 
 	void OnDamage(float damageInvulnerableTime)
     {
 		m_stateTimer = damageInvulnerableTime;
-		m_movementState = MovementState.damageKnockback;
+		m_stateMachine.SetState(SkeletonState.damageKnockback);
 	}
 
 	protected virtual void OnDeath()
@@ -150,7 +151,7 @@ public class SkeletonComponent : EnemyComponent
 		m_lifeComponent.SetActive(false);
 		m_persistentHitboxComponent.SetActive(false);
 
-		m_movementState = MovementState.dead;
+		m_stateMachine.SetState(SkeletonState.dead);
 
 		// kinda hacky
 		Destroy(m_persistentHitboxComponent);
@@ -164,4 +165,6 @@ public class SkeletonComponent : EnemyComponent
 
 
 	protected float m_stateTimer;
+
+	private FiniteStateMachine<SkeletonState> m_stateMachine = new();
 }

@@ -1,3 +1,5 @@
+// #define VERBOSE_FSM_LOGGING
+
 using System;
 using System.Collections.Generic;
 
@@ -9,6 +11,11 @@ public class FiniteStateMachine<T>
     {
         m_state = initialState;
         m_isInitialized = true;
+
+        if (m_stateTable[m_state].Item1 != null)
+        {
+            m_stateTable[m_state].Item1();
+        }
     }
 
     public void Update()
@@ -18,7 +25,10 @@ public class FiniteStateMachine<T>
             return;
         }
 
-        m_stateTable[m_state].Item2();
+        if (m_stateTable[m_state].Item2 != null)
+        {
+            m_stateTable[m_state].Item2();
+        }
     }
 
     public void AddState(T state, Action onEnter, Action onUpdate, Action onExit)
@@ -29,9 +39,21 @@ public class FiniteStateMachine<T>
 
     public void SetState(T newState)
     {
-        m_stateTable[m_state].Item3();
+#if VERBOSE_FSM_LOGGING
+        UnityEngine.Debug.Log($"Transitioning from {m_state.ToString()} to {newState.ToString()}");
+#endif //VERBOSE_FSM_LOGGING
+
+        if (m_stateTable[m_state].Item3 != null)
+        {
+            m_stateTable[m_state].Item3();
+        }
+
         m_state = newState;
-        m_stateTable[m_state].Item1();
+
+        if (m_stateTable[m_state].Item1 != null)
+        {
+            m_stateTable[m_state].Item1();
+        }
     }
 
     // maybe shouldn't be using tuples? feels like this just makes things harder to read

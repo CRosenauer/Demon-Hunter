@@ -7,22 +7,6 @@ public class MovementComponent : MonoBehaviour
 {
     public Animator Animator => m_animator;
 
-    // prob net best ot have all entities draw from this same state pool
-    public enum MovementState
-    {
-        init,
-        idle,
-        jump,
-        fall,
-        jumpLand,
-        damageKnockback,
-        dead,
-        deathFall,
-        spawn,
-        walkOnStair,
-        secondaryWeapon,
-    }
-
     protected void Awake()
     {
         m_rbody = GetComponent<Rigidbody2D>();
@@ -103,17 +87,10 @@ public class MovementComponent : MonoBehaviour
         m_attackBuffered = false;
     }
 
-    public MovementState GetMovmentState()
-    {
-        return m_movementState;
-    }
-
     public virtual void SetCutscene(bool cutscene)
     {
         m_isInCutscene = cutscene;
     }
-
-    [SerializeField] protected MovementState m_movementState;
 
     protected Rigidbody2D m_rbody;
     private Animator m_animator;

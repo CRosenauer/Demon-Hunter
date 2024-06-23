@@ -130,9 +130,9 @@ public class TransitionDoorComponent : TransitionComponent
 
     void MoveCamera()
     {
-        MovementComponent.MovementState movementState = m_player.GetComponent<PlayerMovement>().GetMovmentState();
+        PlayerMovement.PlayerState movementState = m_player.GetComponent<PlayerMovement>().GetPlayerState();
 
-        if(movementState != MovementComponent.MovementState.idle)
+        if(movementState != PlayerMovement.PlayerState.idle)
         {
             return;
         }
