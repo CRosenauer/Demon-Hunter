@@ -73,7 +73,6 @@ GameObject:
   - component: {fileID: 7548005075730308609}
   - component: {fileID: 7548005075730308622}
   - component: {fileID: 7548005075730308623}
-  - component: {fileID: 7548005075730308613}
   - component: {fileID: 7548005075730308610}
   - component: {fileID: 7548005075730308608}
   - component: {fileID: 7548005075730308612}
@@ -81,6 +80,7 @@ GameObject:
   - component: {fileID: -935979807192983368}
   - component: {fileID: 549083795787487024}
   - component: {fileID: 5600122593914734609}
+  - component: {fileID: 6190123940162518434}
   m_Layer: 8
   m_Name: WhiteSkeleton
   m_TagString: Enemy
@@ -179,27 +179,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!50 &7548005075730308613
-Rigidbody2D:
-  serializedVersion: 4
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7548005075730308620}
-  m_BodyType: 0
-  m_Simulated: 1
-  m_UseFullKinematicContacts: 0
-  m_UseAutoMass: 0
-  m_Mass: 1
-  m_LinearDrag: 0
-  m_AngularDrag: 0.05
-  m_GravityScale: 1
-  m_Material: {fileID: 0}
-  m_Interpolate: 0
-  m_SleepingMode: 1
-  m_CollisionDetection: 1
-  m_Constraints: 4
 --- !u!114 &7548005075730308610
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -232,7 +211,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e9bf31abcd8615b4b93f572b265473f1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_movementComponent: {fileID: -935979807192983368}
+  m_movementComponent: {fileID: 0}
   m_hitBoxQueryLayer:
     serializedVersion: 2
     m_Bits: 64
@@ -293,7 +272,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 469aa8a523300f04493c6578912ad0af, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_movementState: 0
   m_scoreEvent: {fileID: 11400000, guid: f5e9d3df6b41b1745aa53b66fdcf9e1f, type: 2}
   m_score: 100
   m_wallDetectorStart: {fileID: 8584428531211685539}
@@ -336,6 +314,21 @@ MonoBehaviour:
   m_componentsToExclude:
   - {fileID: 5600122593914734609}
   - {fileID: 7548005075730308612}
+--- !u!114 &6190123940162518434
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7548005075730308620}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 570aad57e7b157243bff4355b969a20e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_collisionLayerMask:
+    serializedVersion: 2
+    m_Bits: 0
 --- !u!1 &8584428531211685539
 GameObject:
   m_ObjectHideFlags: 0

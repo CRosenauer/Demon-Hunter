@@ -10,7 +10,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1513549560692225950}
   - component: {fileID: 3821081517374492326}
-  - component: {fileID: 1513549560692225951}
   - component: {fileID: 1513549560692225936}
   - component: {fileID: 1513549560692225938}
   - component: {fileID: 1513549560692225949}
@@ -19,6 +18,7 @@ GameObject:
   - component: {fileID: 4659835124993649299}
   - component: {fileID: 6128318112931458223}
   - component: {fileID: 3781269413697798733}
+  - component: {fileID: 3631735652403037275}
   m_Layer: 8
   m_Name: Cultist
   m_TagString: Enemy
@@ -63,7 +63,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cd25e77cb8b833547adcb48e8164cd4a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_movementState: 0
   m_scoreEvent: {fileID: 11400000, guid: f5e9d3df6b41b1745aa53b66fdcf9e1f, type: 2}
   m_score: 500
   m_attackProjectile: {fileID: 3199178923010900270, guid: 00d594b7af9eeb54ebc8896c748a991b, type: 3}
@@ -86,27 +85,6 @@ MonoBehaviour:
   m_physicsLayerMask:
     serializedVersion: 2
     m_Bits: 65664
---- !u!50 &1513549560692225951
-Rigidbody2D:
-  serializedVersion: 4
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1513549560692225939}
-  m_BodyType: 0
-  m_Simulated: 1
-  m_UseFullKinematicContacts: 0
-  m_UseAutoMass: 0
-  m_Mass: 1
-  m_LinearDrag: 0
-  m_AngularDrag: 0.05
-  m_GravityScale: 1
-  m_Material: {fileID: 0}
-  m_Interpolate: 0
-  m_SleepingMode: 1
-  m_CollisionDetection: 1
-  m_Constraints: 4
 --- !u!61 &1513549560692225936
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -238,7 +216,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e9bf31abcd8615b4b93f572b265473f1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_movementComponent: {fileID: 3821081517374492326}
+  m_movementComponent: {fileID: 0}
   m_hitBoxQueryLayer:
     serializedVersion: 2
     m_Bits: 64
@@ -291,6 +269,21 @@ MonoBehaviour:
   m_hitMaterial: {fileID: 2100000, guid: 8febd93ed8d50304b96984b3c2f0d148, type: 2}
   m_damageInvulnerableTime: 0.1666667
   m_maxHealth: 2
+--- !u!114 &3631735652403037275
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1513549560692225939}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 570aad57e7b157243bff4355b969a20e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_collisionLayerMask:
+    serializedVersion: 2
+    m_Bits: 0
 --- !u!1 &2428383356715935625
 GameObject:
   m_ObjectHideFlags: 0

@@ -9,13 +9,13 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5130411661446573416}
-  - component: {fileID: -1790377415483299739}
   - component: {fileID: 738187580529033863}
   - component: {fileID: 2019392874262183534}
   - component: {fileID: -5637307436121404670}
   - component: {fileID: -8258804211244456660}
   - component: {fileID: 2027677963886515449}
   - component: {fileID: -7554589955486434476}
+  - component: {fileID: 3917708598098558929}
   m_Layer: 8
   m_Name: BossCultist
   m_TagString: Enemy
@@ -38,27 +38,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!50 &-1790377415483299739
-Rigidbody2D:
-  serializedVersion: 4
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5130411661446573417}
-  m_BodyType: 0
-  m_Simulated: 1
-  m_UseFullKinematicContacts: 0
-  m_UseAutoMass: 0
-  m_Mass: 1
-  m_LinearDrag: 0
-  m_AngularDrag: 0.05
-  m_GravityScale: 0
-  m_Material: {fileID: 0}
-  m_Interpolate: 0
-  m_SleepingMode: 1
-  m_CollisionDetection: 0
-  m_Constraints: 4
 --- !u!212 &738187580529033863
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -144,7 +123,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 09efb8483ec620f4ba7526ba9ae4d963, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_movementState: 0
   m_scoreEvent: {fileID: 11400000, guid: f5e9d3df6b41b1745aa53b66fdcf9e1f, type: 2}
   m_score: 10000
   m_skeletonSpawnLocations:
@@ -173,7 +151,6 @@ MonoBehaviour:
   m_timeBetweenStates: 5
   m_exitCutscene: {fileID: 0}
   m_landSFX: {fileID: 0}
-  m_state: 0
 --- !u!114 &-8258804211244456660
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -186,7 +163,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e9bf31abcd8615b4b93f572b265473f1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_movementComponent: {fileID: -5637307436121404670}
+  m_movementComponent: {fileID: 0}
   m_hitBoxQueryLayer:
     serializedVersion: 2
     m_Bits: 64
@@ -235,3 +212,18 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.3125, y: 0.875}
   m_EdgeRadius: 0
+--- !u!114 &3917708598098558929
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5130411661446573417}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 570aad57e7b157243bff4355b969a20e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_collisionLayerMask:
+    serializedVersion: 2
+    m_Bits: 0

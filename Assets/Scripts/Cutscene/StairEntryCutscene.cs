@@ -21,7 +21,7 @@ public class StairEntryCutscene : LevelLoadCutscene
         }
 
         MovementComponent playerMovementComponent = m_player.GetComponent<MovementComponent>();
-        playerMovementComponent.SetCutscene(true);
+        playerMovementComponent.IsInCutscene = true;
         playerMovementComponent.Move(Vector2.zero);
 
         yield return new WaitForEndOfFrame();
@@ -42,7 +42,7 @@ public class StairEntryCutscene : LevelLoadCutscene
             yield return new WaitForFixedUpdate();
         }
 
-        playerMovementComponent.SetCutscene(false);
+        playerMovementComponent.IsInCutscene = false;
         rbody.simulated = true;
         animator.ResetTrigger("OnJumpEnd");
         animator.SetBool("CutsceneForceNonJump", false);

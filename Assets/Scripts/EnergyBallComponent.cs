@@ -1,16 +1,21 @@
 using UnityEngine;
 
-[RequireComponent(typeof(Rigidbody2D))]
-public class EnergyBallComponent : MonoBehaviour
+[RequireComponent(typeof(MovementComponent))]
+public class EnergyBallComponent : BaseController
 {
-    [SerializeField] Rigidbody2D m_rbody;
     [SerializeField] float m_speed;
     [SerializeField] bool m_lockedToXAxis;
+
+    private void Awake()
+    {
+        base.Awake();
+        m_movementComponent.ApplyGravity = false;
+    }
 
     void OnSetDirection(Vector2 targetDirection)
     {
         Vector2 m_direction = m_lockedToXAxis ? new(targetDirection.x, 0) : targetDirection;
-        m_rbody.velocity = m_direction.normalized * m_speed;
+        m_movementComponent.Move(m_direction.normalized * m_speed);
     }
 
     void OnHitOther(int layerMask)

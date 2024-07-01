@@ -54,14 +54,12 @@ public class SkeletonComponent : EnemyComponent
 	// Update is called once per frame
 	protected void FixedUpdate()
 	{
-		QueryOnGround();
-
 		m_stateMachine.Update();
 	}
 
 	void OnInitState()
 	{
-		Move(Vector2.zero);
+		m_movementComponent.Move(Vector2.zero);
 
 		QueryDirectionToPlayer();
 
@@ -75,7 +73,6 @@ public class SkeletonComponent : EnemyComponent
 
 		Collider2D collider = GetComponent<Collider2D>();
 		collider.enabled = true;
-		m_rbody.bodyType = RigidbodyType2D.Dynamic;
 	}
 
 	protected virtual void OnIdleState()
@@ -87,31 +84,31 @@ public class SkeletonComponent : EnemyComponent
 
 		if (isApproachingWall)
         {
-			UpdateDirection(-Mathf.Sign(transform.localScale.x));
+			m_movementComponent.UpdateDirection(-Mathf.Sign(transform.localScale.x));
         }
 
 		Vector2 movement = Vector2.right * transform.localScale.x;
 
 		movement = movement * m_moveSpeed;
-		movement.y = m_rbody.velocity.y;
+		movement.y = m_movementComponent.Velocity.y;
 
-		Move(movement);
+		m_movementComponent.Move(movement);
 	}
 
 	protected virtual void OnDeadState()
 	{
-		Move(new(0f, m_rbody.velocity.y));
+		m_movementComponent.Move(new(0f, m_movementComponent.Velocity.y));
 	}
 
 	protected void OnEnterSpawnState()
     {
 		m_stateTimer = 0.5f;
-		Animator.SetTrigger("OnSpawn");
+		m_animator.SetTrigger("OnSpawn");
 	}
 
 	void OnSpawnState()
     {
-		Move(Vector2.zero);
+		m_movementComponent.Move(Vector2.zero);
 
 		m_stateTimer -= Time.fixedDeltaTime;
 
@@ -129,7 +126,7 @@ public class SkeletonComponent : EnemyComponent
 
 	void OnDamageKnockbackState()
 	{
-		Move(Vector2.zero);
+		m_movementComponent.Move(Vector2.zero);
 
 		m_stateTimer -= Time.fixedDeltaTime;
 
@@ -157,7 +154,7 @@ public class SkeletonComponent : EnemyComponent
 		Destroy(m_persistentHitboxComponent);
 
 		Destroy(gameObject, 1f);
-		Animator.SetTrigger("OnDeath");
+		m_animator.SetTrigger("OnDeath");
     }
 
 	protected PersistentHitboxComponent m_persistentHitboxComponent;

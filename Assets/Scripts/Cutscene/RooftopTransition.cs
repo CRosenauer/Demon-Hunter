@@ -41,12 +41,12 @@ public class RooftopTransition : Cutscene
 
     IEnumerator CutsceneCoroutine()
     {
-        m_playerMovementComponent.SetCutscene(true);
+        m_playerMovementComponent.IsInCutscene = true;
         m_playerMovementComponent.Move(Vector2.zero);
 
         m_playerAnimator.SetFloat("Speed", 0);
 
-        m_bossCultistMovementComponent.SetCutscene(true);
+        m_bossCultistMovementComponent.IsInCutscene = true;
 
         m_camera.SendMessage("ChangeCameraMovementMode", CameraComponent.CameraMovementMode.Linear);
         m_camera.SendMessage("NewTrackingObject", m_cameraTrackingTarget);
@@ -81,7 +81,7 @@ public class RooftopTransition : Cutscene
 
         // terrain break and player falls
         m_ledgeObject.SendMessage("Fall");
-        m_playerMovementComponent.SetCutscene(false);
+        m_playerMovementComponent.IsInCutscene = false;
     }
 
     IEnumerator CultistAttackCoroutine(float delay, bool trackRunning = false, bool startRumble = false)

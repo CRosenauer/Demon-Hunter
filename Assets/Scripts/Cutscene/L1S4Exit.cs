@@ -41,8 +41,8 @@ public class L1S4Exit : Cutscene
             enemy.BroadcastMessage("OnDeath");
         }
 
-        m_playerMovementComponent.SetCutscene(true);
-        m_bossCultistMovementComponent.SetCutscene(true);
+        m_playerMovementComponent.IsInCutscene = true;
+        m_bossCultistMovementComponent.IsInCutscene = true;
         m_playerMovementComponent.Move(Vector2.zero);
 
         m_playerMovementComponent.Animator.SetFloat("Speed", 0);

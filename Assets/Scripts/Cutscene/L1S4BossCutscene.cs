@@ -25,8 +25,8 @@ public class L1S4BossCutscene : Cutscene
         m_bossCultistMovementComponent = m_bossCultist.GetComponent<MovementComponent>();
         Debug.Assert(m_bossCultistMovementComponent, "L1S4BossCutscene.CutsceneCoroutine. MovementComponent doesn't exist on the boss cultist!");
 
-        m_playerMovementComponent.SetCutscene(true);
-        m_bossCultistMovementComponent.SetCutscene(true);
+        m_playerMovementComponent.IsInCutscene = true;
+        m_bossCultistMovementComponent.IsInCutscene = true;
         m_playerMovementComponent.Move(Vector2.zero);
 
         m_playerMovementComponent.Animator.SetFloat("Speed", 0);
@@ -37,8 +37,8 @@ public class L1S4BossCutscene : Cutscene
         PlaySound(m_cultistLaugh);
         yield return new WaitForSeconds(2.67f);
 
-        m_playerMovementComponent.SetCutscene(false);
-        m_bossCultistMovementComponent.SetCutscene(false);
+        m_playerMovementComponent.IsInCutscene = false;
+        m_bossCultistMovementComponent.IsInCutscene = false;
 
         m_bossCultist.SendMessage("Activate");
     }

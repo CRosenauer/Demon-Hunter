@@ -39,8 +39,6 @@ public class GrandCultistComponent : EnemyComponent
 
     new void Awake()
     {
-        base.Awake();
-
         m_stateMachine.AddState(GrandCultistState.waitForActivation, null, null, null);
         m_stateMachine.AddState(GrandCultistState.spawnSkeletons, OnEnterSpawnSkeletons, OnSpawnSkeletons, OnExitSpawnSkeletons);
         m_stateMachine.AddState(GrandCultistState.spawnProjectiles, OnEnterSpawnProjectiles, OnSpawnProjectiles, OnExitSpawnProjectiles);
@@ -70,7 +68,6 @@ public class GrandCultistComponent : EnemyComponent
 
     void FixedUpdate()
     {
-        QueryOnGround();
         QueryDirectionToPlayer();
 
         m_stateMachine.Update();
@@ -83,7 +80,7 @@ public class GrandCultistComponent : EnemyComponent
 
     void OnEnterSpawnSkeletons()
     {
-        Animator.SetTrigger("Summon");
+        m_movementComponent.Animator.SetTrigger("Summon");
 
         for(int i = 0; i < m_skeletonSpawnLocations.Count; ++i)
         {
@@ -112,12 +109,12 @@ public class GrandCultistComponent : EnemyComponent
 
     void OnExitSpawnSkeletons()
     {
-        Animator.ResetTrigger("Summon");
+        m_movementComponent.Animator.ResetTrigger("Summon");
     }
 
     void OnEnterSpawnProjectiles()
     {
-        Animator.SetTrigger("Summon");
+        m_movementComponent.Animator.SetTrigger("Summon");
 
         for(int i = 0; i < m_projectileSpawnLocations.Count; ++i)
         {
@@ -167,13 +164,13 @@ public class GrandCultistComponent : EnemyComponent
 
     void OnExitSpawnProjectiles()
     {
-        Animator.ResetTrigger("Summon");
+        m_movementComponent.Animator.ResetTrigger("Summon");
     }
 
     void OnEnterVulnerable()
     {
-        Animator.SetTrigger("Weak");
-        Animator.ResetTrigger("Unweak");
+        m_movementComponent.Animator.SetTrigger("Weak");
+        m_movementComponent.Animator.ResetTrigger("Unweak");
         m_vulerableHitCount = 0;
         if(m_stateTimerCoroutine != null)
         {
@@ -199,8 +196,8 @@ public class GrandCultistComponent : EnemyComponent
 
     void OnExitVulnerable()
     {
-        Animator.SetTrigger("Unweak");
-        Animator.ResetTrigger("Weak");
+        m_movementComponent.Animator.SetTrigger("Unweak");
+        m_movementComponent.Animator.ResetTrigger("Weak");
     }
 
     void ExitVulerableState()
@@ -260,9 +257,9 @@ public class GrandCultistComponent : EnemyComponent
 
         Rigidbody2D rbody = GetComponent<Rigidbody2D>();
         rbody.gravityScale = 1f;
-        Move(9f * Vector2.up);
+        m_movementComponent.Move(9f * Vector2.up);
 
-        Animator.SetTrigger("Death");
+        m_movementComponent.Animator.SetTrigger("Death");
 
         GameObject systems = GameObject.Find("Systems");
         AudioSource musicSource = systems.GetComponent<AudioSource>();
@@ -271,9 +268,9 @@ public class GrandCultistComponent : EnemyComponent
 
     void OnDead()
     {
-        if (IsOnGround())
+        if (m_movementComponent.IsOnGround)
         {
-            Animator.SetTrigger("DeathBounce");
+            m_movementComponent.Animator.SetTrigger("DeathBounce");
 
             if(m_landSFX)
             {
@@ -345,11 +342,11 @@ public class GrandCultistComponent : EnemyComponent
         {
             transform.position = targetPosition;
             m_moveLocationIndex = (m_moveLocationIndex + 1) % m_hoverPoints.Count;
-            Move(Vector2.zero);
+            m_movementComponent.Move(Vector2.zero);
         }
         else
         {
-            Move(movement);
+            m_movementComponent.Move(movement);
         }
     }
 

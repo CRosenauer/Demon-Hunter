@@ -26,7 +26,7 @@ public class L1S4FallingIntro : LevelLoadCutscene
         m_playerMovementComponent = m_player.GetComponent<MovementComponent>();
         Debug.Assert(m_playerMovementComponent, "L1S4FallingIntro.CutsceneCoroutine. MovementComponent doesn't exist on the player!");
 
-        m_playerMovementComponent.SetCutscene(true);
+        m_playerMovementComponent.IsInCutscene = true;
         m_playerMovementComponent.Move(Vector2.zero);
         Rigidbody2D rbody = m_player.GetComponent<Rigidbody2D>();
         rbody.simulated = false;
@@ -57,7 +57,7 @@ public class L1S4FallingIntro : LevelLoadCutscene
         yield return new WaitForSeconds(0.2f);
         bushRenderer.sortingOrder = 5;
 
-        m_playerMovementComponent.SetCutscene(false);
+        m_playerMovementComponent.IsInCutscene = false;
     }
 
     GameObject m_player;

@@ -14,7 +14,7 @@ public class RedBoneComponent : EnemyComponent
         base.Start();
 
         Vector2 velocity = new(m_xSpeed * transform.localScale.x, m_ySpeed);
-        m_rbody.velocity = velocity;
+        m_movementComponent.Move(velocity);
     }
 
     void OnHitOther(int layerMask)

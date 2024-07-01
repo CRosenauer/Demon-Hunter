@@ -9,7 +9,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5173901498255341375}
-  - component: {fileID: 5173901498255341372}
   - component: {fileID: 5173901498255341373}
   - component: {fileID: 5173901498255341374}
   - component: {fileID: 5173901498255341361}
@@ -22,6 +21,7 @@ GameObject:
   - component: {fileID: 740146831}
   - component: {fileID: 3039771955825950006}
   - component: {fileID: -6079279347918384956}
+  - component: {fileID: 1024421304983470299}
   m_Layer: 6
   m_Name: Player
   m_TagString: Player
@@ -44,27 +44,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!50 &5173901498255341372
-Rigidbody2D:
-  serializedVersion: 4
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5173901498255341368}
-  m_BodyType: 0
-  m_Simulated: 1
-  m_UseFullKinematicContacts: 0
-  m_UseAutoMass: 0
-  m_Mass: 1
-  m_LinearDrag: 0
-  m_AngularDrag: 0
-  m_GravityScale: 1
-  m_Material: {fileID: 6200000, guid: 6805a00a0c59a3641b44d91c90f1c42b, type: 2}
-  m_Interpolate: 0
-  m_SleepingMode: 1
-  m_CollisionDetection: 1
-  m_Constraints: 4
 --- !u!61 &5173901498255341373
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -90,7 +69,7 @@ BoxCollider2D:
   m_AutoTiling: 0
   serializedVersion: 2
   m_Size: {x: 0.4, y: 0.9375}
-  m_EdgeRadius: 0.01
+  m_EdgeRadius: 0.1
 --- !u!95 &5173901498255341374
 Animator:
   serializedVersion: 5
@@ -657,3 +636,18 @@ MonoBehaviour:
   m_select: {fileID: 11400000, guid: 96cc377170503b149941f2c58703bda9, type: 2}
   m_cancel: {fileID: 11400000, guid: ac6e34decfd8c334ca912af19c1951bc, type: 2}
   m_navigation: {fileID: 11400000, guid: 552deea1f66d6e445a6009a40c45f5cd, type: 2}
+--- !u!114 &1024421304983470299
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5173901498255341368}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 570aad57e7b157243bff4355b969a20e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_collisionLayerMask:
+    serializedVersion: 2
+    m_Bits: 641

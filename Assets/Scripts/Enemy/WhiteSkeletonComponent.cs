@@ -11,9 +11,9 @@ public class WhiteSkeletonComponent : SkeletonComponent
     protected override void OnIdleState()
     {
         bool isApproachingLedge = !QueryStartEndRaycast(m_ledgeCheckStart.transform.position, m_ledgeCheckEnd.transform.position, m_physicsLayerMask);
-        if (IsOnGround() && isApproachingLedge)
+        if (m_movementComponent.IsOnGround && isApproachingLedge)
         {
-            UpdateDirection(-Mathf.Sign(transform.localScale.x));
+            m_movementComponent.UpdateDirection(-Mathf.Sign(transform.localScale.x));
         }
 
         base.OnIdleState();

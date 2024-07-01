@@ -40,8 +40,6 @@ public class RedSkeletonComponent : EnemyComponent
 
 	void FixedUpdate()
 	{
-		QueryOnGround();
-
 		m_stateMachine.Update();
 	}
 
@@ -56,13 +54,13 @@ public class RedSkeletonComponent : EnemyComponent
 			m_boneThrowTimer = float.PositiveInfinity; // hack
 		}
 
-		if(IsOnGround())
+		if(m_movementComponent.IsOnGround)
         {
 			QueryDirectionToPlayer();
 
-            Animator.ResetTrigger("OnThrow");
-			Animator.ResetTrigger("OnTallJump");
-			Animator.ResetTrigger("OnShortJump");
+            m_animator.ResetTrigger("OnThrow");
+			m_animator.ResetTrigger("OnTallJump");
+			m_animator.ResetTrigger("OnShortJump");
 
 			float directionRand = Random.Range(0f, 1f);
 			float jumpRand = Random.Range(0f, 1f);
@@ -72,37 +70,37 @@ public class RedSkeletonComponent : EnemyComponent
 			float xSpeed = directionRand > 0.5f ? 1f: -1f;
 			float ySpeed = tallJump ? m_tallJumpVelocity : m_shortJumpVelocity;
 
-			m_rbody.velocity = new(xSpeed * m_moveSpeed, ySpeed);
+			m_movementComponent.Move(new Vector2(xSpeed * m_moveSpeed, ySpeed));
 
 			if (m_stateTimer <= 0f)
 			{
 				m_stateTimer = Random.Range(m_minThrowTime, m_maxThrowTime);
 
 				m_boneThrowTimer = 35f / 60f;
-				Animator.SetTrigger("OnThrow");
+				m_animator.SetTrigger("OnThrow");
 				return;
 			}
 
 			if(tallJump)
             {
-				Animator.SetTrigger("OnTallJump");
+				m_animator.SetTrigger("OnTallJump");
 			}
 			else
             {
-				Animator.SetTrigger("OnShortJump");
+				m_animator.SetTrigger("OnShortJump");
 			}
 		}
 	}
 
 	void OnDeadState()
 	{
-		Move(new(0f, m_rbody.velocity.y));
+		m_movementComponent.Move(new(0f, m_movementComponent.Velocity.y));
 	}
 
 	void OnDeath()
 	{
 		ApplyScore();
-		Animator.SetTrigger("OnDeath");
+		m_animator.SetTrigger("OnDeath");
 		m_stateMachine.SetState(RedSkeletonState.dead);
 
 		Destroy(GetComponent<PersistentHitboxComponent>());

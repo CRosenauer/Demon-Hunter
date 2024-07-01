@@ -87,8 +87,6 @@ public class CultistComponent : EnemyComponent
 
     void FixedUpdate()
     {
-        QueryOnGround();
-
         m_stateMachine.Update();
     }
 
@@ -100,9 +98,9 @@ public class CultistComponent : EnemyComponent
 
     void OnEnterIdleState()
     {
-        Move(Vector2.zero);
+        m_movementComponent.Move(Vector2.zero);
         QueryDirectionToPlayer();
-        Animator.SetTrigger("OnIdle");
+        m_animator.SetTrigger("OnIdle");
         
         if(m_attackTimerCoroutine == null)
         {
@@ -112,7 +110,7 @@ public class CultistComponent : EnemyComponent
 
     void OnIdleState()
     {
-        if (!IsOnGround())
+        if (!m_movementComponent.IsOnGround)
         {
             m_stateMachine.SetState(CultistState.fall);
             return;
@@ -150,17 +148,17 @@ public class CultistComponent : EnemyComponent
             return;
         }
 
-        Animator.SetFloat("Speed", m_rbody.velocity.x);
+        m_animator.SetFloat("Speed", m_movementComponent.Velocity.x);
     }
 
     void OnExitIdleState()
     {
-        Animator.ResetTrigger("OnIdle");
+        m_animator.ResetTrigger("OnIdle");
     }
 
     void OnRetreatState()
     {
-        if (!IsOnGround())
+        if (!m_movementComponent.IsOnGround)
         {
             m_stateMachine.SetState(CultistState.fall);
             return;
@@ -196,12 +194,12 @@ public class CultistComponent : EnemyComponent
     void OnEnterJumpState()
     {
         JumpAwayFromPlayer();
-        Animator.SetTrigger("OnJump");
+        m_animator.SetTrigger("OnJump");
     }
 
     void OnJumpState()
     {
-        if(IsOnGround())
+        if(m_movementComponent.IsOnGround)
         { 
             m_stateMachine.SetState(CultistState.idle);
         }
@@ -209,29 +207,29 @@ public class CultistComponent : EnemyComponent
 
     void OnExitJumpState()
     {
-        Animator.ResetTrigger("OnJump");
+        m_animator.ResetTrigger("OnJump");
     }
 
     void OnEnterAttackState()
     {
-        Animator.SetTrigger("OnSpecial");
+        m_animator.SetTrigger("OnSpecial");
         StartCoroutine(ExitAttackCoroutine());
     }
 
     void OnExitAttackState()
     {
-        Animator.ResetTrigger("OnSpecial");
+        m_animator.ResetTrigger("OnSpecial");
     }
 
     void OnEnterFallState()
     {
-        Animator.SetTrigger("OnFall");
-        Move(Vector2.zero);
+        m_animator.SetTrigger("OnFall");
+        m_movementComponent.Move(Vector2.zero);
     }
 
     void OnFallState()
     {
-        if(IsOnGround())
+        if(m_movementComponent.IsOnGround)
         {
             m_stateMachine.SetState(CultistState.idle);
         }
@@ -239,7 +237,7 @@ public class CultistComponent : EnemyComponent
 
     void OnExitFallState()
     {
-        Animator.ResetTrigger("OnFall");
+        m_animator.ResetTrigger("OnFall");
     }
 
     void ANIMATION_LaunchAttack()
@@ -279,10 +277,10 @@ public class CultistComponent : EnemyComponent
 
         Destroy(persistentHitboxComponent);
 
-        Move(Vector2.zero);
+        m_movementComponent.Move(Vector2.zero);
 
         Destroy(gameObject, 2f);
-        Animator.SetTrigger("OnDeath");
+        m_animator.SetTrigger("OnDeath");
     }
 
     bool IsEscapePlatform()
@@ -303,8 +301,8 @@ public class CultistComponent : EnemyComponent
     {
         Vector2 movementDirection = GetXDirectionToPlayer(true);
 
-        Move(movementDirection * m_moveSpeed);
-        UpdateDirection(movementDirection.x);
+        m_movementComponent.Move(movementDirection * m_moveSpeed);
+        m_movementComponent.UpdateDirection(movementDirection.x);
     }
 
     void JumpAwayFromPlayer()
@@ -313,7 +311,7 @@ public class CultistComponent : EnemyComponent
         jumpVelocity = jumpVelocity * m_moveSpeed;
         jumpVelocity.y = m_jumpSpeed;
 
-        Move(jumpVelocity);
+        m_movementComponent.Move(jumpVelocity);
     }
 
     Vector2 GetXDirectionToPlayer(bool away)

@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class EnemyComponent : MovementComponent
+public class EnemyComponent : BaseController
 {
     [SerializeField] ScoreChangedEvent m_scoreEvent;
     [SerializeField] int m_score;
@@ -60,7 +60,7 @@ public class EnemyComponent : MovementComponent
 	{
 		float xToPlayer = m_player.transform.position.x - transform.position.x;
 
-		UpdateDirection(xToPlayer);
+        m_movementComponent.UpdateDirection(xToPlayer);
 	}
 
 	protected GameObject m_player;

@@ -1,19 +1,32 @@
-using System.Collections.Generic;
 using UnityEngine;
 
-[RequireComponent(typeof(Rigidbody2D))]
 [RequireComponent(typeof(Animator))]
+[RequireComponent(typeof(BoxCollider2D))]
 public class MovementComponent : MonoBehaviour
 {
+    [SerializeField]
+    private LayerMask m_collisionLayerMask;
+
+    private const float k_skinWidth = 0.01f;
+    private const int k_physicsMoveRecusionDepth = 5;
+
+    public Vector2 Velocity => m_velocity;
+
+    public bool IsOnGround => m_isOnGround;
+    public bool CanMove { set { m_canMove = value; } get { return m_canMove; } }
+    public bool IsInCutscene { set; get; }
+
+    public bool ApplyGravity { set { m_applyGravity = value; } get { return m_applyGravity; } }
+
     public Animator Animator => m_animator;
 
-    protected void Awake()
+    private struct BoxPhysicsDescriptor
     {
-        m_rbody = GetComponent<Rigidbody2D>();
-        m_animator = GetComponent<Animator>();
+        public Vector2 m_center;
+        public Vector2 m_extents;
     }
 
-    protected void UpdateDirection(float direction)
+    public void UpdateDirection(float direction)
     {
         if (Mathf.Approximately(direction, 0f))
         {
@@ -27,83 +40,108 @@ public class MovementComponent : MonoBehaviour
         transform.localScale = scale;
     }
 
-    protected void QueryOnGround()
+    public void Move(Vector2 velocity)
     {
-        const float SPEED_EPSILON = 0.001f;
-        if (m_rbody.velocity.y > SPEED_EPSILON)
+        m_velocity = velocity;
+    }
+
+    private void Awake()
+    {
+        m_animator = GetComponent<Animator>();
+        m_collider = GetComponent<BoxCollider2D>();
+    }
+
+    private void FixedUpdate()
+    {
+        if(!CanMove)
         {
-            m_isOnGround = false;
             return;
         }
 
-        List<ContactPoint2D> contacts = new List<ContactPoint2D>();
-        m_rbody.GetContacts(contacts);
-
-        foreach (ContactPoint2D contact in contacts)
+        if(m_isInCutscene)
         {
-            float dot = Vector2.Dot(contact.normal, Vector2.up);
-            if (dot >= 0.99f)
-            {
-                m_isOnGround = true;
-                return;
-            }
+            return;
         }
 
-        m_isOnGround = false;
-    }
+        Vector2 velocity = m_velocity;
 
-    protected bool IsOnGround()
-    {
-        return m_isOnGround;
-    }
-
-    public void Move(Vector2 velocity)
-    {
-        m_rbody.velocity = velocity;
-
-        if(!m_isInCutscene)
+        if (ApplyGravity)
         {
-            Animator.SetFloat("Speed", Mathf.Abs(velocity.x));
+            velocity += Physics2D.gravity * Time.fixedDeltaTime;
+        }
+
+        Vector2 requestedMovement = velocity * Time.fixedDeltaTime;
+
+        Vector2 requestedHorizontalMovement = Vector2.right * requestedMovement.x;
+        Vector2 horizontalMovement = CollideAndSlide(requestedHorizontalMovement, m_collisionLayerMask);
+        transform.position += (Vector3) horizontalMovement;
+
+        Vector2 requestedVerticalMovement = Vector2.up * requestedMovement.y;
+        Vector2 verticalMovement = CollideAndSlide(requestedVerticalMovement, m_collisionLayerMask);
+        transform.position += (Vector3) verticalMovement;
+
+        Vector2 totalMovement = horizontalMovement + verticalMovement;
+
+        m_isOnGround = verticalMovement.y > requestedMovement.y;
+        m_velocity = totalMovement / Time.fixedDeltaTime;
+
+        if (!m_isInCutscene)
+        {
+            m_animator.SetFloat("Speed", Mathf.Abs(velocity.x));
         }
     }
 
-    public void FreezeMovement()
+    private Vector2 CollideAndSlide(Vector2 movement, int layerMask)
     {
-        if(!m_rbody)
+        GetBoxPositionDescriptor(m_collider, out BoxPhysicsDescriptor descriptor);
+        return CollideAndSlide_Internal(descriptor, movement, layerMask);
+    }
+
+    private static Vector2 CollideAndSlide_Internal(BoxPhysicsDescriptor descriptor, Vector2 movement, int layerMask)
+    {
+        Vector2 direction = movement.normalized;
+        float distance = movement.magnitude + k_skinWidth;
+
+        RaycastHit2D result = Physics2D.BoxCast(descriptor.m_center, descriptor.m_extents, 0f, direction, distance, layerMask);
+
+        if(result.collider == null)
         {
-            m_rbody = GetComponent<Rigidbody2D>();
+            return movement;
         }
 
-        m_rbody.constraints = RigidbodyConstraints2D.FreezeAll;
+        Vector2 snapToSurface = direction * (result.distance - k_skinWidth);
+
+        if(snapToSurface.magnitude <= k_skinWidth)
+        {
+            return Vector2.zero;
+        }
+
+        return snapToSurface;
     }
 
-    public void UnfreezeMovement()
+    private static void GetBoxPositionDescriptor(BoxCollider2D boxCollider, out BoxPhysicsDescriptor boxPhysicsDescriptor)
     {
-        m_rbody.constraints = RigidbodyConstraints2D.FreezeRotation;
+        boxPhysicsDescriptor = new();
+
+        if (!boxCollider)
+        {
+            return;
+        }
+
+        boxPhysicsDescriptor.m_center = (Vector2) boxCollider.transform.position + boxCollider.offset;
+        boxPhysicsDescriptor.m_extents.x = boxCollider.size.x;
+        boxPhysicsDescriptor.m_extents.y = boxCollider.size.y;
     }
 
-    protected void ClearAttackBuffer()
-    {
-        m_attackBuffered = false;
-    }
-
-    public virtual void SetCutscene(bool cutscene)
-    {
-        m_isInCutscene = cutscene;
-    }
-
-    protected Rigidbody2D m_rbody;
     private Animator m_animator;
 
-    protected bool m_isOnGround = true;
+    private BoxCollider2D m_collider;
 
-    protected bool m_userAttack = false;
-    protected bool m_userAttackDownLastFrame = false;
+    private Vector2 m_velocity;
 
-    protected bool m_userSecondaryAttack = false;
-    protected bool m_userSecondaryAttackDownLastFrame = false;
+    private bool m_isOnGround = true;
+    private bool m_isInCutscene = false;
 
-    protected bool m_attackBuffered = false;
-
-    protected bool m_isInCutscene = false;
+    private bool m_canMove = true;
+    private bool m_applyGravity = true;
 }
