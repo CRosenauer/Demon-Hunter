@@ -13,7 +13,7 @@ public class FanOfKnivesComponent : SecondaryWeaponComponent
             float correctedAngle = direction > 0f ? angle : 180f - angle;
 
             Quaternion orientation = Quaternion.AngleAxis(correctedAngle, Vector3.forward);
-            Instantiate(m_knifeObject, transform.position, orientation, transform.parent);
+            Instantiate(m_knifeObject, transform.position, orientation);
         }
 
         Destroy(gameObject);

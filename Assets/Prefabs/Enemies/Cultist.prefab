@@ -281,9 +281,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 570aad57e7b157243bff4355b969a20e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_collisionLayerMask:
-    serializedVersion: 2
-    m_Bits: 0
+  m_physicsCollisionLayers: {fileID: 11400000, guid: c943cf52d9fbcc04dac5384effb98bb5, type: 2}
 --- !u!1 &2428383356715935625
 GameObject:
   m_ObjectHideFlags: 0

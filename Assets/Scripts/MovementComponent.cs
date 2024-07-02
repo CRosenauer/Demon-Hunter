@@ -5,10 +5,9 @@ using UnityEngine;
 public class MovementComponent : MonoBehaviour
 {
     [SerializeField]
-    private LayerMask m_collisionLayerMask;
+    private PhysicsCollision m_physicsCollisionLayers;
 
     private const float k_skinWidth = 0.01f;
-    private const int k_physicsMoveRecusionDepth = 5;
 
     public Vector2 Velocity => m_velocity;
 
@@ -16,6 +15,8 @@ public class MovementComponent : MonoBehaviour
     public bool CanMove { set { m_canMove = value; } get { return m_canMove; } }
     public bool IsInCutscene { set; get; }
 
+    [SerializeField]
+    private bool m_applyGravity = true;
     public bool ApplyGravity { set { m_applyGravity = value; } get { return m_applyGravity; } }
 
     public Animator Animator => m_animator;
@@ -24,6 +25,20 @@ public class MovementComponent : MonoBehaviour
     {
         public Vector2 m_center;
         public Vector2 m_extents;
+    }
+
+    public delegate void CollisionEventHandler(Collider2D other);
+    
+    private event CollisionEventHandler m_collisionEventHandler;
+
+    public void AddOnCollision(CollisionEventHandler collisionCallback)
+    {
+        m_collisionEventHandler += collisionCallback;
+    }
+
+    public void RemoveOnCollision(CollisionEventHandler collisionCallback)
+    {
+        m_collisionEventHandler -= collisionCallback;
     }
 
     public void UpdateDirection(float direction)
@@ -73,12 +88,24 @@ public class MovementComponent : MonoBehaviour
         Vector2 requestedMovement = velocity * Time.fixedDeltaTime;
 
         Vector2 requestedHorizontalMovement = Vector2.right * requestedMovement.x;
-        Vector2 horizontalMovement = CollideAndSlide(requestedHorizontalMovement, m_collisionLayerMask);
+
+        int layerMask = m_physicsCollisionLayers == null ? 0 : m_physicsCollisionLayers.CollisionLayerMask;
+
+        RaycastHit2D result;
+
+        Vector2 horizontalMovement = CollideAndSlide(requestedHorizontalMovement, layerMask, out result);
         transform.position += (Vector3) horizontalMovement;
 
+        Collider2D collidedCollider = result.collider;
+
         Vector2 requestedVerticalMovement = Vector2.up * requestedMovement.y;
-        Vector2 verticalMovement = CollideAndSlide(requestedVerticalMovement, m_collisionLayerMask);
+        Vector2 verticalMovement = CollideAndSlide(requestedVerticalMovement, layerMask, out result);
         transform.position += (Vector3) verticalMovement;
+
+        if(collidedCollider == null)
+        {
+            collidedCollider = result.collider;
+        }
 
         Vector2 totalMovement = horizontalMovement + verticalMovement;
 
@@ -89,20 +116,25 @@ public class MovementComponent : MonoBehaviour
         {
             m_animator.SetFloat("Speed", Mathf.Abs(velocity.x));
         }
+
+        if(collidedCollider != null)
+        {
+            m_collisionEventHandler?.Invoke(collidedCollider);
+        }
     }
 
-    private Vector2 CollideAndSlide(Vector2 movement, int layerMask)
+    private Vector2 CollideAndSlide(Vector2 movement, int layerMask, out RaycastHit2D result)
     {
         GetBoxPositionDescriptor(m_collider, out BoxPhysicsDescriptor descriptor);
-        return CollideAndSlide_Internal(descriptor, movement, layerMask);
+        return CollideAndSlide_Internal(descriptor, movement, layerMask, out result);
     }
 
-    private static Vector2 CollideAndSlide_Internal(BoxPhysicsDescriptor descriptor, Vector2 movement, int layerMask)
+    private Vector2 CollideAndSlide_Internal(BoxPhysicsDescriptor descriptor, Vector2 movement, int layerMask, out RaycastHit2D result)
     {
         Vector2 direction = movement.normalized;
         float distance = movement.magnitude + k_skinWidth;
 
-        RaycastHit2D result = Physics2D.BoxCast(descriptor.m_center, descriptor.m_extents, 0f, direction, distance, layerMask);
+        result = Physics2D.BoxCast(descriptor.m_center, descriptor.m_extents, 0f, direction, distance, layerMask);
 
         if(result.collider == null)
         {
@@ -143,5 +175,4 @@ public class MovementComponent : MonoBehaviour
     private bool m_isInCutscene = false;
 
     private bool m_canMove = true;
-    private bool m_applyGravity = true;
 }

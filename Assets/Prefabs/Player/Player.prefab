@@ -648,6 +648,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 570aad57e7b157243bff4355b969a20e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_collisionLayerMask:
-    serializedVersion: 2
-    m_Bits: 641
+  m_physicsCollisionLayers: {fileID: 11400000, guid: 8e4df543b7470c44b8804537eac84eed, type: 2}

@@ -3,7 +3,7 @@ using UnityEngine;
 
 [RequireComponent(typeof(PersistentHitboxComponent))]
 [RequireComponent(typeof(SpriteRenderer))]
-public class FanOfKnivesObjectComponent : MovementComponent
+public class FanOfKnivesObjectComponent : BaseController
 {
     [SerializeField] AudioSource m_audioSource;
     [SerializeField] float m_speed;
@@ -18,7 +18,7 @@ public class FanOfKnivesObjectComponent : MovementComponent
 
     void FixedUpdate()
     {
-        Move(m_movementDirection * m_speed);
+        m_movementComponent.Move(m_movementDirection * m_speed);
     }
 
     void OnDestroy()

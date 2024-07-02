@@ -8,13 +8,20 @@ public class CaltropObjectComponent : BaseController
     [SerializeField] float m_speed;
     [SerializeField] float m_deathTimer;
 
-    void Start()
+    void Awake()
     {
-        m_movementDirection = transform.rotation * new Vector2(1f, 0f);
+        base.Awake();
 
         Destroy(gameObject, m_deathTimer);
 
-        m_movementComponent.Move(m_movementDirection * m_speed);
+        m_movementComponent.AddOnCollision(OnMovementCollision);
+
+        m_movementComponent.Move(transform.rotation * new Vector2(1f, 0f) * m_speed);
+    }
+
+    private void OnDestroy()
+    {
+        m_movementComponent.RemoveOnCollision(OnMovementCollision);
     }
 
     void OnHitOther(int layerMask)
@@ -22,5 +29,8 @@ public class CaltropObjectComponent : BaseController
         m_audioSource.Play();
     }
 
-    Vector2 m_movementDirection;
+    private void OnMovementCollision(Collider2D collider)
+    {
+        m_movementComponent.Move(Vector2.zero);
+    }
 }
