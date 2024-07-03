@@ -78,6 +78,7 @@ public class MovementComponent : MonoBehaviour
             return;
         }
 
+
         Vector2 velocity = m_velocity;
 
         if (ApplyGravity)
@@ -90,7 +91,6 @@ public class MovementComponent : MonoBehaviour
         Vector2 requestedHorizontalMovement = Vector2.right * requestedMovement.x;
 
         int layerMask = m_physicsCollisionLayers == null ? 0 : m_physicsCollisionLayers.CollisionLayerMask;
-
         RaycastHit2D result;
 
         Vector2 horizontalMovement = CollideAndSlide(requestedHorizontalMovement, layerMask, out result);

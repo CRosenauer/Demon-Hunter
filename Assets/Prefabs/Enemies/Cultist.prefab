@@ -282,6 +282,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_physicsCollisionLayers: {fileID: 11400000, guid: c943cf52d9fbcc04dac5384effb98bb5, type: 2}
+  m_applyGravity: 1
 --- !u!1 &2428383356715935625
 GameObject:
   m_ObjectHideFlags: 0
@@ -385,6 +386,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5452684265524348569}
   - component: {fileID: 1832041184709374229}
+  - component: {fileID: 4573119257342014710}
   m_Layer: 11
   m_Name: PlayerRetreatCheck
   m_TagString: Untagged
@@ -433,6 +435,27 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 6, y: 2}
   m_EdgeRadius: 0
+--- !u!50 &4573119257342014710
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4028149182462234131}
+  m_BodyType: 1
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 1
+  m_Material: {fileID: 0}
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 7
 --- !u!1 &5143366024601879290
 GameObject:
   m_ObjectHideFlags: 0

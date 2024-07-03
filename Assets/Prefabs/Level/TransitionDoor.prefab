@@ -150,8 +150,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_scene: 
-  m_exitPoint: {fileID: 4451300359858180729}
   m_level: {fileID: 0}
+  m_exitPoint: {fileID: 4451300359858180729}
   m_exitDoorPosition: {x: 0, y: 0}
   m_state: 0
 --- !u!50 &298196099
@@ -162,7 +162,7 @@ Rigidbody2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4451300358410067351}
-  m_BodyType: 2
+  m_BodyType: 1
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
@@ -174,7 +174,7 @@ Rigidbody2D:
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
-  m_Constraints: 0
+  m_Constraints: 7
 --- !u!1 &4451300359858180729
 GameObject:
   m_ObjectHideFlags: 0

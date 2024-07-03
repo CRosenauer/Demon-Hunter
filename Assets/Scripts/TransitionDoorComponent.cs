@@ -9,6 +9,7 @@ public class TransitionDoorComponent : TransitionComponent
     enum TransitionState
     {
         Idle,
+        PreLoadScene,
         LoadScene,
         MoveCamera,
         DoorOpen,
@@ -52,6 +53,9 @@ public class TransitionDoorComponent : TransitionComponent
         {
             case TransitionState.Idle:
                 break;
+            case TransitionState.PreLoadScene:
+                PreLoadScene();
+                break;
             case TransitionState.LoadScene:
                 LoadScene();
                 break;
@@ -79,6 +83,23 @@ public class TransitionDoorComponent : TransitionComponent
             case TransitionState.ExitTransition:
                 ExitTransition();
                 break;
+        }
+    }
+
+    private void PreLoadScene()
+    {
+        PlayerMovement playerMovement = m_player.GetComponent<PlayerMovement>();
+        PlayerMovement.PlayerState playerState = playerMovement.GetPlayerState();
+
+        if(playerState == PlayerMovement.PlayerState.idle)
+        {
+            // wee bit janky
+            MovementComponent movementComponent = m_player.GetComponent<MovementComponent>();
+            movementComponent.CanMove = false;
+            m_player.GetComponent<Animator>().SetFloat("Speed", 0f);
+
+            m_state = TransitionState.LoadScene;
+            LoadLevel();
         }
     }
 
@@ -177,6 +198,9 @@ public class TransitionDoorComponent : TransitionComponent
             m_player.BroadcastMessage("ForceEmulatedUserInput", new Vector2(Mathf.Sign(distanceToExitPoint), 0f));
 
             m_state = TransitionState.MovePlayer;
+
+            MovementComponent movementComponent = m_player.GetComponent<MovementComponent>();
+            movementComponent.CanMove = true;
         }
     }
 
@@ -187,10 +211,10 @@ public class TransitionDoorComponent : TransitionComponent
 
         float distanceToExit = exitPosition.x - playerPosition.x;
 
-        Vector2 playerVelocity = m_player.GetComponent<Rigidbody2D>().velocity;
+        Vector2 playerVelocity = m_player.GetComponent<MovementComponent>().Velocity;
 
         // is player is moving away from the exit point
-        if(distanceToExit * playerVelocity.x < 0f)
+        if (distanceToExit * playerVelocity.x < 0f)
         {
             m_player.BroadcastMessage("ForceEmulatedUserInput", new Vector2(0f, 0f));
             m_state = TransitionState.DoorClose;
@@ -250,10 +274,6 @@ public class TransitionDoorComponent : TransitionComponent
 
     void OnTriggerEnter2D(Collider2D other)
     {
-        LoadLevel();
-
-        m_state = TransitionState.LoadScene;
-
         m_player = other.gameObject;
         m_player.BroadcastMessage("SetControl", false);
 
@@ -265,7 +285,7 @@ public class TransitionDoorComponent : TransitionComponent
 
         SceneManager.GetActiveScene().GetRootGameObjects(m_currentObjects);
 
-        m_state = TransitionState.LoadScene;
+        m_state = TransitionState.PreLoadScene;
     }
 
     void ReactivateGame()

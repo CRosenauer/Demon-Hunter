@@ -12,6 +12,8 @@ public class PlayerMovement : BaseController
 	[SerializeField] Vector2 m_onHitKnockbackVelocity;
 
 	[SerializeField] float m_moveSpeed;
+	public float MoveSpeed => m_moveSpeed;
+
 	[SerializeField] float m_jumpSpeed;
 
 	public enum PlayerState
