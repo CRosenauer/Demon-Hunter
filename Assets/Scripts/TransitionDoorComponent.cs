@@ -94,6 +94,8 @@ public class TransitionDoorComponent : TransitionComponent
         if(playerState == PlayerMovement.PlayerState.idle)
         {
             // wee bit janky
+            // this is a hack fix. I think there's something bigger and jankier going on here
+            // todo: investigate later.
             MovementComponent movementComponent = m_player.GetComponent<MovementComponent>();
             movementComponent.CanMove = false;
             m_player.GetComponent<Animator>().SetFloat("Speed", 0f);
