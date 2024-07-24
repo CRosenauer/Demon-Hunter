@@ -6,7 +6,8 @@ This game is a 2D action-platformer heavily inspired by (if not a blatant rip-of
 
 Future plans are to refactor the movement controller and enemy/player controller logic to provide de-coupled and easier to use logic. The bulk of the work is complete, however I have not found the time to validate and patch the few remaining corner cases. Additionally, I hope to iterate on the gameplay to make it less derivative when my brainstorming provides an idea with sufficient potential.
 
-# Gameplay Controls:
+# Controls:
+Gameplay Controls:
 - WASD or d-pad to move
 - space or A button to jump
 - j or B button to attack
