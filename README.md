@@ -1,17 +1,22 @@
 # Demon-Hunter
-A Castlevania inspired 2D action-platformer created in Unity.
+![image](https://github.com/user-attachments/assets/247ebfda-4990-4402-acc3-7eec22d7d1ef)
 
-Gameplay Controls:
-- WASD to move
-- space to jump
-- j to attack
-- k to use secondary weapons
+# About
+This game is a 2D action-platformer heavily inspired by (if not a blatant rip-off of) the old-school NES Castlevania games. The scope of this project was to create a reasonably polished, demo-like experience following the Castlevania formula. To that extent, I believe this project met it's goals. It is a competent action-platformer with a custom character controller, controller support, multiple collectable sub-weapons, various level transitions, and fluid gameplay to cutscene transitions.
+
+Future plans are to refactor the movement controller and enemy/player controller logic to provide de-coupled and easier to use logic. The bulk of the work is complete, however I have not found the time to validate and patch the few remaining corner cases. Additionally, I hope to iterate on the gameplay to make it less derivative when my brainstorming provides an idea with sufficient potential.
+
+# Gameplay Controls:
+- WASD or d-pad to move
+- space or A button to jump
+- j or B button to attack
+- k or X button to use secondary weapons
 
 Menu Controls:
-- enter to open/close the pause menu
-- WASD to navigate menu options
-- space to select menu options
-- escaoe to return to the previous menu
+- enter or start button to open/close the pause menu
+- WASD or d-pad to navigate menu options
+- space or A button to select menu options
+- escaoe or B button to return to the previous menu
 
 # Asset Credits:
 Character and Enemy Graphics:
