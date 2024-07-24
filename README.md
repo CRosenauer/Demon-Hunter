@@ -1,4 +1,5 @@
 # Demon-Hunter
+Play on itch io: https://crosenauer.itch.io/castlevania-clone
 ![image](https://github.com/user-attachments/assets/247ebfda-4990-4402-acc3-7eec22d7d1ef)
 
 # About
