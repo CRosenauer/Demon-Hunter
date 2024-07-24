@@ -2,7 +2,7 @@
 ![image](https://github.com/user-attachments/assets/247ebfda-4990-4402-acc3-7eec22d7d1ef)
 
 # About
-This game is a 2D action-platformer heavily inspired by (if not a blatant rip-off of) the old-school NES Castlevania games. The scope of this project was to create a reasonably polished, demo-like experience following the Castlevania formula. To that extent, I believe this project met it's goals. It is a competent action-platformer with a custom character controller, multiple collectible sub-weapons, controller support, resolution (Windows only) and audio option menus, various level transitions, and fluid gameplay to cutscene transitions.
+This game is a 2D action-platformer heavily inspired by (if not a blatant rip-off of) the old-school NES Castlevania games. The scope of this project was to create a reasonably polished, demo-like experience following the Castlevania formula. To that extent, I believe this project met it's goals. It is a competent action-platformer with a custom character controller, multiple collectible sub-weapons, controller support (windows only), resolution (Windows only) and audio option menus, various level transitions, and fluid gameplay to cutscene transitions.
 
 Future plans are to refactor the movement controller and enemy/player controller logic to provide de-coupled and easier to use logic. The bulk of the work is complete, however I have not found the time to validate and patch the few remaining corner cases. Additionally, I hope to iterate on the gameplay to make it less derivative when my brainstorming provides an idea with sufficient potential.
 
