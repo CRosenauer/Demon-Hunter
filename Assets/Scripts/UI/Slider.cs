@@ -14,7 +14,7 @@ public abstract class Slider : MonoBehaviour
         Debug.Assert(m_sliderKnob);
     }
 
-    void SetSliderPosition()
+    protected void SetSliderPosition()
     {
         float sliderRange = m_sliderPositionRange.y - m_sliderPositionRange.x;
         float sliderPercentage = m_sliderValue / (m_sliderValueRange.y - m_sliderValueRange.x);
@@ -46,7 +46,7 @@ public abstract class Slider : MonoBehaviour
         OnSliderMove(false);
     }
 
-    void ClampSliderValue()
+    protected void ClampSliderValue()
     {
         m_sliderValue = Mathf.Clamp(m_sliderValue, m_sliderValueRange.x, m_sliderValueRange.y);
     }

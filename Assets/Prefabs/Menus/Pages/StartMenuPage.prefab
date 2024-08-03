@@ -529,7 +529,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &2850007281615347180
 RectTransform:
   m_ObjectHideFlags: 0
@@ -768,7 +768,6 @@ MonoBehaviour:
   - {fileID: 2850007281377644334}
   - {fileID: 2850007281148680872}
   - {fileID: 2850007281418264643}
-  - {fileID: 2850007281615347181}
   m_menuPointer: {fileID: 2850007281566135831}
   m_systemManager: {fileID: 0}
   m_menuSoundSource: {fileID: 2850007281774949818}

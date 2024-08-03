@@ -217,6 +217,10 @@ PrefabInstance:
       value: -32
       objectReference: {fileID: 0}
     - target: {fileID: 8402401679162851852, guid: c5c467d35eea4a14c91ac5cfe48806dd, type: 3}
+      propertyPath: m_prefsName
+      value: sound
+      objectReference: {fileID: 0}
+    - target: {fileID: 8402401679162851852, guid: c5c467d35eea4a14c91ac5cfe48806dd, type: 3}
       propertyPath: m_menuPersistencyUpdator
       value: 
       objectReference: {fileID: 1440059210}
@@ -312,6 +316,10 @@ PrefabInstance:
       propertyPath: m_Camera
       value: 
       objectReference: {fileID: 822661990}
+    - target: {fileID: 8402401679926829248, guid: c5c467d35eea4a14c91ac5cfe48806dd, type: 3}
+      propertyPath: m_prefsName
+      value: music
+      objectReference: {fileID: 0}
     - target: {fileID: 8402401679926829248, guid: c5c467d35eea4a14c91ac5cfe48806dd, type: 3}
       propertyPath: m_menuPersistencyUpdator
       value: 
