@@ -13,11 +13,17 @@ public class VolumeSlider : Slider
     [SerializeField] AudioSource m_audioSource;
     [SerializeField] string m_audioMixerName;
 
+    [SerializeField] string m_prefsName;
+
     new void Awake()
     {
         Debug.Assert(m_mixer);
         Debug.Assert(m_menuPersistencyUpdator);
         base.Awake();
+
+        m_sliderValue = PlayerPrefs.GetFloat(m_prefsName, 0.8f);
+        ClampSliderValue();
+        SetSliderPosition();
         OnSliderMove(false);
     }
 
@@ -32,11 +38,8 @@ public class VolumeSlider : Slider
             value = -80; // dB. functionally mute audio
         }
 
-        MenuPersistency.MenuField menuField = new();
-        menuField.m_menuOption = m_menuOption;
-        menuField.m_value = m_sliderValue;
-
-        m_menuPersistencyUpdator.SendMessage("SetMenuField", menuField);
+        PlayerPrefs.SetFloat(m_prefsName, m_sliderValue);
+        PlayerPrefs.Save();
 
         m_mixer.SetFloat(m_audioMixerName, value);
 
