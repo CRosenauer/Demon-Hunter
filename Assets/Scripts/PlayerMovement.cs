@@ -25,7 +25,7 @@ public class PlayerMovement : MovementComponent
 		idle,
 		jump,
 		fall,
-		jumpLand,
+		__UNUSED__,
 		damageKnockback,
 		dead,
 		deathFall,
@@ -391,7 +391,7 @@ public class PlayerMovement : MovementComponent
     {
 		if (IsOnGround())
 		{
-			m_playerStateMachine.SetState(PlayerState.jumpLand);
+			m_playerStateMachine.SetState(PlayerState.dead);
 			OnJumpLand();
 			Animator.ResetTrigger("OnJump");
 		}
