@@ -38,6 +38,9 @@ public class VolumeSlider : Slider
             value = -80; // dB. functionally mute audio
         }
 
+        // Todo: this should really be on a base class
+        // it doesn't make sense for this shared logic to not be shared between every persistent/preference UI element
+        // could maybe pass a scriptable object for storing option keys or if the value should be persistent.
         PlayerPrefs.SetFloat(m_prefsName, m_sliderValue);
         PlayerPrefs.Save();
 
